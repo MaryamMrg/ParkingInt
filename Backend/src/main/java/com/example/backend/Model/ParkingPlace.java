@@ -10,14 +10,14 @@ public class ParkingPlace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long placeId;
 
     private  Long number;
     private  Boolean availablty;
     private Status status;
 
-    public ParkingPlace(Long id, Long number, Boolean availablty, Status status) {
-        this.id = id;
+    public ParkingPlace(Long placeId, Long number, Boolean availablty, Status status) {
+        this.placeId = placeId;
         this.number = number;
         this.availablty = availablty;
         this.status = status;
@@ -26,12 +26,12 @@ public class ParkingPlace {
     public ParkingPlace() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getPlaceId() {
+        return placeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPlaceId(Long placeId) {
+        this.placeId = placeId;
     }
 
     public Long getNumber() {

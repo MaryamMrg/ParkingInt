@@ -11,14 +11,14 @@ public class Parking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long parkingId;
     private String P_name;
     private Long capacity;
     private Long avaible_places;
     private String opening_hours;
 
-    public Parking(Long id, String p_name, Long capacity, Long avaible_places, String opening_hours) {
-        this.id = id;
+    public Parking(Long parkingId, String p_name, Long capacity, Long avaible_places, String opening_hours) {
+        this.parkingId = parkingId;
         P_name = p_name;
         this.capacity = capacity;
         this.avaible_places = avaible_places;
@@ -28,12 +28,12 @@ public class Parking {
     public Parking() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getParkingId() {
+        return parkingId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setParkingId(Long parkingId) {
+        this.parkingId = parkingId;
     }
 
     public String getP_name() {
