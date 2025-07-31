@@ -1,1 +1,36 @@
-<p>home-component works!</p>
+<div class="home-container">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Smart Parking
+            <span class="hero-subtitle">for Smarter Cities</span>
+          </h1>
+          <p class="hero-description">Your Spot is Just a Tap Away</p>
+          
+          <div class="hero-actions">
+            <button class="cta-button primary">Find Parking</button>
+            <button class="cta-button secondary">Learn More</button>
+          </div>
+        </div>
+        
+        <!-- Animated parking spots indicators -->
+        <div class="parking-indicators">
+          <div class="indicator" [class.occupied]="spot.occupied" *ngFor="let spot of parkingSpots; let i = index">
+            <span class="spot-number">{{spot.number}}</span>
+          </div>
+        </div>
+      </section>
+
+      
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <h2 class="cta-title">Ready to Transform Your Parking Experience?</h2>
+          <p class="cta-description">Join thousands of drivers who have already made the switch to smart parking</p>
+          <button class="cta-button large">Get Started Today</button>
+        </div>
+      </section>
+    </div>

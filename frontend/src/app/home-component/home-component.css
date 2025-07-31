@@ -1,0 +1,292 @@
+ .home-container {
+      min-height: 100vh;
+      background: #f8fafc;
+    }
+
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      background: 
+                  url('../assets/city-built-interior-reflection-sign.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(15, 23, 42, 0.2) 0%, 
+    rgba(30, 41, 59, 0.1) 50%, 
+    rgba(51, 65, 85, 0.2) 100%);
+}
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .hero-subtitle {
+      display: block;
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: #f59e0b;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+
+    .hero-description {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 3rem;
+      font-weight: 300;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cta-button.primary {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+    }
+
+    .cta-button.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
+    }
+
+    .cta-button.secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-button.secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-3px);
+    }
+
+    .cta-button.large {
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+    }
+
+    .cta-button.large:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
+    }
+
+    .parking-indicators {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 2;
+    }
+
+    .indicator {
+      width: 60px;
+      height: 40px;
+      background: rgba(34, 197, 94, 0.8);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .indicator.occupied {
+      background: rgba(239, 68, 68, 0.8);
+    }
+
+    .spot-number {
+      color: white;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .features-section {
+      padding: 6rem 0;
+      background: white;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border: 1px solid rgba(245, 158, 11, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .feature-description {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .stats-section {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #1e293b, #334155);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: white;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #f59e0b;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+    }
+
+    .cta-section {
+      padding: 6rem 0;
+      background: #f8fafc;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .cta-description {
+      font-size: 1.2rem;
+      color: #64748b;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-button {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .parking-indicators {
+        display: none;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
