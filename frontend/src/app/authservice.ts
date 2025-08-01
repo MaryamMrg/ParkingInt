@@ -47,11 +47,11 @@ export class Authservice {
   }
 
     login(credentials:{email:string, password:string }):Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(`${this.apiUrl}/api/v1/auth/authenticate`,credentials)
+    return this.http.post<LoginResponse>(`${this.apiUrl}/api/auth/authenticate`,credentials)
   }
 
   register(userdata : {name:string,email:string,password:string,role:string}):Observable<any>{
- return this.http.post<RegisterRequest>(`${this.apiUrl}/api/v1/auth/register`,userdata);
+ return this.http.post<RegisterRequest>(`${this.apiUrl}/api/auth/register`,userdata);
   }
    saveUserData(response: LoginResponse): void {
     localStorage.setItem('token', response.token);
