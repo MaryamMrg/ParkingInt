@@ -2,7 +2,7 @@
       <div class="nav-container">
         
         <!-- Logo/Brand -->
-        <div class="brand">
+        <div class="brand" routerLink="/">
             <img src="../assets/logoParking.jpg" class="logo-img">
           <span class="brand-text">SmartParking</span>
         </div>
@@ -27,18 +27,25 @@
           </div>
         </div>
 
-        <!-- Navigation Links -->
-        <div class="nav-links">
-          <button 
-            *ngFor="let item of menuItems"
-            (click)="setActiveMenuItem(item.name)"
-            [class.active]="activeMenuItem === item.name"
-            class="nav-button"
-          >
-            {{ item.name }}
+    <!-- Auth controls -->
+      <div class="text-end">
+        <ng-container *ngIf="!isLoggedIn; else userControls">
+          <button (click)="goToLogin()" mat-stroked-button class="login-btn">
+            Login
           </button>
-        </div>
+          <button (click)="goToRegister()" class="signup-btn">
+            Signup
+          </button>
+        </ng-container>
+        
+        <ng-template #userControls>
+          <span class="me-2">Welcome, {{currentUser?.name}}</span>
+          <button (click)="logout()" mat-stroked-button class="logout-btn">
+            Logout
+          </button>
+        </ng-template>
       </div>
       <!-- Gradient overlay for depth -->
       <div class="nav-overlay"></div>
+      </div>
     </nav>
