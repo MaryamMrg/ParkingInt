@@ -3,11 +3,13 @@ import { HomeComponent } from './home-component/home-component';
 import { LoginComponent } from './login-component/login-component';
 import { Signup } from './signup/signup';
 import { CustomerDashboard } from './customer-dashboard/customer-dashboard';
+import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 
 export const routes: Routes = [
 
     {path : '', component : HomeComponent},
     {path: 'login', component:LoginComponent},
     {path : 'signup' , component:Signup},
-    {path : 'customer-Dash',component:CustomerDashboard}
+    {path : 'customer-Dash',component:CustomerDashboard},
+    {path : 'admin-dashboard', component : AdminDashboard}
 ];
