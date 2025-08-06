@@ -1,1 +1,85 @@
-<p>customer-dashboard works!</p>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🅿️<img src="../assets/logoParking.jpg"></div>
+            SmartParking
+        </div>
+        
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search parking locations...">
+                <button class="search-btn">search 🔍</button>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active">Near</button>
+                <button class="filter-btn">Available</button>
+            </div>
+            
+            <button class="logout-btn">
+                👤 Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Hi {{customername}}</h1>
+            <p class="welcome-subtitle">Park your car easily 🚗</p>
+        </div>
+
+        <div class="parking-grid">
+            <div class="parking-card">
+                <div class="parking-header">
+                    <div>
+                        <h3 class="parking-name">Beni Mellal</h3>
+                        <p class="parking-address">Boulevard Mohamed 5</p>
+                    </div>
+                    <div class="parking-icon">🏢</div>
+                </div>
+                
+                <div class="parking-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">25</div>
+                        <div class="stat-label">Places</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">20</div>
+                        <div class="stat-label">Min</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10dh</div>
+                        <div class="stat-label">Per Hour</div>
+                    </div>
+                </div>
+
+                <div class="availability-bar">
+                    <div class="availability-fill" style="width: 68%"></div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <span class="status-badge status-available">Available</span>
+                </div>
+
+                <div class="parking-actions">
+                    <button class="action-btn">View Details</button>
+                    <button class="action-btn primary pulse">Reserve Now</button>
+                </div>
+            </div>
+
+            <div class="parking-card">
+                <div class="parking-header">
+                    <div>
+                        <h3 class="parking-name">Beni Mellal</h3>
+                        <p class="parking-address">Boulevard Hassan 2</p>
+                    </div>
+                    <div class="parking-icon">🏪</div>
+                </div>
+                
+                <div class="parking-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">13</div>
+                        <div class="stat-label">Places</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">20
