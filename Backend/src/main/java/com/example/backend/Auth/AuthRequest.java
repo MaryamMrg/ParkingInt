@@ -3,7 +3,7 @@ package com.example.backend.Auth;
 import lombok.Builder;
 
 @Builder
-public class AuthRequest {
+public class AuthRequest{
 
     private String email;
     private String password;
