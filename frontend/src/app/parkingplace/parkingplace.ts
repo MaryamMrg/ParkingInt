@@ -146,21 +146,15 @@ export class Parkingplace implements OnInit{
 
   selectPlace(place: Place): void {
     if (this.canSelectPlace(place)) {
-      // Navigate to booking/reservation page with selected place
-      this.router.navigate(['/book-place', place.number]);
+      this.router.navigate(['/booking', place.number]);
     }
   }
 
   goBack(): void {
     this.location.back();
-    // Alternative: this.router.navigate(['/dashboard']);
+    Alternative: this.router.navigate(['/customer-Dash']);
   }
 
-  logout(): void {
-    // Assuming you have access to auth service through dependency injection
-    // You might need to inject it or handle this differently
-    this.router.navigate(['/login']);
-  }
 
   // Optional filter/sort methods
   toggleFilters(): void {

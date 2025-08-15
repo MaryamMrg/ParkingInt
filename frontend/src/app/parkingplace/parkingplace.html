@@ -81,12 +81,15 @@
     </div>
 </main>
 
-<!-- Filter/Sort Options (Optional) -->
-<div class="floating-controls" *ngIf="places.length > 0">
+
+<!-- <div class="floating-controls" *ngIf="places.length > 0">
     <button class="control-btn" (click)="toggleFilters()">
         🔍 Filter
     </button>
     <button class="control-btn" (click)="toggleSort()">
         📊 Sort
     </button>
+</div> -->
+<div>
+     <button (click)="goBack()" class="back-btn-alt">Go Back</button>
 </div>
