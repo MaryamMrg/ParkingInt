@@ -22,6 +22,7 @@
     }
 
     .brand {
+      background: url("../assets/lg-removebg-preview.png");
       display: flex;
       align-items: center;
       gap: 8px;

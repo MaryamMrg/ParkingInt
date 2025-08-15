@@ -56,14 +56,15 @@
              
             <!-- Action Buttons -->
             <div class="place-actions">
-                <button class="action-btn secondary" 
+                <!-- <button class="action-btn secondary" 
                         (click)="viewPlaceDetails(place)">
                     View Details
-                </button>
+                </button> -->
                 <button class="action-btn primary" 
                         (click)="selectPlace(place)"
                         [disabled]="!canSelectPlace(place)">
-                    {{ getActionButtonText(place.status) }}
+                        Reserve
+                    <!-- {{ getActionButtonText(place.status) }} -->
                 </button>
             </div>
         </div>
