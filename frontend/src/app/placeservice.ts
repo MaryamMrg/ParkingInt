@@ -1,4 +1,6 @@
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface Place{
   placeId : number;
@@ -10,6 +12,31 @@ export interface Place{
   providedIn: 'root'
 })
 export class Placeservice {
+   private apiUrl="http://localhost:8080/place"
+  constructor(private http : HttpClient) { }
 
-  constructor() { }
+
+   getAuthHeader():HttpHeaders{
+     const token= localStorage.getItem('token');
+  return new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : ''
+  });
+  }
+
+  getAllPlaces():Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/all`,{headers:this.getAuthHeader()})
+  }
+
+  addPlace(place:Place){
+    return this.http.post<Place>(`${this.apiUrl}/add`,{headers:this.getAuthHeader()})
+  }
+
+  updatePlace(id:number,place:Place){
+    return this.http.put<Place>(`${this.apiUrl}/update/${id}`,place,{headers:this.getAuthHeader()})
+  }
+
+  deletPlace(id:number):Observable<any>{
+    return this.http.delete(`${this.apiUrl}/${id}`,{headers:this.getAuthHeader()})
+  }
 }
