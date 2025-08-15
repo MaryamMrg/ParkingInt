@@ -1,0 +1,92 @@
+<main class="main-content">
+    <div class="welcome-section">
+        <h1 class="welcome-title">Available Parking Places</h1>
+        <p class="welcome-subtitle">Choose your perfect parking spot 🚗</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+        <div class="loading-spinner">⏳</div>
+        <p>Loading available places...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-container">
+        <div class="error-icon">❌</div>
+        <p class="error-message">{{ errorMessage }}</p>
+        <button (click)="loadPlaces()" class="retry-btn">Try Again</button>
+    </div>
+
+    <!-- Places Grid -->
+    <div *ngIf="!loading && !errorMessage" class="places-grid">
+        <div *ngFor="let place of places; trackBy: trackByPlaceNumber" class="place-card">
+            <div class="place-header">
+                <div class="place-info">
+                    <h3 class="place-name">Place {{ place.number }}</h3>
+                    <p class="place-status-text">Status: {{ getStatusText(place.status) }}</p>
+                </div>
+                <div class="place-icon">
+                    <span [ngClass]="getPlaceIconClass(place.status)">
+                        {{ getPlaceIcon(place.status) }}
+                    </span>
+                </div>
+            </div>
+                             
+            <div class="place-details">
+                <div class="detail-row">
+                    <span class="detail-label">Place Number:</span>
+                    <span class="detail-value">#{{ place.number }}</span>
+                </div>
+              
+                <div class="detail-row">
+                    <span class="detail-label">Current Status:</span>
+                    <span class="detail-value" [ngClass]="getStatusTextClass(place.status)">
+                        {{ getStatusText(place.status) }}
+                    </span>
+                </div>
+            </div>
+             
+            <!-- Status Badge -->
+            <div class="place-status">
+                <span class="status-badge" 
+                      [ngClass]="getStatusClass(place.status)">
+                    {{ getStatusText(place.status) }}
+                </span>
+            </div>
+             
+            <!-- Action Buttons -->
+            <div class="place-actions">
+                <button class="action-btn secondary" 
+                        (click)="viewPlaceDetails(place)">
+                    View Details
+                </button>
+                <button class="action-btn primary" 
+                        (click)="selectPlace(place)"
+                        [disabled]="!canSelectPlace(place)">
+                    {{ getActionButtonText(place.status) }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !errorMessage && places.length === 0" class="empty-state">
+        <div class="empty-icon">🚫</div>
+        <h3>No Places Available</h3>
+        <p>There are currently no parking places available at this location.</p>
+        <div class="empty-actions">
+            <button (click)="loadPlaces()" class="retry-btn">Refresh</button>
+            <button (click)="goBack()" class="back-btn-alt">Go Back</button>
+        </div>
+    </div>
+</main>
+
+<!-- Filter/Sort Options (Optional) -->
+<div class="floating-controls" *ngIf="places.length > 0">
+    <button class="control-btn" (click)="toggleFilters()">
+        🔍 Filter
+    </button>
+    <button class="control-btn" (click)="toggleSort()">
+        📊 Sort
+    </button>
+</div>

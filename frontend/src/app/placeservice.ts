@@ -2,11 +2,16 @@ import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export enum Status {
+  AVAILABLE = 'AVAILABLE',
+  RESERVED = 'RESERVED', 
+  OCCUPIED = 'OCCUPIED',
+  BLOCKED = 'BLOCKED'
+}
+
 export interface Place{
-  placeId : number;
-    number: number;
-  availablty: boolean;
-  status: "AVAILABLE"
+number: number;
+  status: Status;
 }
 @Injectable({
   providedIn: 'root'

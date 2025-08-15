@@ -4,6 +4,7 @@ import { Route, Router } from '@angular/router';
 import { Parking, Parkingservice } from '../parkingservice';
 
 import { CommonModule } from '@angular/common';
+import { Placeservice } from '../placeservice';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -17,7 +18,7 @@ errorMessage='';
 loading=true;
 parkings:Parking[]=[];
 
-  constructor(private authservice : Authservice,private parkingservice : Parkingservice,
+  constructor(private authservice : Authservice,private parkingservice : Parkingservice,private placeservice:Placeservice,
      private router : Router)
      { }
 
@@ -56,7 +57,7 @@ const user = this.authservice.getCurrentUser();
   // Action methods
   viewDetails(parking: Parking): void {
     // Navigate to parking details page
-    this.router.navigate(['/parking-details', parking.parking_Id]);
+    this.router.navigate(['/places']);
   }
 
   reserveNow(parking: Parking): void {
