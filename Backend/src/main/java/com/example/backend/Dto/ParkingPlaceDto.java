@@ -1,23 +1,20 @@
 package com.example.backend.Dto;
 
 import com.example.backend.Model.Status;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingPlaceDto {
 
 
     private  Long number;
     private  Boolean availablty;
     private Status status;
+    private Long parkingId;
 
 
-    public ParkingPlaceDto(Long number, Boolean availablty, Status status) {
-        this.number = number;
-        this.availablty = availablty;
-        this.status = status;
-    }
-
-    public ParkingPlaceDto() {
-    }
 
     public Long getNumber() {
         return number;
@@ -42,4 +39,13 @@ public class ParkingPlaceDto {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public Long getParkingId() {
+        return parkingId;
+    }
+
+    public void setParkingId(Long parkingId) {
+        this.parkingId = parkingId;
+    }
+
 }

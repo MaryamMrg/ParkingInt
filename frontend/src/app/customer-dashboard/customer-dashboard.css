@@ -1,143 +1,93 @@
-
-
-.main-content{
-   
-     position: relative;
-      height: 100vh;
-    background : url("../assets/lamp-dirty-urban-area-traffic.jpg");
-          background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-}
-
-.header {
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background: rgba(5, 5, 5, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    background: white;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #667eea;
-    font-weight: bold;
-}
-
-.header-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.search-container {
-    position: relative;
-}
-
-.search-input {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 25px;
-    padding: 10px 40px 10px 20px;
-    color: white;
-    width: 300px;
-    font-size: 14px;
-}
-
-.search-input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.search-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.filter-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-}
-
-.filter-btn.active,
-.filter-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
+/* Fixed and improved CSS styles */
 
 .main-content {
+    position: relative;
+    min-height: 100vh; /* Changed from height to min-height */
+    background: url("../assets/lamp-dirty-urban-area-traffic.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Allow vertical scrolling */
     padding: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .welcome-section {
     margin-bottom: 40px;
+    text-align: center;
+    width: 100%;
 }
 
 .welcome-title {
     font-size: 2.5rem;
     font-weight: 300;
     margin-bottom: 10px;
+    color: white;
 }
 
 .welcome-subtitle {
     font-size: 1.1rem;
     opacity: 0.9;
+    color: white;
 }
 
+/* Loading State */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: white;
+}
+
+.loading-spinner {
+    text-align: center;
+}
+
+/* Error State */
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.retry-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+}
+
+/* Parking Grid */
 .parking-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
-    margin-top: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .parking-card {
@@ -149,6 +99,8 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    color: white;
+    box-sizing: border-box;
 }
 
 .parking-card:hover {
@@ -171,17 +123,26 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 20px;
+    gap: 15px;
+}
+
+.parking-info {
+    flex: 1;
 }
 
 .parking-name {
     font-size: 1.4rem;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
+    color: white;
+    word-wrap: break-word;
 }
 
 .parking-address {
     font-size: 0.95rem;
     opacity: 0.8;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .parking-icon {
@@ -193,6 +154,7 @@
     align-items: center;
     justify-content: center;
     font-size: 24px;
+    flex-shrink: 0;
 }
 
 .parking-stats {
@@ -200,21 +162,44 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
 .stat-item {
     text-align: center;
+    flex: 1;
 }
 
 .stat-value {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 5px;
+    color: white;
 }
 
 .stat-label {
     font-size: 0.85rem;
     opacity: 0.8;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.parking-hours {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.hours-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.hours-value {
+    font-weight: 600;
 }
 
 .availability-bar {
@@ -232,41 +217,15 @@
     transition: width 0.3s ease;
 }
 
-.parking-actions {
+.status-section {
+    margin-bottom: 20px;
     display: flex;
-    gap: 10px;
-}
-
-.action-btn {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.action-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-}
-
-.action-btn.primary {
-    background: linear-gradient(45deg, #00d4ff, #0099cc);
-    border: none;
-}
-
-.action-btn.primary:hover {
-    background: linear-gradient(45deg, #0099cc, #007aa3);
+    justify-content: center;
 }
 
 .status-badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 6px 16px;
     border-radius: 15px;
     font-size: 0.8rem;
     font-weight: 600;
@@ -286,14 +245,95 @@
     border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        gap: 15px;
-    }
+.status-full {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
 
-    .search-input {
-        width: 250px;
+.parking-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.action-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-btn.primary {
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    border: none;
+}
+
+.action-btn.primary:hover:not(:disabled) {
+    background: linear-gradient(45deg, #0099cc, #007aa3);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    text-align: center;
+    color: white;
+    gap: 20px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.7;
+}
+
+/* Animations */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px 15px;
     }
 
     .welcome-title {
@@ -302,21 +342,37 @@
 
     .parking-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .parking-card {
+        padding: 20px;
+    }
+
+    .parking-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+
+    .action-btn {
+        min-width: 100px;
     }
 }
 
-.pulse {
-    animation: pulse 2s infinite;
-}
+@media (max-width: 480px) {
+    .parking-actions {
+        flex-direction: column;
+    }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
+    .action-btn {
+        min-width: unset;
+        width: 100%;
     }
 }

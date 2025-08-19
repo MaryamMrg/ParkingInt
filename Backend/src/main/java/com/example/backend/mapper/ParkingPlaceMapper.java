@@ -1,9 +1,12 @@
 package com.example.backend.mapper;
 
 import com.example.backend.Dto.ParkingPlaceDto;
+import com.example.backend.Model.Parking;
 import com.example.backend.Model.ParkingPlace;
 import jdk.dynalink.linker.LinkerServices;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -12,9 +15,23 @@ public interface ParkingPlaceMapper {
 
 
 
-    ParkingPlace toEntity(ParkingPlaceDto parkingPlaceDto);
-
+    @Mapping(source = "parking.parkingId", target = "parkingId")
     ParkingPlaceDto toDto(ParkingPlace parkingPlace);
 
+    // FIXED: Map parkingId to parking entity
+    @Mapping(source = "parkingId", target = "parking", qualifiedByName = "mapParkingId")
+
+    ParkingPlace toEntity(ParkingPlaceDto dto);
+
     List<ParkingPlaceDto> toDtos(List<ParkingPlace> parkingPlaces);
-}
+
+    // Custom mapping method for parkingId to Parking entity
+    @Named("mapParkingId")
+    default Parking mapParkingId(Long parkingId) {
+        if (parkingId == null) {
+            return null;
+        }
+        Parking parking = new Parking();
+        parking.setParkingId(parkingId);
+        return parking;
+    }}

@@ -6,6 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/ParkingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/ParkingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Parking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Parking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/ParkingPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/ParkingPlace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/repository/ParkingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/repository/ParkingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingservice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +72,7 @@
       <workItem from="1751361894793" duration="75000" />
       <workItem from="1751361977416" duration="47000" />
       <workItem from="1751362035242" duration="166000" />
-      <workItem from="1755355960478" duration="1005000" />
+      <workItem from="1755355960478" duration="2389000" />
     </task>
     <servers />
   </component>

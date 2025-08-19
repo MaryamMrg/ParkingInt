@@ -4,6 +4,7 @@ import com.example.backend.Dto.ParkingDto;
 import com.example.backend.Model.Parking;
 import com.example.backend.mapper.ParkingMapper;
 import com.example.backend.repository.ParkingRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,23 +27,34 @@ public class ParkingService {
 
     }
 
+    @Transactional
     public List<ParkingDto> getAllParkings(){
-        List<Parking> parkings = parkingRepository.findAll();
+        List<Parking> parkings = parkingRepository.findAllByPlaces();
         return parkingMapper.toDtos(parkings);
     }
 
-    public ParkingDto updateParking(ParkingDto dto,Long id){
-        Parking parking = parkingRepository.findById(id).orElseThrow(()->new RuntimeException("parking not found"));
-        parking.setAvaible_places(dto.getAvaible_places());
-        parking.setCapacity(dto.getCapacity());
-        parking.setOpening_hours(dto.getOpening_hours());
-        parking.setP_name(dto.getP_name());
+    public ParkingDto updateParking(Long parkingId, ParkingDto parkingDto) {
+        Parking existingParking = parkingRepository.findById(parkingId)
+                .orElseThrow(() -> new RuntimeException("Parking not found with id: " + parkingId));
 
-        Parking saved = parkingRepository.save(parking);
-        return parkingMapper.toDto(saved);
+        // Update only the fields that should be manually updated
+        existingParking.setP_name(parkingDto.getP_name());
+        existingParking.setOpening_hours(parkingDto.getOpening_hours());
+
+
+        Parking updatedParking = parkingRepository.save(existingParking);
+        return parkingMapper.toDto(updatedParking);
     }
+
 
     public void deleteParking(Long id){
         parkingRepository.deleteById(id);
+    }
+
+    public ParkingDto getParkingById(Long id) {
+        Parking parking = parkingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Parking not found"));
+
+        return parkingMapper.toDto(parking); // Mapper handles the dynamic capacity
     }
 }

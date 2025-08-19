@@ -31,7 +31,7 @@ public class ParkingController {
 
     @PutMapping("/update/{id}")
     public ParkingDto updateParking(@RequestBody ParkingDto parkingDto,@PathVariable Long id){
-        return parkingService.updateParking(parkingDto,id);
+        return parkingService.updateParking(id,parkingDto);
     }
 
 

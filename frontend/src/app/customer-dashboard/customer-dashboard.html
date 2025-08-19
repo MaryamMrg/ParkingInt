@@ -1,5 +1,4 @@
-
-
+<!-- Fixed HTML Template -->
 <main class="main-content">
     <div class="welcome-section">
         <h1 class="welcome-title">Hi {{ customername }}</h1>
@@ -8,65 +7,75 @@
 
     <!-- Loading State -->
     <div *ngIf="loading" class="loading-container">
-        <p>Loading parking locations...</p>
+        <div class="loading-spinner">
+            <p>Loading parking locations...</p>
+        </div>
     </div>
 
     <!-- Error State -->
-    <div *ngIf="errorMessage" class="error-container">
+    <div *ngIf="errorMessage && !loading" class="error-container">
         <p class="error-message">{{ errorMessage }}</p>
         <button (click)="loadParkings()" class="retry-btn">Retry</button>
     </div>
 
     <!-- Parking Grid -->
-    <div *ngIf="!loading && !errorMessage" class="parking-grid">
-        <div *ngFor="let parking of parkings" class="parking-card">
+    <div *ngIf="!loading && !errorMessage && parkings && parkings.length > 0" class="parking-grid">
+        <div *ngFor="let parking of parkings; trackBy: trackByParkingId" class="parking-card">
             <div class="parking-header">
-                <div>
-                    <h3 class="parking-name">{{ parking.P_name}}</h3>
+                <div class="parking-info">
+                    <h3 class="parking-name">{{ parking.p_name }}</h3>
+                
                 </div>
                 <div class="parking-icon">🏢</div>
             </div>
-                             
+
             <div class="parking-stats">
                 <div class="stat-item">
-                    <div class="stat-value">{{ parking.capacity }}</div>
-                    <div class="stat-label">Places</div>
+                    <div class="stat-value">{{ parking.capacity || 0 }}</div>
+                    <div class="stat-label">Total Places</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">{{ parking.opening_hours }}</div>
-                    <div class="stat-label">Min</div>
+                    <div class="stat-value">{{ parking.avaible_places || parking.capacity }}</div>
+                    <div class="stat-label">Available</div>
                 </div>
-              
             </div>
-             
+
+            <div class="parking-hours">
+                <span class="hours-label">Hours:</span>
+                <span class="hours-value">{{ parking.opening_hours || 'Not specified' }}</span>
+            </div>
+
             <div class="availability-bar">
                 <div class="availability-fill" 
-                     [style.width.%]="getAvailabilityPercentage(parking)"></div>
+                     [style.width.%]="getAvailabilityPercentage(parking)">
+                </div>
             </div>
-             
-            <div style="margin-bottom: 15px;">
-                <span class="status-badge" 
-                      [ngClass]="getStatusClass(parking)">
+
+            <div class="status-section">
+                <span class="status-badge" [ngClass]="getStatusClass(parking)">
                     {{ getStatusText(parking) }}
                 </span>
             </div>
-             
+
             <div class="parking-actions">
                 <button class="action-btn" (click)="viewDetails(parking)">
                     View Details
                 </button>
-                <!-- <button class="action-btn primary pulse" 
+                <button class="action-btn primary" 
                         (click)="reserveNow(parking)"
-                        [disabled]="!isParkingAvailable(parking)">
+                        [disabled]="!isParkingAvailable(parking)"
+                        [ngClass]="{'pulse': isParkingAvailable(parking)}">
                     Reserve Now
-                </button> -->
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="!loading && !errorMessage && parkings.length === 0" class="empty-state">
-        <p>No parking locations found.</p>
+    <div *ngIf="!loading && !errorMessage && (!parkings || parkings.length === 0)" class="empty-state">
+        <div class="empty-icon">🚗</div>
+        <h3>No parking locations found</h3>
+        <p>Try refreshing or check back later</p>
         <button (click)="loadParkings()" class="retry-btn">Refresh</button>
     </div>
 </main>

@@ -2,11 +2,15 @@ package com.example.backend.Model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Parking {
 
     @Id
@@ -14,25 +18,15 @@ public class Parking {
     private Long parkingId;
 
     private String P_name;
-    private Long capacity;
-    private Long avaible_places;
+
+//    private Long avaible_places;
+
     private String opening_hours;
 
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ParkingPlace> places = new ArrayList<ParkingPlace>();
-
-    public Parking(Long parkingId, String p_name, Long capacity, Long avaible_places, String opening_hours) {
-        this.parkingId = parkingId;
-        P_name = p_name;
-        this.capacity = capacity;
-        this.avaible_places = avaible_places;
-        this.opening_hours = opening_hours;
-    }
-
-    public Parking() {
-    }
 
     public Long getParkingId() {
         return parkingId;
@@ -40,6 +34,22 @@ public class Parking {
 
     public void setParkingId(Long parkingId) {
         this.parkingId = parkingId;
+    }
+
+    public List<ParkingPlace> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<ParkingPlace> places) {
+        this.places = places;
+    }
+
+    public String getOpening_hours() {
+        return opening_hours;
+    }
+
+    public void setOpening_hours(String opening_hours) {
+        this.opening_hours = opening_hours;
     }
 
     public String getP_name() {
@@ -51,26 +61,15 @@ public class Parking {
     }
 
     public Long getCapacity() {
-        return capacity;
+        return (long) places.size();
     }
 
-    public void setCapacity(Long capacity) {
-        this.capacity = capacity;
-    }
-
-    public Long getAvaible_places() {
-        return avaible_places;
-    }
-
-    public void setAvaible_places(Long avaible_places) {
-        this.avaible_places = avaible_places;
-    }
-
-    public String getOpening_hours() {
-        return opening_hours;
-    }
-
-    public void setOpening_hours(String opening_hours) {
-        this.opening_hours = opening_hours;
+    public Long getAvailablePlaces() {
+        if (places == null || places.isEmpty()) {
+            return 0L;
+        }
+        return places.stream()
+                .filter(place -> Boolean.TRUE.equals(place.getAvailablty()))
+                .count();
     }
 }

@@ -40,6 +40,10 @@ const user = this.authservice.getCurrentUser();
     this.parkingservice.getAllPArkings().subscribe({
       next : (parkings)=>{
         console.log('parjing recieved :' ,parkings);
+        
+         parkings.forEach((parking:Parking) => {
+        console.log(`Parking: ${parking.p_name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
+      });
         this.parkings=parkings;
         this.loading=false;
       },
@@ -52,6 +56,9 @@ const user = this.authservice.getCurrentUser();
 
    isParkingAvailable(parking: Parking): boolean {
     return (parking.avaible_places|| 0) > 0;
+  }
+   trackByParkingId(index: number, parking: any): any {
+    return parking.parkingId || parking.id || index;
   }
 
   // Action methods

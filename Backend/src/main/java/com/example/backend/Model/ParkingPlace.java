@@ -11,10 +11,12 @@ public class ParkingPlace {
 
     private  Long number;
     private  Boolean availablty;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name = "parkingId")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "parking_id")
     private  Parking parking;
 
     public ParkingPlace(Long placeId, Long number, Boolean availablty, Status status) {
@@ -25,6 +27,14 @@ public class ParkingPlace {
     }
 
     public ParkingPlace() {
+    }
+
+    public Parking getParking() {
+        return parking;
+    }
+
+    public void setParking(Parking parking) {
+        this.parking = parking;
     }
 
     public Long getPlaceId() {
