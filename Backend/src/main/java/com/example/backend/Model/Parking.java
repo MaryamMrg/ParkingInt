@@ -68,8 +68,47 @@ public class Parking {
         if (places == null || places.isEmpty()) {
             return 0L;
         }
+
         return places.stream()
-                .filter(place -> Boolean.TRUE.equals(place.getAvailablty()))
+                .filter(place -> place != null &&
+                        place.getStatus() != null &&
+                        place.getStatus() == Status.AVAILABLE)
+                .count();
+    }
+
+    public Long getReservedPlaces() {
+        if (places == null || places.isEmpty()) {
+            return 0L;
+        }
+
+        return places.stream()
+                .filter(place -> place != null &&
+                        place.getStatus() != null &&
+                        place.getStatus() == Status.RESERVED)
+                .count();
+    }
+
+    public Long getOccupiedPlaces() {
+        if (places == null || places.isEmpty()) {
+            return 0L;
+        }
+
+        return places.stream()
+                .filter(place -> place != null &&
+                        place.getStatus() != null &&
+                        place.getStatus() == Status.OCCUPIED)
+                .count();
+    }
+
+    public Long getBlockedPlaces() {
+        if (places == null || places.isEmpty()) {
+            return 0L;
+        }
+
+        return places.stream()
+                .filter(place -> place != null &&
+                        place.getStatus() != null &&
+                        place.getStatus() == Status.BLOCKED)
                 .count();
     }
 }

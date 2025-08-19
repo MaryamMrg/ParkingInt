@@ -29,16 +29,24 @@
                 <div class="parking-icon">🏢</div>
             </div>
 
-            <div class="parking-stats">
-                <div class="stat-item">
-                    <div class="stat-value">{{ parking.capacity || 0 }}</div>
-                    <div class="stat-label">Total Places</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">{{ parking.avaible_places || parking.capacity }}</div>
-                    <div class="stat-label">Available</div>
-                </div>
-            </div>
+           <div class="parking-stats">
+    <div class="stat-item">
+        <div class="stat-value">{{ parking.capacity || 0 }}</div>
+        <div class="stat-label">Total Places</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">{{ parking.avaible_places || 0 }}</div>
+        <div class="stat-label">Available</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">{{ getReservedCount(parking) || 0 }}</div>
+        <div class="stat-label">Reserved</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">{{ getOccupiedCount(parking) || 0 }}</div>
+        <div class="stat-label">Occupied</div>
+    </div>
+</div>
 
             <div class="parking-hours">
                 <span class="hours-label">Hours:</span>

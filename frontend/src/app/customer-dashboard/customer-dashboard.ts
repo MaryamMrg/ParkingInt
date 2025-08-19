@@ -92,8 +92,12 @@ const user = this.authservice.getCurrentUser();
     if (availableSpaces > 0) return 'Limited';
     return 'Full';
   }
-   logout(): void {
-    this.authservice.logout();
-    this.router.navigate(['/login']);
-  }
+   getReservedCount(parking: any): number {
+    // You'll need to add reservedPlaces to your DTO or calculate client-side
+    return parking.reserved_places || 0;
+}
+
+getOccupiedCount(parking: any): number {
+    return parking.occupied_places || 0;
+}
 }
