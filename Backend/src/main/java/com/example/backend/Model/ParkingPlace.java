@@ -1,9 +1,6 @@
 package com.example.backend.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class ParkingPlace {
@@ -15,6 +12,10 @@ public class ParkingPlace {
     private  Long number;
     private  Boolean availablty;
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "parkingId")
+    private  Parking parking;
 
     public ParkingPlace(Long placeId, Long number, Boolean availablty, Status status) {
         this.placeId = placeId;

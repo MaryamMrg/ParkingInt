@@ -1,10 +1,10 @@
 package com.example.backend.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Parking {
@@ -12,10 +12,16 @@ public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long parkingId;
+
     private String P_name;
     private Long capacity;
     private Long avaible_places;
     private String opening_hours;
+
+
+
+    @OneToMany
+    private List<ParkingPlace> places = new ArrayList<ParkingPlace>();
 
     public Parking(Long parkingId, String p_name, Long capacity, Long avaible_places, String opening_hours) {
         this.parkingId = parkingId;
