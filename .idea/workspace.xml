@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Auth/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +63,7 @@
       <workItem from="1751361977416" duration="47000" />
       <workItem from="1751362035242" duration="166000" />
       <workItem from="1755355960478" duration="2389000" />
-      <workItem from="1755809247688" duration="378000" />
+      <workItem from="1755809247688" duration="1856000" />
     </task>
     <servers />
   </component>

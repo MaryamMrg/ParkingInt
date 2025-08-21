@@ -1,25 +1,238 @@
 import { Component, OnInit } from '@angular/core';
-import { Authservice } from '../authservice';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { User,Authservice } from '../authservice';
+import { Bookingservice,Booking } from '../bookingservice';
+import { Placeservice , Place,Status } from '../placeservice';
 import { Router } from '@angular/router';
-
+interface DashboardStats {
+  totalBookings: number;
+  totalPlaces: number;
+  availablePlaces: number;
+  occupiedPlaces: number;
+  reservedPlaces: number;
+  blockedPlaces: number;
+  totalUsers: number;
+}
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [],
+  imports: [CommonModule,FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css'
 })
 export class AdminDashboard implements OnInit{
 
-  adminname : String = '';
- constructor(private authservice :Authservice, private router : Router){}
+  activeTab = 'overview';
+  currentUser: User | null = null;
+  loading = false;
+  errorMessage = '';
+  successMessage = '';
+  showAddPlaceForm = false;
 
+  // Data
+  bookings: Booking[] = [];
+  places: Place[] = [];
+  stats: DashboardStats = {
+    totalBookings: 0,
+    totalPlaces: 0,
+    availablePlaces: 0,
+    occupiedPlaces: 0,
+    reservedPlaces: 0,
+    blockedPlaces: 0,
+    totalUsers: 0
+  };
+
+  // Form data
+  newPlace: Partial<Place> = {
+    number: 0,
+    status: Status.AVAILABLE,
+    parkingId: 0
+  };
+
+  tabs = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'bookings', label: 'Bookings' },
+    { id: 'places', label: 'Places' },
+    { id: 'analytics', label: 'Analytics' }
+  ];
+
+  statusOptions = Object.values(Status);
+
+  constructor(
+    private bookingService: Bookingservice,
+    private placeService: Placeservice,
+    private authService: Authservice
+  ) {}
 
   ngOnInit(): void {
-    this.loadAdminData();
+    this.currentUser = this.authService.getCurrentUser();
+    if (!this.currentUser || this.currentUser.role !== 'ADMIN') {
+      // Redirect to login or show error
+      this.errorMessage = 'Access denied. Admin privileges required.';
+      return;
+    }
+    this.loadInitialData();
   }
 
-  loadAdminData() : void{
-    const user = this.authservice.getCurrentUser();
-    this.adminname=user?.name|| 'ADMIN'
+  async loadInitialData(): Promise<void> {
+    this.loading = true;
+    try {
+      await Promise.all([
+        this.loadBookings(),
+        this.loadPlaces()
+      ]);
+      this.calculateStats();
+    } catch (error) {
+      this.errorMessage = 'Failed to load dashboard data';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async loadBookings(): Promise<void> {
+    try {
+      this.bookingService.getAllBookings().subscribe({
+        next: (data) => {
+          this.bookings = data || [];
+          this.calculateStats();
+        },
+        error: (error) => {
+          console.error('Error loading bookings:', error);
+          this.errorMessage = 'Failed to load bookings';
+        }
+      });
+    } catch (error) {
+      console.error('Error loading bookings:', error);
+    }
+  }
+
+  async loadPlaces(): Promise<void> {
+    try {
+      this.placeService.getAllPlaces().subscribe({
+        next: (data) => {
+          this.places = data || [];
+          this.calculateStats();
+        },
+        error: (error) => {
+          console.error('Error loading places:', error);
+          this.errorMessage = 'Failed to load places';
+        }
+      });
+    } catch (error) {
+      console.error('Error loading places:', error);
+    }
+  }
+
+  calculateStats(): void {
+    this.stats = {
+      totalBookings: this.bookings.length,
+      totalPlaces: this.places.length,
+      availablePlaces: this.places.filter(p => p.status === Status.AVAILABLE).length,
+      occupiedPlaces: this.places.filter(p => p.status === Status.OCCUPIED).length,
+      reservedPlaces: this.places.filter(p => p.status === Status.RESERVED).length,
+      blockedPlaces: this.places.filter(p => p.status === Status.BLOCKED).length,
+      totalUsers: 0 // You'll need a user service to get this
+    };
+  }
+
+  setActiveTab(tabId: string): void {
+    this.activeTab = tabId;
+  }
+
+  refreshData(): void {
+    this.loadInitialData();
+    this.successMessage = 'Data refreshed successfully';
+  }
+
+  addPlace(): void {
+    if (this.newPlace.number && this.newPlace.parkingId && this.newPlace.status) {
+      this.placeService.addPlace(this.newPlace as Place).subscribe({
+        next: () => {
+          this.successMessage = 'Place added successfully';
+          this.loadPlaces();
+          this.showAddPlaceForm = false;
+          this.resetNewPlace();
+        },
+        error: (error) => {
+          console.error('Error adding place:', error);
+          this.errorMessage = 'Failed to add place';
+        }
+      });
+    }
+  }
+
+  editPlace(place: Place): void {
+    // Implement edit functionality
+    console.log('Edit place:', place);
+  }
+
+  deletePlace(id: number): void {
+    if (confirm('Are you sure you want to delete this place?')) {
+      this.placeService.deletPlace(id).subscribe({
+        next: () => {
+          this.successMessage = 'Place deleted successfully';
+          this.loadPlaces();
+        },
+        error: (error) => {
+          console.error('Error deleting place:', error);
+          this.errorMessage = 'Failed to delete place';
+        }
+      });
+    }
+  }
+
+  editBooking(booking: Booking): void {
+    // Implement edit functionality
+    console.log('Edit booking:', booking);
+  }
+
+  deleteBooking(id: number): void {
+    if (confirm('Are you sure you want to delete this booking?')) {
+      this.bookingService.deleteBooking(id).subscribe({
+        next: () => {
+          this.successMessage = 'Booking deleted successfully';
+          this.loadBookings();
+        },
+        error: (error) => {
+          console.error('Error deleting booking:', error);
+          this.errorMessage = 'Failed to delete booking';
+        }
+      });
+    }
+  }
+
+  formatTimestamp(timestamp: number): string {
+    return new Date(timestamp).toLocaleString();
+  }
+
+  getOccupancyRate(): number {
+    if (this.stats.totalPlaces === 0) return 0;
+    return Math.round((this.stats.occupiedPlaces / this.stats.totalPlaces) * 100);
+  }
+
+  getAvailabilityRate(): number {
+    if (this.stats.totalPlaces === 0) return 0;
+    return Math.round((this.stats.availablePlaces / this.stats.totalPlaces) * 100);
+  }
+
+  resetNewPlace(): void {
+    this.newPlace = {
+      number: 0,
+      status: Status.AVAILABLE,
+      parkingId: 0
+    };
+  }
+
+  logout(): void {
+    this.authService.logout();
+    // Navigate to login page
+  }
+
+  trackByBookingId(index: number, booking: any): any {
+    return booking.id || index;
+  }
+
+  trackByPlaceId(index: number, place: Place): any {
+    return place.placeId;
   }
 }

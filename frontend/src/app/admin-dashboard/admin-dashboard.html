@@ -1,15 +1,262 @@
-<div class="container mt-4">
-      <!-- Welcome Header -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="welcome-card">
-            <div>
-              <h2>
-                <div class="me-2">local_shipping</div>
-                Welcome, {{adminname}}!
-              </h2>
-              <p>Manage your delivery ads</p>
-            </div>
-        </div>
+<div class="admin-dashboard">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <div class="user-info">
+          <span>Welcome, {{ currentUser?.name }}</span>
+          <button (click)="logout()" class="logout-btn">Logout</button>
         </div>
       </div>
+
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button 
+          *ngFor="let tab of tabs" 
+          [class.active]="activeTab === tab.id"
+          (click)="setActiveTab(tab.id)"
+          class="tab-btn">
+          {{ tab.label }}
+        </button>
+      </div>
+
+      <!-- Overview Tab -->
+      <div *ngIf="activeTab === 'overview'" class="tab-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Bookings</h3>
+            <div class="stat-number">{{ stats.totalBookings }}</div>
+          </div>
+          <div class="stat-card">
+            <h3>Total Places</h3>
+            <div class="stat-number">{{ stats.totalPlaces }}</div>
+          </div>
+          <div class="stat-card available">
+            <h3>Available Places</h3>
+            <div class="stat-number">{{ stats.availablePlaces }}</div>
+          </div>
+          <div class="stat-card occupied">
+            <h3>Occupied Places</h3>
+            <div class="stat-number">{{ stats.occupiedPlaces }}</div>
+          </div>
+          <div class="stat-card reserved">
+            <h3>Reserved Places</h3>
+            <div class="stat-number">{{ stats.reservedPlaces }}</div>
+          </div>
+          <div class="stat-card blocked">
+            <h3>Blocked Places</h3>
+            <div class="stat-number">{{ stats.blockedPlaces }}</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h2>Quick Actions</h2>
+          <div class="action-buttons">
+            <button (click)="refreshData()" class="action-btn primary">
+              <i class="icon">🔄</i> Refresh Data
+            </button>
+            <button (click)="setActiveTab('places')" class="action-btn">
+              <i class="icon">🅿️</i> Manage Places
+            </button>
+            <button (click)="setActiveTab('bookings')" class="action-btn">
+              <i class="icon">📅</i> View Bookings
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings Tab -->
+      <div *ngIf="activeTab === 'bookings'" class="tab-content">
+        <div class="section-header">
+          <h2>Bookings Management</h2>
+          <button (click)="loadBookings()" class="refresh-btn">Refresh</button>
+        </div>
+        
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>User ID</th>
+                <th>Parking ID</th>
+                <th>Place ID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of bookings; trackBy: trackByBookingId">
+                <!-- <td>{{ booking.id || 'N/A' }}</td> -->
+                <td>{{ booking.userId }}</td>
+                <td>{{ booking.parkingId }}</td>
+                <td>{{ booking.placeId }}</td>
+                <td>{{ formatTimestamp(booking.startTime) }}</td>
+                <td>{{ formatTimestamp(booking.endTime) }}</td>
+                <td>
+                  <button (click)="editBooking(booking)" class="edit-btn">Edit</button>
+                  <!-- <button (click)="deleteBooking(booking.id)" class="delete-btn">Delete</button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="bookings.length === 0" class="no-data">
+            No bookings found
+          </div>
+        </div>
+      </div>
+
+      <!-- Places Tab -->
+      <div *ngIf="activeTab === 'places'" class="tab-content">
+        <div class="section-header">
+          <h2>Places Management</h2>
+          <div class="actions">
+            <button (click)="showAddPlaceForm = !showAddPlaceForm" class="add-btn">
+              {{ showAddPlaceForm ? 'Cancel' : 'Add Place' }}
+            </button>
+            <button (click)="loadPlaces()" class="refresh-btn">Refresh</button>
+          </div>
+        </div>
+
+        <!-- Add Place Form -->
+        <div *ngIf="showAddPlaceForm" class="form-container">
+          <form (ngSubmit)="addPlace()" #placeForm="ngForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="placeNumber">Place Number:</label>
+                <input 
+                  type="number" 
+                  id="placeNumber" 
+                  [(ngModel)]="newPlace.number" 
+                  name="number" 
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="parkingId">Parking ID:</label>
+                <input 
+                  type="number" 
+                  id="parkingId" 
+                  [(ngModel)]="newPlace.parkingId" 
+                  name="parkingId" 
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" [(ngModel)]="newPlace.status" name="status" required>
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of statusOptions" [value]="status">
+                    {{ status }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" [disabled]="!placeForm.form.valid" class="submit-btn">
+                Add Place
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Places Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Place ID</th>
+                <th>Number</th>
+                <th>Parking ID</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let place of places; trackBy: trackByPlaceId">
+                <td>{{ place.placeId }}</td>
+                <td>{{ place.number }}</td>
+                <td>{{ place.parkingId }}</td>
+                <td>
+                  <span [class]="'status-badge ' + place.status.toLowerCase()">
+                    {{ place.status }}
+                  </span>
+                </td>
+                <td>
+                  <button (click)="editPlace(place)" class="edit-btn">Edit</button>
+                  <button (click)="deletePlace(place.placeId)" class="delete-btn">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="places.length === 0" class="no-data">
+            No places found
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div *ngIf="activeTab === 'analytics'" class="tab-content">
+        <div class="section-header">
+          <h2>Analytics & Reports</h2>
+        </div>
+        
+        <div class="analytics-grid">
+          <div class="chart-container">
+            <h3>Place Status Distribution</h3>
+            <div class="pie-chart">
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-color available"></span>
+                  Available: {{ stats.availablePlaces }}
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color occupied"></span>
+                  Occupied: {{ stats.occupiedPlaces }}
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color reserved"></span>
+                  Reserved: {{ stats.reservedPlaces }}
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color blocked"></span>
+                  Blocked: {{ stats.blockedPlaces }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="metrics-container">
+            <h3>Key Metrics</h3>
+            <div class="metric-item">
+              <span class="metric-label">Occupancy Rate:</span>
+              <span class="metric-value">{{ getOccupancyRate() }}%</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Available Rate:</span>
+              <span class="metric-value">{{ getAvailabilityRate() }}%</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Total Capacity:</span>
+              <span class="metric-value">{{ stats.totalPlaces }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div *ngIf="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+        <button (click)="errorMessage = ''" class="close-btn">×</button>
+      </div>
+
+      <!-- Success Message -->
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+        <button (click)="successMessage = ''" class="close-btn">×</button>
+      </div>
+    </div>
