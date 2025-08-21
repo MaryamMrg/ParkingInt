@@ -1,23 +1,37 @@
 package com.example.backend.Dto;
 
 import com.example.backend.Model.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 public class UserDto {
 
+    private Long userId;
 
     private String name;
     private String email;
     private String password;
     private Role role;
 
-    public UserDto(String name, String email, String password, Role role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    public Long getUserId() {
+        return userId;
     }
 
-    public UserDto() {}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public UserDto(Role role, String password, String email, String name, Long userId) {
+        this.role = role;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.userId = userId;
+    }
+
+    public UserDto() {
+    }
 
     public String getName() {
         return name;

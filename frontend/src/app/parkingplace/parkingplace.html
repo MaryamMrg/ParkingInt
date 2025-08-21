@@ -56,15 +56,10 @@
              
             <!-- Action Buttons -->
             <div class="place-actions">
-                <!-- <button class="action-btn secondary" 
-                        (click)="viewPlaceDetails(place)">
-                    View Details
-                </button> -->
                 <button class="action-btn primary" 
                         (click)="selectPlace(place)"
                         [disabled]="!canSelectPlace(place)">
                         Reserve
-                    <!-- {{ getActionButtonText(place.status) }} -->
                 </button>
             </div>
         </div>
@@ -82,15 +77,63 @@
     </div>
 </main>
 
-
-<!-- <div class="floating-controls" *ngIf="places.length > 0">
-    <button class="control-btn" (click)="toggleFilters()">
-        🔍 Filter
-    </button>
-    <button class="control-btn" (click)="toggleSort()">
-        📊 Sort
-    </button>
-</div> -->
 <div>
      <button (click)="goBack()" class="back-btn-alt">Go Back</button>
+</div>
+
+<!-- BOOKING MODAL - Outside main content -->
+<div *ngIf="showBookingModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Reserve Parking Place</h2>
+      <button (click)="closeBookingModal()" class="close-btn">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div *ngIf="selectedPlace" class="selected-place-info">
+        <h3>Place {{ selectedPlace.number }}</h3>
+        <p>Status: {{ getStatusText(selectedPlace.status) }}</p>
+      </div>
+
+      <div class="form-group">
+        <label for="startTime">Start Time:</label>
+        <input 
+          type="time" 
+          id="startTime" 
+          [(ngModel)]="startTime" 
+          class="form-control"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="endTime">End Time:</label>
+        <input 
+          type="time" 
+          id="endTime" 
+          [(ngModel)]="endTime" 
+          class="form-control"
+          required>
+      </div>
+
+      <div *ngIf="bookingError" class="error-message">
+        {{ bookingError }}
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button 
+        (click)="closeBookingModal()" 
+        class="btn btn-secondary"
+        [disabled]="bookingInProgress">
+        Cancel
+      </button>
+      <button 
+        (click)="submitBooking()" 
+        class="btn btn-primary"
+        [disabled]="bookingInProgress">
+        <span *ngIf="bookingInProgress">Processing...</span>
+        <span *ngIf="!bookingInProgress">Confirm Booking</span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -12,6 +12,8 @@ export enum Status {
 export interface Place{
 number: number;
   status: Status;
+  placeId: number;
+  parkingId: number;
 }
 @Injectable({
   providedIn: 'root'
