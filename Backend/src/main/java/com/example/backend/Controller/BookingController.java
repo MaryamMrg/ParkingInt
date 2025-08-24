@@ -20,7 +20,7 @@ public class BookingController {
 
 
     @PostMapping
-    public BookingDto AddBooking(@RequestBody BookingDto dto){
+    public BookingDto addBooking(@RequestBody BookingDto dto){
         return bookingService.addBooking(dto);
     }
 

@@ -4,7 +4,6 @@ import com.example.backend.Dto.BookingDto;
 import com.example.backend.Model.Booking;
 import com.example.backend.mapper.BookingMapper;
 import com.example.backend.repository.BookingRepository;
-import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +13,11 @@ public class BookingService {
 
     private final BookingMapper bookingMapper;
     private final BookingRepository bookingRepository;
-    private final UserRepository userRepository;
 
-    public BookingService(BookingMapper bookingMapper, BookingRepository bookingRepository, UserRepository userRepository) {
+    public BookingService(BookingMapper bookingMapper, BookingRepository bookingRepository) {
         this.bookingMapper = bookingMapper;
         this.bookingRepository = bookingRepository;
-        this.userRepository = userRepository;
+
     }
 
     public BookingDto addBooking(BookingDto bookingDto){

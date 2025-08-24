@@ -131,7 +131,7 @@ export class AdminDashboard implements OnInit{
       occupiedPlaces: this.places.filter(p => p.status === Status.OCCUPIED).length,
       reservedPlaces: this.places.filter(p => p.status === Status.RESERVED).length,
       blockedPlaces: this.places.filter(p => p.status === Status.BLOCKED).length,
-      totalUsers: 0 // You'll need a user service to get this
+      totalUsers: 0 
     };
   }
 
@@ -162,7 +162,6 @@ export class AdminDashboard implements OnInit{
   }
 
   editPlace(place: Place): void {
-    // Implement edit functionality
     console.log('Edit place:', place);
   }
 
@@ -182,7 +181,6 @@ export class AdminDashboard implements OnInit{
   }
 
   editBooking(booking: Booking): void {
-    // Implement edit functionality
     console.log('Edit booking:', booking);
   }
 
@@ -225,7 +223,6 @@ export class AdminDashboard implements OnInit{
 
   logout(): void {
     this.authService.logout();
-    // Navigate to login page
   }
 
   trackByBookingId(index: number, booking: any): any {
