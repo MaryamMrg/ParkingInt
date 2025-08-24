@@ -43,10 +43,12 @@ export class AdminDashboard implements OnInit{
   };
 
   // Form data
-  newPlace: Partial<Place> = {
+  newPlace: Place = {
+    placeId:0,
     number: 0,
     status: Status.AVAILABLE,
     parkingId: 0
+    
   };
 
   tabs = [
@@ -145,20 +147,66 @@ export class AdminDashboard implements OnInit{
   }
 
   addPlace(): void {
-    if (this.newPlace.number && this.newPlace.parkingId && this.newPlace.status) {
-      this.placeService.addPlace(this.newPlace as Place).subscribe({
-        next: () => {
-          this.successMessage = 'Place added successfully';
-          this.loadPlaces();
-          this.showAddPlaceForm = false;
-          this.resetNewPlace();
-        },
-        error: (error) => {
-          console.error('Error adding place:', error);
-          this.errorMessage = 'Failed to add place';
-        }
-      });
+
+   // Clear previous messages
+  this.successMessage = '';
+  this.errorMessage = '';
+
+  // Validate form data
+  if (!this.newPlace.number || this.newPlace.number <= 0) {
+    this.errorMessage = 'Please enter a valid place number';
+    return;
+  }
+
+  if (!this.newPlace.parkingId || this.newPlace.parkingId <= 0) {
+    this.errorMessage = 'Please enter a valid parking ID';
+    return;
+  }
+
+  if (!this.newPlace.status) {
+    this.errorMessage = 'Please select a status';
+    return;
+  }
+
+  this.loading = true;
+
+ 
+  const placeToAdd: Place = {
+    placeId: 0, 
+    number: this.newPlace.number,
+    status: this.newPlace.status,
+    parkingId: this.newPlace.parkingId
+  };
+
+  this.placeService.addPlace(placeToAdd).subscribe({
+    next: (response) => {
+      console.log('Place created successfully:', response);
+      this.successMessage = 'Place created successfully!';
+      this.showAddPlaceForm = false;
+      this.resetNewPlace();
+      this.loadPlaces(); 
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error adding place:', error);
+      this.errorMessage = error.error?.message || 'Failed to add place';
+      this.loading = false;
     }
+  });
+    // if (this.newPlace.number && this.newPlace.parkingId && this.newPlace.status) {
+    //   this.placeService.addPlace(this.newPlace as Place).subscribe({
+    //     next: () => {
+    //       this.successMessage = 'Place added successfully';
+    //       this.loadPlaces();
+    //       this.showAddPlaceForm = false;
+    //       this.resetNewPlace();
+    //     },
+    //     error: (error) => {
+    //       console.error('Error adding place:', error);
+    //       this.errorMessage = 'Failed to add place';
+    //     }
+    //   });
+    // }
   }
 
   editPlace(place: Place): void {
@@ -215,6 +263,7 @@ export class AdminDashboard implements OnInit{
 
   resetNewPlace(): void {
     this.newPlace = {
+      placeId:0,
       number: 0,
       status: Status.AVAILABLE,
       parkingId: 0

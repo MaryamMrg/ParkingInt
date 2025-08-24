@@ -35,8 +35,8 @@ export class Placeservice {
     return this.http.get<any>(`${this.apiUrl}/all`,{headers:this.getAuthHeader()})
   }
 
-  addPlace(place:Place){
-    return this.http.post<Place>(`${this.apiUrl}/add`,{headers:this.getAuthHeader()})
+  addPlace(place:Place) : Observable<Place>{
+    return this.http.post<Place>(`${this.apiUrl}/add`,place,{headers:this.getAuthHeader()})
   }
 
   updatePlace(id:number,place:Place){

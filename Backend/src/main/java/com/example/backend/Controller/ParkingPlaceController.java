@@ -19,7 +19,7 @@ public class ParkingPlaceController {
 
 
     @PostMapping("/add")
-    public ParkingPlaceDto addplace(@RequestBody ParkingPlaceDto dto){
+    public ParkingPlaceDto addPlace(@RequestBody ParkingPlaceDto dto){
         return parkingPlaceService.addPlace(dto);
     }
 
