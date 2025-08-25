@@ -32,6 +32,9 @@ public class BookingService {
         return bookingMapper.toDtos(bookings);
     }
 
+    public List<Booking> findBookingByUserId(Long Id){
+        return bookingRepository.findByUserId(Id);
+    }
     public BookingDto updateBooking(BookingDto dto,Long id){
         Booking booking =bookingRepository.findById(id).orElseThrow(()->new RuntimeException("not found"));
         booking.setEndTime(dto.getEndTime());
