@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Booking{
+  id?:number,
   userId: number,
   parkingId: number,
   placeId: number,
