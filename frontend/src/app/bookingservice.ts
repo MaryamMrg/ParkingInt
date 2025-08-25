@@ -31,6 +31,10 @@ export class Bookingservice {
   return this.http.get<any>(`${this.apiUrl}/all`,{headers : this.getAuthHeader()});
  }
 
+ getMyBookings(userId:number):Observable<Booking[]>{
+  return this.http.get<Booking[]>(`${this.apiUrl}/myBookings/${userId}`,{headers:this.getAuthHeader()})
+
+ }
  addBooking(booking: Booking):Observable<Booking>{
   return this.http.post<Booking>(this.apiUrl,booking,{headers:this.getAuthHeader()});
 
