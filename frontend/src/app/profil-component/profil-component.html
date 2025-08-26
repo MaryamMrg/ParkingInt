@@ -24,21 +24,29 @@
       </div>
 
       <div class="profile-actions">
-        <button 
+        <!-- <button 
           class="btn-secondary" 
           (click)="navigateToBookings()"
-          *ngIf="currentUser?.role === 'USER'">
+          *ngIf="currentUser?.role === 'CUSTOMER'">
           My Bookings
         </button>
+         -->
         <button 
           class="btn-secondary" 
           (click)="navigateToBookings()"
           *ngIf="currentUser?.role === 'ADMIN'">
           Admin Dashboard
         </button>
+          <button 
+          class="btn-secondary" 
+          (click)="navigateToBookings()"
+          *ngIf="currentUser?.role === 'CUSTOMER'">
+          CUSTOMER Dashboard
+        </button>
         <button class="btn-outline" (click)="logout()">
           Logout
         </button>
+       
       </div>
     </div>
 

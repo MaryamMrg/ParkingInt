@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Authservice, User } from '../authservice';
+import { RouterLink } from '@angular/router';
 export interface UpdateProfileRequest {
   name: string;
   email: string;
@@ -16,7 +17,7 @@ export interface ChangePasswordRequest {
 
 @Component({
   selector: 'app-profil-component',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './profil-component.html',
   styleUrl: './profil-component.css'
 })
@@ -296,13 +297,14 @@ export class ProfilComponent implements OnInit{
   }
 
   navigateToBookings(): void {
-    if (this.currentUser?.role === 'USER') {
-      this.router.navigate(['/customer-dashboard']);
+    if (this.currentUser?.role === 'CUSTOMER') {
+      this.router.navigate(['/customer-Dash']);
     } else if (this.currentUser?.role === 'ADMIN') {
       this.router.navigate(['/admin-dashboard']);
     }
   }
 
+  
   logout(): void {
     this.authservice.logout();
     this.router.navigate(['/login']);
