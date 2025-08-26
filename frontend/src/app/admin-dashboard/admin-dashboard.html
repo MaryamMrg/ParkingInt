@@ -192,8 +192,43 @@
             No places found
           </div>
         </div>
-      </div>
 
+
+          
+      </div>
+<div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>user ID</th>
+                <th>userName</th>
+                <th>email</th>
+                <th>role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users; trackBy: trackByUserId">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name}}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <!-- <td>
+                  <span [class]="'status-badge ' + user.status.toLowerCase()">
+                    {{ place.status }}
+                  </span>
+                </td> -->
+                <td>
+                  <button class="edit-btn">Edit</button>
+                  <button  class="delete-btn">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="users.length === 0" class="no-data">
+            No places found
+          </div>
+        </div>
       <!-- Analytics Tab -->
       <div *ngIf="activeTab === 'analytics'" class="tab-content">
         <div class="section-header">

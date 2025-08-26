@@ -57,7 +57,8 @@ users:User[]=[];
     { id: 'overview', label: 'Overview' },
     { id: 'bookings', label: 'Bookings' },
     { id: 'places', label: 'Places' },
-    { id: 'analytics', label: 'Analytics' }
+    { id: 'analytics', label: 'Analytics' },
+    { id: 'users', label: 'users' }
   ];
 
   statusOptions = Object.values(Status);
@@ -297,5 +298,8 @@ users:User[]=[];
 
   trackByPlaceId(index: number, place: Place): any {
     return place.placeId;
+  }
+  trackByUserId(index:number,user:User):any{
+    return user.id;
   }
 }
