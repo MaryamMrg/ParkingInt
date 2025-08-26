@@ -5,6 +5,8 @@ import { User,Authservice } from '../authservice';
 import { Bookingservice,Booking } from '../bookingservice';
 import { Placeservice , Place,Status } from '../placeservice';
 import { Router } from '@angular/router';
+import { Userservice } from '../userservice';
+import { P } from '@angular/cdk/keycodes';
 interface DashboardStats {
   totalBookings: number;
   totalPlaces: number;
@@ -28,7 +30,7 @@ export class AdminDashboard implements OnInit{
   errorMessage = '';
   successMessage = '';
   showAddPlaceForm = false;
-
+users:User[]=[];
   // Data
   bookings: Booking[] = [];
   places: Place[] = [];
@@ -60,7 +62,7 @@ export class AdminDashboard implements OnInit{
 
   statusOptions = Object.values(Status);
 
-  constructor(
+  constructor(private userservice:Userservice,
     private bookingService: Bookingservice,
     private placeService: Placeservice,
     private authService: Authservice
@@ -74,6 +76,7 @@ export class AdminDashboard implements OnInit{
       return;
     }
     this.loadInitialData();
+    this.loadUsers();
   }
 
   async loadInitialData(): Promise<void> {
@@ -90,7 +93,21 @@ export class AdminDashboard implements OnInit{
       this.loading = false;
     }
   }
+ 
 
+  loadUsers():void{
+
+    this.errorMessage='';
+    this.loading=true;
+   this.userservice.getAllUsers().subscribe({
+    next : (users)=>{
+      console.log('recieved users :',users);
+
+      this.users=users;
+      this.loading=false;
+    }
+   })
+  }
   async loadBookings(): Promise<void> {
     try {
       this.bookingService.getAllBookings().subscribe({
@@ -133,7 +150,7 @@ export class AdminDashboard implements OnInit{
       occupiedPlaces: this.places.filter(p => p.status === Status.OCCUPIED).length,
       reservedPlaces: this.places.filter(p => p.status === Status.RESERVED).length,
       blockedPlaces: this.places.filter(p => p.status === Status.BLOCKED).length,
-      totalUsers: 0 
+      totalUsers: this.users.length
     };
   }
 
