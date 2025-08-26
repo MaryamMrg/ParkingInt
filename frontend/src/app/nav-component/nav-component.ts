@@ -56,7 +56,9 @@ this.router.navigate(['/login']);
 goToRegister(){
   this.router.navigate(['/signup'])
 }
-
+goToProfil(){
+  this.router.navigate(['/profil'])
+}
 
   logout() {
     this.authservice.logout();

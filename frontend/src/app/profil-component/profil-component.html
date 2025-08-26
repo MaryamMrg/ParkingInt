@@ -1,1 +1,248 @@
-<p>profil-component works!</p>
+<div class="profile-container">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Profile Content -->
+  <div *ngIf="!loading" class="profile-content">
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <div class="avatar-circle">
+          {{ getInitials() }}
+        </div>
+      </div>
+      
+      <div class="profile-info">
+        <h1 class="profile-name">{{ currentUser?.name }}</h1>
+        <div class="profile-email">{{ currentUser?.email }}</div>
+        <span class="role-badge" [ngClass]="getRoleBadgeClass()">
+          {{ currentUser?.role }}
+        </span>
+      </div>
+
+      <div class="profile-actions">
+        <button 
+          class="btn-secondary" 
+          (click)="navigateToBookings()"
+          *ngIf="currentUser?.role === 'USER'">
+          My Bookings
+        </button>
+        <button 
+          class="btn-secondary" 
+          (click)="navigateToBookings()"
+          *ngIf="currentUser?.role === 'ADMIN'">
+          Admin Dashboard
+        </button>
+        <button class="btn-outline" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <!-- Profile Stats (for customers) -->
+    <div *ngIf="currentUser?.role === 'USER'" class="profile-stats">
+      <h2>Account Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">{{ profileStats.totalBookings }}</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ profileStats.activeBookings }}</div>
+          <div class="stat-label">Active Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ profileStats.completedBookings }}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Member Since</div>
+          <div class="stat-value">{{ profileStats.memberSince }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Management Sections -->
+    <div class="profile-sections">
+      <!-- Personal Information Section -->
+      <div class="section-card">
+        <div class="section-header">
+          <h3>Personal Information</h3>
+          <button 
+            *ngIf="!isEditingProfile" 
+            class="btn-primary btn-small"
+            (click)="startEditProfile()">
+            Edit Profile
+          </button>
+        </div>
+
+        <!-- View Mode -->
+        <div *ngIf="!isEditingProfile" class="profile-details">
+          <div class="detail-row">
+            <label>Full Name:</label>
+            <span>{{ currentUser?.name }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Email Address:</label>
+            <span>{{ currentUser?.email }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Role:</label>
+            <span>{{ currentUser?.role }}</span>
+          </div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="isEditingProfile" class="edit-form">
+          <form (ngSubmit)="updateProfile()">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                [(ngModel)]="profileForm.name"
+                name="name"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                [(ngModel)]="profileForm.email"
+                name="email"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" [disabled]="loading">
+                Save Changes
+              </button>
+              <button 
+                type="button" 
+                class="btn-secondary" 
+                (click)="cancelEditProfile()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div class="section-card">
+        <div class="section-header">
+          <h3>Security</h3>
+          <button 
+            *ngIf="!isChangingPassword" 
+            class="btn-primary btn-small"
+            (click)="startChangePassword()">
+            Change Password
+          </button>
+        </div>
+
+        <!-- View Mode -->
+        <div *ngIf="!isChangingPassword" class="profile-details">
+          <div class="detail-row">
+            <label>Password:</label>
+            <span>••••••••</span>
+          </div>
+          <div class="detail-row">
+            <label>Last Updated:</label>
+            <span>Not available</span>
+          </div>
+        </div>
+
+        <!-- Change Password Form -->
+        <div *ngIf="isChangingPassword" class="edit-form">
+          <form (ngSubmit)="changePassword()">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                [(ngModel)]="passwordForm.currentPassword"
+                name="currentPassword"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                [(ngModel)]="passwordForm.newPassword"
+                name="newPassword"
+                class="form-input"
+                required
+                minlength="6"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                [(ngModel)]="passwordForm.confirmPassword"
+                name="confirmPassword"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" [disabled]="loading">
+                Change Password
+              </button>
+              <button 
+                type="button" 
+                class="btn-secondary" 
+                (click)="cancelChangePassword()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Danger Zone (Account Deletion) -->
+      <div class="section-card danger-zone">
+        <div class="section-header">
+          <h3>Danger Zone</h3>
+        </div>
+        
+        <div class="profile-details">
+          <div class="detail-row">
+            <div>
+              <strong>Delete Account</strong>
+              <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+            </div>
+            <button class="btn-danger" (click)="deleteAccount()">
+              Delete Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

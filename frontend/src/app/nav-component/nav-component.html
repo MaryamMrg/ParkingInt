@@ -35,12 +35,17 @@
           <button (click)="goToRegister()" class="signup-btn">
             Signup
           </button>
+         
+          
         </ng-container>
         
         <ng-template #userControls>
           <span class="me-2">Welcome, {{currentUser?.name}}</span>
           <button (click)="logout()" mat-stroked-button class="logout-btn">
             Logout
+          </button>
+           <button (click)="goToProfil()" class="profil-btn">
+            Profil
           </button>
         </ng-template>
       </div>
