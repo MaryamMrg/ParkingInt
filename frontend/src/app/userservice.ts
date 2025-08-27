@@ -7,6 +7,7 @@ export interface User {
   name: string;
   role: string;
   email: string;
+  userId?: number;
 }
 export interface UpdateProfileRequest {
   id: number;

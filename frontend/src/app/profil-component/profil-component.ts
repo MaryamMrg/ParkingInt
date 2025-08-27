@@ -10,6 +10,7 @@ export interface UpdateProfileRequest {
   name: string;
   role: string;
   email: string;
+  userId?: number;
 }
 
 export interface ChangePasswordRequest {
@@ -65,7 +66,8 @@ export class ProfilComponent implements OnInit{
   
   loadUserProfile(): void {
     this.currentUser = this.authservice.getCurrentUser();
-    
+    console.log("user " ,this.currentUser);
+    console.log("user id :", this.currentUser?.id)
     if (!this.currentUser) {
       this.router.navigate(['/login']);
       return;
@@ -126,7 +128,9 @@ export class ProfilComponent implements OnInit{
     return;
   }
 
-  if (!this.currentUser?.id) {
+    const userId = this.currentUser?.id || this.currentUser?.userId;
+
+  if (!userId) {
     this.errorMessage = 'User ID not found';
     return;
   }
@@ -134,10 +138,10 @@ export class ProfilComponent implements OnInit{
   this.loading = true;
   this.clearMessages();
   
-  this.userservice.updateUser(this.currentUser.id, this.profileForm).subscribe({
+  this.userservice.updateUser(userId, this.profileForm).subscribe({
     next: (response) => {
       // Option 1: If your backend returns the updated user directly
-      if (response.id) {
+      if (response.id ) {
         this.currentUser = response;
       } 
       // Option 2: If your backend returns a response object with user property

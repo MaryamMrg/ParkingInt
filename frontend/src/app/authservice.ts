@@ -7,6 +7,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role: "USER";
+  userId?: number;
 }
 
 export interface LoginResponse {
@@ -20,6 +21,7 @@ export interface User {
   name: string;
   role: string;
   email: string;
+  userId?: number;
 }
 
 @Injectable({
