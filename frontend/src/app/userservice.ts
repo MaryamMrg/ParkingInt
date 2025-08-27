@@ -8,7 +8,12 @@ export interface User {
   role: string;
   email: string;
 }
-
+export interface UpdateProfileRequest {
+  id: number;
+  name: string;
+  role: string;
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +40,12 @@ export class Userservice {
     return this.http.delete(`${this.apiUrl}/${id}`,{headers:this.getAuthHeader()});
   }
 
-  updateUser(id:number,user:User){
-    return this.http.put<User>(`${this.apiUrl}/update/${id}`,user,{headers:this.getAuthHeader()});
+  updateUser(id: number | undefined, user: UpdateProfileRequest): Observable<any> {
+    if (!id) {
+      throw new Error('User ID is required');
+    }
+    return this.http.put<any>(`${this.apiUrl}/update/${id}`, user, { headers: this.getAuthHeader() });
   }
+  
 
 }

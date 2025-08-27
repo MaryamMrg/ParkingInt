@@ -4,8 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Authservice, User } from '../authservice';
 import { RouterLink } from '@angular/router';
+import { Userservice } from '../userservice';
 export interface UpdateProfileRequest {
+  id: number;
   name: string;
+  role: string;
   email: string;
 }
 
@@ -31,8 +34,10 @@ export class ProfilComponent implements OnInit{
    // Edit profile form
   isEditingProfile = false;
   profileForm: UpdateProfileRequest = {
+    id: 0,
     name: '',
-    email: ''
+    role:'',
+    email:''
   };
 
   // Change password form
@@ -51,7 +56,7 @@ export class ProfilComponent implements OnInit{
     memberSince: ''
   };
 
-  constructor(private authservice :Authservice, private router:Router){}
+  constructor(private authservice :Authservice, private router:Router,private userservice:Userservice){}
   ngOnInit(): void {
     this.loadUserProfile();
   }
@@ -69,7 +74,10 @@ export class ProfilComponent implements OnInit{
     // Initialize form with current user data
     this.profileForm = {
       name: this.currentUser.name,
-      email: this.currentUser.email
+      email: this.currentUser.email,
+       id: this.currentUser.id,
+       role: this.currentUser.role
+ 
     };
 
     // Calculate member since date (you might want to add this to your User interface)
@@ -105,62 +113,64 @@ export class ProfilComponent implements OnInit{
     if (this.currentUser) {
       this.profileForm = {
         name: this.currentUser.name,
-        email: this.currentUser.email
+        email: this.currentUser.email,
+         id: this.currentUser.id,
+       role: this.currentUser.role
       };
     }
     this.clearMessages();
   }
 
-  updateProfile(): void {
-    if (!this.validateProfileForm()) {
-      return;
-    }
+ updateProfile(): void {
+  if (!this.validateProfileForm()) {
+    return;
+  }
 
-    this.loading = true;
-    this.clearMessages();
+  if (!this.currentUser?.id) {
+    this.errorMessage = 'User ID not found';
+    return;
+  }
 
-    // Note: You'll need to implement this endpoint in your backend and service
-    // For now, this is a placeholder implementation
-    console.log('Updating profile with:', this.profileForm);
-    
-    // Simulate API call
-    setTimeout(() => {
-      try {
-        // Update local user data
+  this.loading = true;
+  this.clearMessages();
+  
+  this.userservice.updateUser(this.currentUser.id, this.profileForm).subscribe({
+    next: (response) => {
+      // Option 1: If your backend returns the updated user directly
+      if (response.id) {
+        this.currentUser = response;
+      } 
+      // Option 2: If your backend returns a response object with user property
+      else if (response.user) {
+        this.currentUser = response.user;
+      }
+      // Option 3: If backend just returns success, update locally
+      else {
         if (this.currentUser) {
           this.currentUser.name = this.profileForm.name;
           this.currentUser.email = this.profileForm.email;
-          
-          // Update localStorage
-          localStorage.setItem('user', JSON.stringify(this.currentUser));
-          
-          // Update auth service
-          this.authservice['currentUserSubject'].next(this.currentUser);
+          this.currentUser.role = this.profileForm.role;
         }
-
-        this.successMessage = 'Profile updated successfully!';
-        this.isEditingProfile = false;
-        this.loading = false;
-      } catch (error) {
-        this.errorMessage = 'Failed to update profile. Please try again.';
-        this.loading = false;
       }
-    }, 1000);
 
-    // TODO: Replace with actual HTTP call
-    // this.authService.updateProfile(this.profileForm).subscribe({
-    //   next: (response) => {
-    //     this.currentUser = response.user;
-    //     this.successMessage = 'Profile updated successfully!';
-    //     this.isEditingProfile = false;
-    //     this.loading = false;
-    //   },
-    //   error: (error) => {
-    //     this.errorMessage = 'Failed to update profile. Please try again.';
-    //     this.loading = false;
-    //   }
-    // });
-  }
+      // Update localStorage and auth service
+      if (this.currentUser) {
+        localStorage.setItem('user', JSON.stringify(this.currentUser));
+        // Update auth service current user
+        this.authservice.setCurrentUser(this.currentUser); // You may need to add this method
+      }
+
+      this.successMessage = 'Profile updated successfully!';
+      this.isEditingProfile = false;
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Update profile error:', error);
+      this.errorMessage = error.error?.message || 'Failed to update profile. Please try again.';
+      this.loading = false;
+    }
+  });
+}
 
   startChangePassword(): void {
     this.isChangingPassword = true;

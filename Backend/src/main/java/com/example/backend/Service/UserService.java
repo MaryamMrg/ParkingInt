@@ -32,8 +32,11 @@ public class UserService {
         }
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userMapper.toDto(user);
+        if (userDto.getPassword() != null && !userDto.getPassword().trim().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+        User savedUser= userRepository.save(user);
+        return userMapper.toDto(savedUser);
     }
 
     public void deleteUser(Long id) {
