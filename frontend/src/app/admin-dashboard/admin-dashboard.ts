@@ -6,10 +6,12 @@ import { Bookingservice,Booking } from '../bookingservice';
 import { Placeservice , Place,Status } from '../placeservice';
 import { Router } from '@angular/router';
 import { Userservice } from '../userservice';
-import { P } from '@angular/cdk/keycodes';
+
+import { Parking,Parkingservice } from '../parkingservice';
 interface DashboardStats {
   totalBookings: number;
   totalPlaces: number;
+   totalParkings:number;
   availablePlaces: number;
   occupiedPlaces: number;
   reservedPlaces: number;
@@ -34,9 +36,11 @@ users:User[]=[];
   // Data
   bookings: Booking[] = [];
   places: Place[] = [];
+   parkings: Parking[] = [];
   stats: DashboardStats = {
     totalBookings: 0,
     totalPlaces: 0,
+    totalParkings:0,
     availablePlaces: 0,
     occupiedPlaces: 0,
     reservedPlaces: 0,
@@ -58,7 +62,8 @@ users:User[]=[];
     { id: 'bookings', label: 'Bookings' },
     { id: 'places', label: 'Places' },
     { id: 'analytics', label: 'Analytics' },
-    { id: 'users', label: 'users' }
+    { id: 'users', label: 'users' },
+    { id: 'Parkings', label: 'Parkings' }
   ];
 
   statusOptions = Object.values(Status);
@@ -66,7 +71,7 @@ users:User[]=[];
   constructor(private userservice:Userservice,
     private bookingService: Bookingservice,
     private placeService: Placeservice,
-    private authService: Authservice
+    private authService: Authservice,private parkingservice:Parkingservice
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +83,7 @@ users:User[]=[];
     }
     this.loadInitialData();
     this.loadUsers();
+    this.loadParkings();
   }
 
   async loadInitialData(): Promise<void> {
@@ -109,6 +115,29 @@ users:User[]=[];
     }
    })
   }
+   loadParkings(): void {
+    this.errorMessage = '';
+    this.loading = true;
+
+    this.parkingservice.getAllPArkings().subscribe({
+      next: (parkings) => {
+        console.log('parking received:', parkings);
+        
+        parkings.forEach((parking: Parking) => {
+          console.log(`Parking: ${parking.p_name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
+        });
+        this.parkings = parkings;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.log('error fetching parkings:', error);
+        this.errorMessage = 'Failed to load parking locations';
+        this.loading = false;
+      }
+    });
+  }
+
+
   async loadBookings(): Promise<void> {
     try {
       this.bookingService.getAllBookings().subscribe({
@@ -151,7 +180,8 @@ users:User[]=[];
       occupiedPlaces: this.places.filter(p => p.status === Status.OCCUPIED).length,
       reservedPlaces: this.places.filter(p => p.status === Status.RESERVED).length,
       blockedPlaces: this.places.filter(p => p.status === Status.BLOCKED).length,
-      totalUsers: this.users.length
+      totalUsers: this.users.length,
+      totalParkings:this.parkings.length
     };
   }
 
@@ -301,5 +331,8 @@ users:User[]=[];
   }
   trackByUserId(index:number,user:User):any{
     return user.id;
+  }
+   trackByParkingId(index:number,parking:Parking):any{
+    return parking.parking_Id;
   }
 }

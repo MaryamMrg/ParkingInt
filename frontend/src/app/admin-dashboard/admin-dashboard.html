@@ -196,6 +196,12 @@
 
           
       </div>
+
+       <div *ngIf="activeTab === 'users'" class="tab-content">
+        <div class="section-header">
+          <h2>users</h2>
+        </div>
+        
 <div class="table-container">
           <table class="data-table">
             <thead>
@@ -226,8 +232,9 @@
             </tbody>
           </table>
           <div *ngIf="users.length === 0" class="no-data">
-            No places found
+            No users found
           </div>
+        </div>
         </div>
       <!-- Analytics Tab -->
       <div *ngIf="activeTab === 'analytics'" class="tab-content">
@@ -277,7 +284,49 @@
           </div>
         </div>
       </div>
-
+<div *ngIf="activeTab === 'Parkings'" class="tab-content">
+        <div class="section-header">
+          <h2>Parkings</h2>
+        </div>
+        
+<div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>parking ID</th>
+                <th>parking Name</th>
+                <th>capacity</th>
+                <th>opening_hours</th>
+                <th>available Places<th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parking of parkings; trackBy: trackByParkingId">
+                <td>{{ parking.parking_Id }}</td>
+                <td>{{ parking.p_name}}</td>
+                <td>{{ parking.capacity }}</td>
+                <td>{{ parking.opening_hours }}</td>
+                <td>{{ parking.avaible_places }}</td>
+                <!-- <td>
+                  <span [class]="'status-badge ' + user.status.toLowerCase()">
+                    {{ place.status }}
+                  </span>
+                </td> -->
+                <td>
+                  <button class="edit-btn">Edit</button>
+                  <button  class="delete-btn">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="parkings.length===0" class="no-data">
+            No parking  found
+          </div>
+        </div>
+        </div>
+      
+        
       <!-- Loading Overlay -->
       <div *ngIf="loading" class="loading-overlay">
         <div class="loading-spinner"></div>
