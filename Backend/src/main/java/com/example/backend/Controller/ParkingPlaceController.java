@@ -28,6 +28,11 @@ public class ParkingPlaceController {
         return parkingPlaceService.getAllPlaces();
     }
 
+    @GetMapping("placeBypName")
+    public List<ParkingPlaceDto> getPlacesByP_name(@RequestParam String name){
+        return parkingPlaceService.getPlacesByP_name(name);
+    }
+
     @PutMapping("/update/{id}")
     public ParkingPlaceDto updatePlace(@RequestBody ParkingPlaceDto dto,@PathVariable Long id){
         return parkingPlaceService.updatePlace(dto,id);

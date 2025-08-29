@@ -32,6 +32,7 @@ export class AdminDashboard implements OnInit{
   errorMessage = '';
   successMessage = '';
   showAddPlaceForm = false;
+  showAddParkingForm=false;
 users:User[]=[];
   // Data
   bookings: Booking[] = [];

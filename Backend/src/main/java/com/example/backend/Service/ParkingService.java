@@ -38,7 +38,7 @@ public class ParkingService {
                 .orElseThrow(() -> new RuntimeException("Parking not found with id: " + parkingId));
 
         // Update only the fields that should be manually updated
-        existingParking.setP_name(parkingDto.getP_name());
+        existingParking.setName(parkingDto.getName());
         existingParking.setOpening_hours(parkingDto.getOpening_hours());
 
 

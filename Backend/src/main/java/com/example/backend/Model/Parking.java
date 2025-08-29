@@ -17,7 +17,7 @@ public class Parking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long parkingId;
 
-    private String P_name;
+    private String name;
 
 //    private Long avaible_places;
 
@@ -52,12 +52,13 @@ public class Parking {
         this.opening_hours = opening_hours;
     }
 
-    public String getP_name() {
-        return P_name;
+
+    public String getName() {
+        return name;
     }
 
-    public void setP_name(String p_name) {
-        P_name = p_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getCapacity() {

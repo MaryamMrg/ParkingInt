@@ -59,6 +59,11 @@ public class ParkingPlaceService {
         List<ParkingPlace> places = parkingPlaceRepository.findAll();
         return parkingPlaceMapper.toDtos(places);
     }
+
+    public List<ParkingPlaceDto> getPlacesByP_name(String p_name){
+        List<ParkingPlace> places = parkingPlaceRepository.findByParking_Name(p_name);
+        return parkingPlaceMapper.toDtos(places);
+    }
     public ParkingPlaceDto updatePlace(ParkingPlaceDto dto,Long id){
         ParkingPlace place = parkingPlaceRepository.findById(id).orElseThrow(()->new RuntimeException("place not found"));
         place.setAvailablty(dto.getAvailablty());
