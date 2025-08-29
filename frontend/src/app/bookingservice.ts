@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface Booking{
   id?:number,
-  userId: number,
+  userId?: number,
   parkingId: number,
   placeId: number,
   startTime: number,

@@ -230,68 +230,59 @@ submitBooking(): void {
   this.bookingInProgress = true;
   this.bookingError = '';
 
-  const bookingData: Booking = {
-    userId: this.getUserId(), 
-    parkingId: this.selectedPlace.parkingId,
-    placeId: this.selectedPlace.placeId,
-    startTime: startTimestamp,
-    endTime: endTimestamp
-  };
+  try {
+    const bookingData: Booking = {
+      userId: this.getUserId(), // This should now work correctly
+      parkingId: this.selectedPlace.parkingId,
+      placeId: this.selectedPlace.placeId,
+      startTime: startTimestamp,
+      endTime: endTimestamp
+    };
 
-  console.log('Submitting booking:', bookingData);
+    console.log('Submitting booking:', bookingData);
 
-  // ERROR HANDLING GOES RIGHT HERE IN THE SUBSCRIBE CALL
-  this.booking.addBooking(bookingData).subscribe({
-    next: (response) => {
-      console.log('Booking successful:', response);
-      alert('Booking created successfully!');
-      this.closeBookingModal();
-      this.bookingInProgress = false;
-      this.loadPlaces();
-    },
-    error: (error) => {
-      // === PUT ERROR HANDLING CODE HERE ===
-      console.error('Booking failed - full error:', error);
-      console.error('Error response body:', error.error);
-      console.error('Error status:', error.status);
-      
-      // Show the actual error message from backend
-      if (error.error) {
-        console.error('Backend error message:', error.error);
-        // Try to extract the error message in different formats
-        this.bookingError = error.error.message || 
-                           error.error.error || 
-                           JSON.stringify(error.error);
-      } else {
-        this.bookingError = 'Booking failed. Please try again.';
+    this.booking.addBooking(bookingData).subscribe({
+      next: (response) => {
+        console.log('Booking successful:', response);
+        alert('Booking created successfully!');
+        this.closeBookingModal();
+        this.bookingInProgress = false;
+        this.loadPlaces();
+      },
+      error: (error) => {
+        console.error('Booking failed - full error:', error);
+        
+        if (error.error) {
+          this.bookingError = error.error.message || 
+                             error.error.error || 
+                             JSON.stringify(error.error);
+        } else {
+          this.bookingError = 'Booking failed. Please try again.';
+        }
+        
+        this.bookingInProgress = false;
       }
-      
-      this.bookingInProgress = false;
-      // === END ERROR HANDLING CODE ===
-    }
-  });
+    });
+  } catch (error) {
+    this.bookingError = (error as Error).message;
+    this.bookingInProgress = false;
+  }
 }
+
 private getUserId(): number {
   const user = this.authservice.getCurrentUser();
-  console.log('Current user:', user);
   
   if (!user) {
     throw new Error('User not authenticated');
   }
   
-  // Map email to numeric ID - you need to get the actual user ID from your backend
-  const emailToIdMap: {[email: string]: number} = {
-    'azoz@gmail.com': 1,
-    'khadija@gmail.com': 2
-    // Add other users as needed
-  };
-  
-  if (user.email && emailToIdMap[user.email]) {
-    return emailToIdMap[user.email];
+  if (!user.userId) {
+    throw new Error('User ID not found');
   }
   
-  throw new Error('User ID not found for email: ' + user.email);
+  return user.userId; 
 }
+
   closeBookingModal(): void {
     this.showBookingModal = false;
     this.selectedPlace = null;
