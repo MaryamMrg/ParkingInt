@@ -3,15 +3,8 @@ package com.example.backend.Controller;
 
 import com.example.backend.Dto.BookingDto;
 import com.example.backend.Model.Booking;
-import com.example.backend.Model.User;
 import com.example.backend.Service.BookingService;
-import com.example.backend.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +15,9 @@ import java.util.List;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final UserRepository userRepository;
 
-    public BookingController(BookingService bookingService, UserRepository userRepository) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.userRepository = userRepository;
     }
 
 
