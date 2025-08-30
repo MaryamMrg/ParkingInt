@@ -34,7 +34,9 @@ export class Placeservice {
   getAllPlaces():Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/all`,{headers:this.getAuthHeader()})
   }
-
+ getPlacesByµParkingNAme():Observable<any>{
+  return this.http.get<any>(`${this.apiUrl}/placeByName`,{headers:this.getAuthHeader()})
+ }
   addPlace(place:Place) : Observable<Place>{
     return this.http.post<Place>(`${this.apiUrl}/add`,place,{headers:this.getAuthHeader()})
   }
