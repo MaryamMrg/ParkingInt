@@ -57,7 +57,14 @@ users:User[]=[];
     parkingId: 0
     
   };
+newParking : Parking={
+  parking_Id:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
 
+}
   tabs = [
     { id: 'overview', label: 'Overview' },
     { id: 'bookings', label: 'Bookings' },
@@ -257,7 +264,34 @@ users:User[]=[];
     //   });
     // }
   }
+addParking():void{
+   this.successMessage = '';
+  this.errorMessage = '';
 
+  const parkingToAdd: Parking = {
+    parking_Id: 0, 
+    name: this.newParking.name,
+    capacity: this.newParking.capacity,
+    opening_hours: this.newParking.opening_hours,
+    avaible_places:this.newParking.avaible_places
+  };
+
+  this.parkingservice.createParking(parkingToAdd).subscribe({
+    next: (response) => {
+      console.log('Parking created successfully:', response);
+      this.successMessage = 'Parking created successfully!';
+      this.showAddParkingForm = false;
+      this.resetNewPartking();
+      this.loadParkings 
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error adding parking:', error);
+      this.errorMessage = error.error?.message || 'Failed to add parking';
+      this.loading = false;
+    }
+  });
+}
   editPlace(place: Place): void {
     console.log('Edit place:', place);
   }
@@ -318,7 +352,15 @@ users:User[]=[];
       parkingId: 0
     };
   }
-
+ resetNewPartking(): void {
+    this.newParking = {
+      parking_Id:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
+    };
+  }
   logout(): void {
     this.authService.logout();
   }

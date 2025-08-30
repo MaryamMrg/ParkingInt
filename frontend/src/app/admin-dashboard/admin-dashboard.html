@@ -297,14 +297,14 @@
         
            <!-- Add Place Form -->
         <div *ngIf="showAddParkingForm" class="form-container">
-          <form (ngSubmit)="addPlace()" #parkingForm="ngForm">
+          <form (ngSubmit)="addParking()" #parkingForm="ngForm">
             <div class="form-row">
               <div class="form-group">
                 <label for="parkingName">Parking Name:</label>
                 <input 
                   type="text" 
                   id="parkingName" 
-                  [(ngModel)]="newPlace.number" 
+                  [(ngModel)]="newParking.name" 
                   name="parkingName" 
                   required>
               </div>
@@ -313,7 +313,7 @@
                 <input 
                   type="number" 
                   id="capacity" 
-                  [(ngModel)]="newPlace.parkingId" 
+                  [(ngModel)]="newParking.capacity" 
                   name="capacity" 
                   required>
               </div>
@@ -322,15 +322,15 @@
                <input 
                   type="text" 
                   id="opening_hours" 
-                  [(ngModel)]="newPlace.number" 
+                  [(ngModel)]="newParking.opening_hours" 
                   name="opening_hours" 
                   required>
               </div>
             </div>
             <div class="form-actions">
-              <!-- <button type="submit" [disabled]="!placeForm.form.valid" class="submit-btn">
-                Add Place
-              </button> -->
+              <button type="submit" [disabled]="!parkingForm.form.valid" class="submit-btn">
+                Add Parking
+              </button>
             </div>
           </form>
         </div>
