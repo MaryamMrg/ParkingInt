@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 export interface Parking{
  parking_Id?:number;
- p_name: string;
+ name: string;
  capacity: number;
  avaible_places: number;
  opening_hours: number

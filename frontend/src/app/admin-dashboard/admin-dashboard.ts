@@ -125,7 +125,7 @@ users:User[]=[];
         console.log('parking received:', parkings);
         
         parkings.forEach((parking: Parking) => {
-          console.log(`Parking: ${parking.p_name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
+          console.log(`Parking: ${parking.name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
         });
         this.parkings = parkings;
         this.loading = false;
