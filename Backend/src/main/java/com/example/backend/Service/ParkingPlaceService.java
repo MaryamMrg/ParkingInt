@@ -8,6 +8,7 @@ import com.example.backend.mapper.ParkingPlaceMapper;
 import com.example.backend.repository.ParkingPlaceRepository;
 import com.example.backend.repository.ParkingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +60,10 @@ public class ParkingPlaceService {
         List<ParkingPlace> places = parkingPlaceRepository.findAll();
         return parkingPlaceMapper.toDtos(places);
     }
-
+   public List<ParkingPlaceDto> getPlacesByParkingId(Long parkingId){
+        List<ParkingPlace> places = parkingPlaceRepository.findByParking_ParkingId(parkingId);
+        return parkingPlaceMapper.toDtos(places);
+   }
     public List<ParkingPlaceDto> getPlacesByP_name(String p_name){
         List<ParkingPlace> places = parkingPlaceRepository.findByParking_Name(p_name);
         return parkingPlaceMapper.toDtos(places);

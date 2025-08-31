@@ -28,6 +28,10 @@ public class ParkingPlaceController {
         return parkingPlaceService.getAllPlaces();
     }
 
+    @GetMapping("/byParking/{parkingId}")
+    public List<ParkingPlaceDto> getPlacesByParkingId(@PathVariable Long parkingId){
+        return parkingPlaceService.getPlacesByParkingId(parkingId);
+    }
     @GetMapping("placeBypName")
     public List<ParkingPlaceDto> getPlacesByP_name(@RequestParam String name){
         return parkingPlaceService.getPlacesByP_name(name);

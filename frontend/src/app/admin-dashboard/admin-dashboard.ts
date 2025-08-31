@@ -58,7 +58,7 @@ users:User[]=[];
     
   };
 newParking : Parking={
-  parking_Id:0,
+  parkingId:0,
    name: '',
  capacity: 0,
  avaible_places: 0,
@@ -269,7 +269,7 @@ addParking():void{
   this.errorMessage = '';
 
   const parkingToAdd: Parking = {
-    parking_Id: 0, 
+    parkingId: 0, 
     name: this.newParking.name,
     capacity: this.newParking.capacity,
     opening_hours: this.newParking.opening_hours,
@@ -354,7 +354,7 @@ addParking():void{
   }
  resetNewPartking(): void {
     this.newParking = {
-      parking_Id:0,
+      parkingId:0,
    name: '',
  capacity: 0,
  avaible_places: 0,
@@ -376,6 +376,6 @@ addParking():void{
     return user.id;
   }
    trackByParkingId(index:number,parking:Parking):any{
-    return parking.parking_Id;
+    return parking.parkingId;
   }
 }

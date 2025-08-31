@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParkingDto {
 
+    private Long parkingId;
 
     private String name;
     private Long capacity;
@@ -15,6 +16,14 @@ public class ParkingDto {
     private Long occupied_places;
     private Long blocked_places;
     private String opening_hours;
+
+    public Long getParkingId() {
+        return parkingId;
+    }
+
+    public void setParkingId(Long parkingId) {
+        this.parkingId = parkingId;
+    }
 
     public String getName() {
         return name;

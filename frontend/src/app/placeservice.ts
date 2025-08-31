@@ -14,6 +14,7 @@ number: number;
   status: Status;
   placeId: number;
   parkingId: number;
+ 
 }
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,8 @@ export class Placeservice {
   getAllPlaces():Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/all`,{headers:this.getAuthHeader()})
   }
- getPlacesByµParkingNAme():Observable<any>{
-  return this.http.get<any>(`${this.apiUrl}/placeByName`,{headers:this.getAuthHeader()})
+ getPlacesByParkingNAme(name:string):Observable<any>{
+  return this.http.get<any>(`${this.apiUrl}/placeByName?name=${encodeURIComponent(name)}`,{headers:this.getAuthHeader()})
  }
   addPlace(place:Place) : Observable<Place>{
     return this.http.post<Place>(`${this.apiUrl}/add`,place,{headers:this.getAuthHeader()})
@@ -47,5 +48,11 @@ export class Placeservice {
 
   deletPlace(id:number):Observable<any>{
     return this.http.delete(`${this.apiUrl}/${id}`,{headers:this.getAuthHeader()})
+  }
+
+  getPlacesByParkingId(parkingId: number): Observable<Place[]> {
+    return this.http.get<Place[]>(`${this.apiUrl}/byParking/${parkingId}`, { 
+      headers: this.getAuthHeader() 
+    });
   }
 }

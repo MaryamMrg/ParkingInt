@@ -14,7 +14,7 @@
     <div *ngIf="errorMessage" class="error-container">
         <div class="error-icon">❌</div>
         <p class="error-message">{{ errorMessage }}</p>
-        <button (click)="loadPlaces()" class="retry-btn">Try Again</button>
+        <button (click)="loadPlacesForParking(parking)" class="retry-btn">Try Again</button>
     </div>
 
     <!-- Places Grid -->
@@ -71,7 +71,7 @@
         <h3>No Places Available</h3>
         <p>There are currently no parking places available at this location.</p>
         <div class="empty-actions">
-            <button (click)="loadPlaces()" class="retry-btn">Refresh</button>
+            <button (click)="loadPlacesForParking(parking)" class="retry-btn">Refresh</button>
             <button (click)="goBack()" class="back-btn-alt">Go Back</button>
         </div>
     </div>

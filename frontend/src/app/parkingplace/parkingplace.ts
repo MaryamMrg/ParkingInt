@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Place, Placeservice } from '../placeservice';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Booking,Bookingservice } from '../bookingservice';
 import { Authservice } from '../authservice';
+import { Parking } from '../parkingservice';
 export enum Status {
   AVAILABLE = 'AVAILABLE',
   RESERVED = 'RESERVED', 
@@ -24,9 +25,26 @@ export enum Status {
 export class Parkingplace implements OnInit{
   
   errorMessage='';
-  loading = true;
-  places:Place[]=[];
+   loading = true;
+  parking : Parking={
+     parkingId:0,
+ name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours: 0
 
+
+
+  }
+
+  //for places
+   showPlaces = false;
+    selectedParking: Parking | null = null;
+    places: Place[] = [];
+    placesLoading = false;
+    placesErrorMessage = '';
+
+  parkingName='';
   selectedPlace: Place | null = null;
   showBookingModal: boolean = false;
   bookingInProgress: boolean = false;
@@ -35,30 +53,156 @@ export class Parkingplace implements OnInit{
   bookingError: string = '';
 
 
-  constructor(private placeservice:Placeservice,private router:Router,private location : Location,private booking : Bookingservice,private authservice:Authservice){}
+  constructor(private route:ActivatedRoute, private placeservice:Placeservice,private router:Router,private location : Location,private booking : Bookingservice,private authservice:Authservice){}
 
   ngOnInit(): void {
-    this.loadPlaces();
+    console.log("hhh")
+    this.loadParkingFromRoute();
+  this.debugRouteParams();
+    this.loadPlacesForParking(this.parking)
   }
+debugRouteParams(): void {
+  this.route.queryParams.subscribe(params => {
+    console.log('=== ROUTE DEBUG ===');
+    console.log('Raw params:', params);
+    Object.keys(params).forEach(key => {
+      console.log(`${key}: ${params[key]} (type: ${typeof params[key]})`);
+    });
+    console.log('=== END DEBUG ===');
+  });
+}
+  // loadPlaces():void{
+  //   this.errorMessage='';
+  //   this.loading=true;
 
-  loadPlaces():void{
-    this.errorMessage='';
-    this.loading=true;
+  //   this.placeservice.getAllPlaces().subscribe({
+  //     next : (places)=>{
+  //       console.log('places recieved :',places)
 
-    this.placeservice.getAllPlaces().subscribe({
-      next : (places)=>{
-        console.log('places recieved :',places)
+  //       this.places=places;
+  //       this.loading=false;
+  //     },error:(error)=>{
+  //       console.log('error fetching places:',error);
+  //       this.loading=false;
+  //     }
+  //   })
+  // }
 
-        this.places=places;
-        this.loading=false;
-      },error:(error)=>{
-        console.log('error fetching ads:',error);
-        this.loading=false;
+loadParkingFromRoute(): void {
+  this.route.queryParams.subscribe(params => {
+    console.log('Route params received:', params);
+    
+    if (params['parking_id'] || params['name']) {
+     
+      const parkingIdParam = params['parking_id'];
+      const parsedParkingId = parkingIdParam ? parseInt(parkingIdParam, 10) : 0;
+      
+      this.parking = {
+        parkingId: isNaN(parsedParkingId) ? 0 : parsedParkingId,
+        name: params['name'] || '',
+        capacity: parseInt(params['capacity']) || 0,
+        avaible_places: parseInt(params['available_places']) || 0,
+        opening_hours: parseInt(params['opening_hours']) || 0
+      };
+      
+      this.parkingName = this.parking.name;
+      
+      console.log('Parking data loaded from route:', this.parking);
+      
+ 
+      const parkingId = this.parking.parkingId;
+      
+      if (parkingId && parkingId > 0) {
+        this.loadPlacesForParking(this.parking);
+      } else {
+        console.warn('Invalid parking ID, trying to load by name instead');
+        if (this.parking.name) {
+          this.loadPlacesByParkingName();
+        } else {
+          this.placesErrorMessage = 'Invalid parking data received';
+          this.loading = false;
+        }
       }
-    })
+    } else {
+      console.error('No parking data in route parameters');
+      this.placesErrorMessage = 'No parking data provided';
+      this.loading = false;
+    }
+  });
+}
+
+loadPlacesForParking(parking: Parking): void {
+  console.log('Loading places for parking:', parking);
+  
+  if (!parking) {
+    this.placesErrorMessage = 'No parking data provided';
+    this.loading = false;
+    return;
   }
+
+  const parkingId = parking.parkingId;
+  const parkingName = parking.name;
+  
+  console.log('Parking ID:', parkingId, 'Parking Name:', parkingName);
   
 
+  if (!parkingId || parkingId <= 0 || isNaN(parkingId)) {
+    console.warn('Invalid parking ID, using name-based loading');
+    if (parkingName) {
+      this.loadPlacesByParkingName();
+      return;
+    } else {
+      this.placesErrorMessage = 'Invalid parking data - no ID or name available';
+      this.loading = false;
+      return;
+    }
+  }
+
+  this.placesLoading = true;
+  this.loading = true;
+  this.showPlaces = true;
+  this.placesErrorMessage = '';
+  this.selectedParking = parking;
+
+  
+  this.placeservice.getPlacesByParkingId(parkingId).subscribe({
+    next: (places) => {
+      console.log('Places for parking received:', places);
+      this.places = places || [];
+      this.placesLoading = false;
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error fetching places by ID:', error);
+      
+      
+      if (parkingName) {
+        console.log('Fallback: Trying to load by parking name');
+        this.loadPlacesByParkingName();
+      } else {
+        this.placesErrorMessage = 'Failed to load parking places. Please try again.';
+        this.placesLoading = false;
+        this.loading = false;
+      }
+    }
+  });
+}
+loadPlacesByParkingName():void{
+   this.errorMessage='';
+    this.loading=true;
+
+    this.placeservice.getPlacesByParkingNAme(this.parkingName).subscribe({
+      next : (places)=>{
+        console.log('places of parking selected are : ',places);
+        this.places=places;
+         this.loading=false;
+      },error:(error)=>{
+        console.log('error fetching places:',error);
+        this.loading=false;
+      
+      }
+    })
+}
     trackByPlaceNumber(index: number, place: Place): any {
     return place.number;
   }
@@ -214,6 +358,7 @@ private convertTimeToTimestamp(timeString: string, isEndTime: boolean = false): 
   return date.getTime();
 }
 submitBooking(): void {
+  
   if (!this.selectedPlace || !this.startTime || !this.endTime) {
     this.bookingError = 'Please fill all required fields';
     return;
@@ -232,7 +377,7 @@ submitBooking(): void {
 
   try {
     const bookingData: Booking = {
-      userId: this.getUserId(), // This should now work correctly
+      userId: this.getUserId(), 
       parkingId: this.selectedPlace.parkingId,
       placeId: this.selectedPlace.placeId,
       startTime: startTimestamp,
@@ -247,7 +392,7 @@ submitBooking(): void {
         alert('Booking created successfully!');
         this.closeBookingModal();
         this.bookingInProgress = false;
-        this.loadPlaces();
+        this.loadPlacesForParking(this.parking);
       },
       error: (error) => {
         console.error('Booking failed - full error:', error);
@@ -300,14 +445,13 @@ private getUserId(): number {
   }
 
 
-  // Optional filter/sort methods
   toggleFilters(): void {
-    // Implement filter functionality
+    //  filter functionality
     console.log('Toggle filters');
   }
 
   toggleSort(): void {
-    // Implement sort functionality
+    // sort functionality
     console.log('Toggle sort');
   }
 }

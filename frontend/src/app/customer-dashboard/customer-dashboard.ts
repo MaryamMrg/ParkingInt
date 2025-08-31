@@ -5,6 +5,7 @@ import { Parking, Parkingservice } from '../parkingservice';
 import { Booking, Bookingservice } from '../bookingservice';
 import { CommonModule } from '@angular/common';
 import { Placeservice } from '../placeservice';
+import { Place } from '../placeservice';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -18,17 +19,18 @@ export class CustomerDashboard implements OnInit {
   loading = true;
   parkings: Parking[] = [];
   
-  // New properties for bookings
+  //  properties for bookings
   myBookings: Booking[] = [];
   bookingsLoading = false;
   bookingsErrorMessage = '';
   showBookings = false;
   currentUserId: number | null = null;
+  showPlaces = false;
 
   constructor(
     private authservice: Authservice,
     private parkingservice: Parkingservice,
-    private bookingservice: Bookingservice, // Add booking service
+    private bookingservice: Bookingservice, 
     private placeservice: Placeservice,
     private router: Router
   ) { }
@@ -42,13 +44,11 @@ export class CustomerDashboard implements OnInit {
     const user = this.authservice.getCurrentUser();
     console.log('Current user from auth service:', user);
     
-    // Fix: Use userId instead of id based on the console output
     this.customername = user?.name || user?.name || user?.email?.split('@')[0] || 'Customer';
 this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id || null;    
     console.log('Customer name:', this.customername);
     console.log('Current user ID:', this.currentUserId);
     
-    // If still no user ID, try to get it from localStorage or token
     if (!this.currentUserId) {
       const token = localStorage.getItem('token');
       if (token) {
@@ -90,7 +90,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     });
   }
 
-  // New method to load user's bookings with better error handling
+
   loadMyBookings(): void {
     if (!this.currentUserId) {
       console.error('No user ID available');
@@ -128,13 +128,13 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     });
   }
 
-  // Toggle bookings view with improved logic
+  
   toggleBookingsView(): void {
     this.showBookings = !this.showBookings;
     if (this.showBookings) {
-      // Always try to load bookings when switching to bookings view
+      //  load bookings when switching to bookings view
       if (!this.currentUserId) {
-        // Try to reload user data first
+        // reload user data first
         this.loadCustomerData();
       }
       
@@ -187,7 +187,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
       this.bookingservice.deleteBooking(booking.id).subscribe({
         next: () => {
           console.log('Booking cancelled successfully');
-          this.loadMyBookings(); // Refresh bookings
+          this.loadMyBookings(); 
         },
         error: (error) => {
           console.log('Error cancelling booking:', error);
@@ -197,7 +197,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     }
   }
 
-  // Existing methods...
+  
   isParkingAvailable(parking: Parking): boolean {
     return (parking.avaible_places || 0) > 0;
   }
@@ -210,13 +210,26 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     return booking.id || index;
   }
 
-  viewDetails(parking: Parking): void {
-    this.router.navigate(['/places']);
-  }
+viewDetails(parking: Parking): void {
+  console.log('Navigating to parking place with:', parking);
+  this.showBookings = false;
+  this.showPlaces = false;
+  
+  // Navigate with consistent parameter names
+  this.router.navigate(['/places'], {
+    queryParams: {
+      parking_id: parking.parkingId,  
+      name: parking.name,
+      capacity: parking.capacity,
+      available_places: parking.avaible_places,
+      opening_hours: parking.opening_hours
+    }
+  });
+}
 
   reserveNow(parking: Parking): void {
     if (this.isParkingAvailable(parking)) {
-      this.router.navigate(['/reserve', parking.parking_Id]);
+      this.router.navigate(['/reserve', parking.parkingId]);
     }
   }
 
@@ -248,7 +261,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     return parking.occupied_places || 0;
   }
 
-  // Debug methods (remove in production)
+  // Debug methods 
   getTokenStatus(): string {
     const token = localStorage.getItem('token');
     return token ? 'Yes' : 'No';
@@ -266,7 +279,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     console.log('3. Current User ID:', this.currentUserId);
     console.log('4. Customer Name:', this.customername);
     
-    // Try to decode token if it exists
+    // T decode token 
     const token = localStorage.getItem('token');
     if (token) {
       try {
