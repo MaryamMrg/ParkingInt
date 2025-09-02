@@ -109,6 +109,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
         console.log('My bookings received:', bookings);
         this.myBookings = bookings || [];
         this.bookingsLoading = false;
+        this.debugBooking(bookings)
       },
       error: (error) => {
         console.error('Error fetching my bookings:', error);
@@ -128,6 +129,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
         this.bookingsLoading = false;
       }
     });
+  
   }
 
   
@@ -169,7 +171,11 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
       return 'Completed';
     }
   }
-
+debugBooking(booking: any): void {
+  console.log('Full booking object:', booking);
+  console.log('Booking ID:', booking.bookingId);
+  console.log('All keys:', Object.keys(booking));
+}
   // Get status class for styling
   getBookingStatusClass(booking: Booking): string {
     const status = this.getBookingStatus(booking);
@@ -183,11 +189,17 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
 
   // Cancel booking method
   cancelBooking(booking: Booking): void {
-    console.log("boooking id : ",booking.id)
-    if (!booking.id) return;
+    console.log("boooking id : ",booking.bookingId)
+   
+     if (!booking.bookingId) {
+    console.error('Booking ID is missing');
+    alert('Cannot cancel booking: Missing booking ID');
+    return;
+  }
+  
     
     if (confirm('Are you sure you want to cancel this booking?')) {
-      this.bookingservice.deleteBooking(booking.id).subscribe({
+      this.bookingservice.deleteBooking(booking.bookingId).subscribe({
         next: () => {
           console.log('Booking cancelled successfully');
           this.loadMyBookings(); 
@@ -210,7 +222,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
   }
 
   trackByBookingId(index: number, booking: Booking): any {
-    return booking.id || index;
+    return booking.bookingId || index;
   }
 
 viewDetails(parking: Parking): void {

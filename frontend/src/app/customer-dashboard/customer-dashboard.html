@@ -44,7 +44,7 @@
             <div *ngFor="let booking of myBookings; trackBy: trackByBookingId" class="booking-card">
                 <div class="booking-header">
                     <div class="booking-info">
-                        <h3 class="booking-title">Booking #{{ booking.id }}</h3>
+                        <h3 class="booking-title">Booking #{{ booking.bookingId}}</h3>
                         <p class="parking-name">{{ booking.parkingId }}</p>
                     </div>
                     <span class="status-badge" [ngClass]="getBookingStatusClass(booking)">
