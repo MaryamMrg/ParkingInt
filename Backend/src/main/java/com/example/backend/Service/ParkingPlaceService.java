@@ -4,6 +4,7 @@ package com.example.backend.Service;
 import com.example.backend.Dto.ParkingPlaceDto;
 import com.example.backend.Model.Parking;
 import com.example.backend.Model.ParkingPlace;
+import com.example.backend.Model.Status;
 import com.example.backend.mapper.ParkingPlaceMapper;
 import com.example.backend.repository.ParkingPlaceRepository;
 import com.example.backend.repository.ParkingRepository;
@@ -28,26 +29,27 @@ public class ParkingPlaceService {
     public ParkingPlaceDto addPlace(ParkingPlaceDto dto){
         System.out.println("Received DTO: " + dto);
 
-        // ADDED: Validate parkingId is not null
+        // Validate parkingId is not null
         if (dto.getParkingId() == null) {
             throw new IllegalArgumentException("Parking ID cannot be null");
         }
 
-        // ADDED: Validate that parking exists
-        Optional<Parking> parkingOptional = parkingRepository.findById(dto.getParkingId());
-        if (!parkingOptional.isPresent()) {
-            throw new IllegalArgumentException("Parking with ID " + dto.getParkingId() + " not found");
-        }
+        // Get the ACTUAL parking entity from database
+        Parking parking = parkingRepository.findById(dto.getParkingId())
+                .orElseThrow(() -> new IllegalArgumentException("Parking with ID " + dto.getParkingId() + " not found"));
 
-        // Convert DTO to Entity
-        ParkingPlace place = parkingPlaceMapper.toEntity(dto);
-
-        // ADDED: Explicitly set the parking relationship to ensure it's not null
-        place.setParking(parkingOptional.get());
+        // Create entity
+        ParkingPlace place = new ParkingPlace();
+        place.setPlaceId(null);
+        place.setNumber(dto.getNumber());
+        place.setAvailablty(dto.getAvailablty());
+        place.setStatus(dto.getStatus());
+        place.setParking(parking);
 
         System.out.println("Entity before save: placeId=" + place.getPlaceId() +
                 ", parkingId=" + (place.getParking() != null ? place.getParking().getParkingId() : "null"));
 
+        // Save the entity
         ParkingPlace saved = parkingPlaceRepository.save(place);
 
         System.out.println("Entity after save: placeId=" + saved.getPlaceId() +
@@ -77,6 +79,10 @@ public class ParkingPlaceService {
         ParkingPlace saved = parkingPlaceRepository.save(place);
         return parkingPlaceMapper.toDto(saved);
     }
+
+
+
+
 
     public void deletePlace(Long id){
         parkingPlaceRepository.deleteById(id);

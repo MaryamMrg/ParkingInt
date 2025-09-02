@@ -8,13 +8,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParkingPlaceDto {
 
+    private Long placeId;
 
     private  Long number;
     private  Boolean availablty;
     private Status status;
     private Long parkingId;
 
+    public Long getPlaceId() {
+        return placeId;
+    }
 
+    public void setPlaceId(Long placeId) {
+        this.placeId = placeId;
+    }
 
     public Long getNumber() {
         return number;

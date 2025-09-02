@@ -1,4 +1,4 @@
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { HttpClient ,HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -55,4 +55,19 @@ export class Placeservice {
       headers: this.getAuthHeader() 
     });
   }
+
+ updatePlaceStatus(placeId: number, startTime: number, endTime: number): Observable<Status> {
+  const params = new HttpParams()
+    .set('startTime', startTime.toString())
+    .set('endTime', endTime.toString());
+  
+  return this.http.put<Status>(
+    `${this.apiUrl}/${placeId}/status`, 
+    null, 
+    { 
+      headers: this.getAuthHeader(), 
+      params: params 
+    }
+  );
+}
 }

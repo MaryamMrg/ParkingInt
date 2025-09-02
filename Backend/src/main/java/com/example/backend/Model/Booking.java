@@ -1,11 +1,12 @@
 package com.example.backend.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Booking {
 
     @Id
@@ -13,21 +14,24 @@ public class Booking {
     private Long bookingId;
 
     private Long userId;
-    private Long parkingId;
-    private Long placeId;
-    private Long startTime;
-    private Long endTime;
+    private String startTime;
+    private String endTime;
 
-    public Booking() {
+
+    public ParkingPlace getParkingPlace() {
+        return parkingPlace;
     }
 
-    public Booking(Long bookingId, Long userId, Long parkingId, Long placeId, Long startTime, Long endTime) {
-        this.bookingId = bookingId;
-        this.userId = userId;
-        this.parkingId = parkingId;
-        this.placeId = placeId;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public void setParkingPlace(ParkingPlace parkingPlace) {
+        this.parkingPlace = parkingPlace;
+    }
+
+    public Parking getParking() {
+        return parking;
+    }
+
+    public void setParking(Parking parking) {
+        this.parking = parking;
     }
 
     public Long getBookingId() {
@@ -46,35 +50,30 @@ public class Booking {
         this.userId = userId;
     }
 
-    public Long getParkingId() {
-        return parkingId;
-    }
-
-    public void setParkingId(Long parkingId) {
-        this.parkingId = parkingId;
-    }
-
-    public Long getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(Long placeId) {
-        this.placeId = placeId;
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
-    public Long getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Long endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private ParkingPlace parkingPlace;
+
+
+    @ManyToOne
+    @JoinColumn(name = "parking_id")
+    private Parking parking;
+
+
 }

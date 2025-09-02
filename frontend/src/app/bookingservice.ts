@@ -6,7 +6,7 @@ export interface Booking{
   id?:number,
   userId?: number,
   parkingId: number,
-  placeId: number,
+  placeId?: number,
   startTime: number,
   endTime: number
 }

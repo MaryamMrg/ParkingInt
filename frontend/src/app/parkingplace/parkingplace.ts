@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Booking,Bookingservice } from '../bookingservice';
 import { Authservice } from '../authservice';
 import { Parking } from '../parkingservice';
+import { STRING_TYPE } from '@angular/compiler';
 export enum Status {
   AVAILABLE = 'AVAILABLE',
   RESERVED = 'RESERVED', 
@@ -43,7 +44,9 @@ export class Parkingplace implements OnInit{
     places: Place[] = [];
     placesLoading = false;
     placesErrorMessage = '';
+     currentStatus: Status | null = null;
 
+  successMessage: string | null = null;
   parkingName='';
   selectedPlace: Place | null = null;
   showBookingModal: boolean = false;
@@ -59,7 +62,8 @@ export class Parkingplace implements OnInit{
     console.log("hhh")
     this.loadParkingFromRoute();
   this.debugRouteParams();
-    this.loadPlacesForParking(this.parking)
+    this.loadPlacesForParking(this.parking);
+    
   }
 debugRouteParams(): void {
   this.route.queryParams.subscribe(params => {
@@ -390,9 +394,11 @@ submitBooking(): void {
       next: (response) => {
         console.log('Booking successful:', response);
         alert('Booking created successfully!');
+        
         this.closeBookingModal();
         this.bookingInProgress = false;
         this.loadPlacesForParking(this.parking);
+      
       },
       error: (error) => {
         console.error('Booking failed - full error:', error);
@@ -413,6 +419,10 @@ submitBooking(): void {
     this.bookingInProgress = false;
   }
 }
+
+
+
+
 
 private getUserId(): number {
   const user = this.authservice.getCurrentUser();
@@ -454,4 +464,6 @@ private getUserId(): number {
     // sort functionality
     console.log('Toggle sort');
   }
+
+
 }

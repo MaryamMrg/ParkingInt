@@ -181,6 +181,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
 
   // Cancel booking method
   cancelBooking(booking: Booking): void {
+    console.log("boooking id : ",booking.id)
     if (!booking.id) return;
     
     if (confirm('Are you sure you want to cancel this booking?')) {

@@ -19,8 +19,7 @@ public interface ParkingPlaceMapper {
     ParkingPlaceDto toDto(ParkingPlace parkingPlace);
 
     // FIXED: Map parkingId to parking entity
-    @Mapping(source = "parkingId", target = "parking", qualifiedByName = "mapParkingId")
-
+    @Mapping(target = "parking", ignore = true)
     ParkingPlace toEntity(ParkingPlaceDto dto);
 
     List<ParkingPlaceDto> toDtos(List<ParkingPlace> parkingPlaces);

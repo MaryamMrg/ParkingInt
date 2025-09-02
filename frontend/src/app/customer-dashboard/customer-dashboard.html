@@ -53,6 +53,7 @@
                 </div>
 
                 <div class="booking-details">
+                    
                     <div class="detail-row">
                         <span class="detail-label">Place ID:</span>
                         <span class="detail-value">{{ booking.placeId }}</span>
@@ -69,7 +70,7 @@
 
                 <div class="booking-actions">
                     <button class="action-btn secondary" 
-                            *ngIf="getBookingStatus(booking) === 'Upcoming'"
+                            
                             (click)="cancelBooking(booking)">
                         Cancel Booking
                     </button>
