@@ -92,6 +92,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
 
 
   loadMyBookings(): void {
+    console.log("current user id : ",this.currentUserId)
     if (!this.currentUserId) {
       console.error('No user ID available');
       this.bookingsErrorMessage = 'User authentication required. Please login again.';
@@ -103,6 +104,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     this.bookingsErrorMessage = '';
 
     this.bookingservice.getMyBookings(this.currentUserId).subscribe({
+      
       next: (bookings) => {
         console.log('My bookings received:', bookings);
         this.myBookings = bookings || [];

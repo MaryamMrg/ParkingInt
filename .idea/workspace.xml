@@ -6,19 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/ParkingPlaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/ParkingPlaceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/BookingDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/BookingDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/BookingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/BookingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/bookingservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/bookingservice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

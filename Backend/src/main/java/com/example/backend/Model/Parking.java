@@ -1,6 +1,7 @@
 package com.example.backend.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Parking {
 
 
     @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ParkingPlace> places = new ArrayList<ParkingPlace>();
 
     public Long getParkingId() {

@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { Booking,Bookingservice } from '../bookingservice';
 import { Authservice } from '../authservice';
 import { Parking } from '../parkingservice';
-import { STRING_TYPE } from '@angular/compiler';
 export enum Status {
   AVAILABLE = 'AVAILABLE',
   RESERVED = 'RESERVED', 
@@ -54,9 +53,14 @@ export class Parkingplace implements OnInit{
   startTime: string = '';
   endTime: string = '';
   bookingError: string = '';
+  bookingId?:number;
 
 
-  constructor(private route:ActivatedRoute, private placeservice:Placeservice,private router:Router,private location : Location,private booking : Bookingservice,private authservice:Authservice){}
+  constructor(private route:ActivatedRoute,private location:Location,
+     private placeservice:Placeservice,
+     private router:Router,
+     private bookingservice : Bookingservice,
+     private authservice:Authservice){}
 
   ngOnInit(): void {
     console.log("hhh")
@@ -390,7 +394,7 @@ submitBooking(): void {
 
     console.log('Submitting booking:', bookingData);
 
-    this.booking.addBooking(bookingData).subscribe({
+    this.bookingservice.addBooking(bookingData).subscribe({
       next: (response) => {
         console.log('Booking successful:', response);
         alert('Booking created successfully!');
@@ -466,4 +470,29 @@ private getUserId(): number {
   }
 
 
+cancelBooking(bookingId: number): void {
+    console.log("cancelBooking called with:", bookingId);
+    console.log("typeof bookingId:", typeof bookingId);
+    
+    if (!bookingId) {
+        console.log("No booking ID - function returning early");
+        return;
+    }
+    
+    console.log("About to show confirm dialog");
+    if (confirm('Are you sure you want to cancel this booking?')) {
+        console.log("User confirmed, calling deleteBooking service");
+        this.bookingservice.deleteBooking(bookingId).subscribe({
+            next: () => {
+                console.log('Booking cancelled successfully');
+            },
+            error: (error) => {
+                console.log('Error cancelling booking:', error);
+                alert('Failed to cancel booking. Please try again.');
+            }
+        });
+    } else {
+        console.log("User cancelled the confirm dialog");
+    }
+}
 }

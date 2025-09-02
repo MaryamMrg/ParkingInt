@@ -9,12 +9,14 @@ import com.example.backend.mapper.ParkingPlaceMapper;
 import com.example.backend.repository.ParkingPlaceRepository;
 import com.example.backend.repository.ParkingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ParkingPlaceService {
 
     private final ParkingPlaceMapper parkingPlaceMapper;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class ParkingService {
 
     private final ParkingMapper parkingMapper;

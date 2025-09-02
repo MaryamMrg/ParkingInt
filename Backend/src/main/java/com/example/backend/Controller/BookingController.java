@@ -5,6 +5,7 @@ import com.example.backend.Dto.BookingDto;
 import com.example.backend.Model.Booking;
 import com.example.backend.Service.BookingService;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,9 @@ public class BookingController {
         return bookingService.getAll();
     }
 
-    @GetMapping("/myBookings/{id}")
-   public List<Booking> getMyBookings(@PathVariable Long id){
-        return bookingService.findBookingByUserId(id);
+    @GetMapping("/myBookings/{userId}")
+   public List<Booking> getMyBookings(@PathVariable Long userId){
+        return bookingService.findBookingByUserId(userId);
     }
 
     @PutMapping("/update/{id}")
