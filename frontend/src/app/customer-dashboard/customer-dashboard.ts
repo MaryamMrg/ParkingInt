@@ -121,6 +121,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
       
       next: (bookings) => {
         console.log('My bookings received:', bookings);
+       
         this.myBookings = bookings || [];
         this.bookingsLoading = false;
         this.debugBooking(bookings)
