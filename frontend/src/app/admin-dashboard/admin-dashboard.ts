@@ -41,6 +41,7 @@ export class AdminDashboard implements OnInit{
   places: Place[] = [];
   parkings: Parking[] = [];
   
+  // Dash Stats
   stats: DashboardStats = {
   totalBookings: 0,
   totalPlaces: 0,
@@ -51,6 +52,19 @@ export class AdminDashboard implements OnInit{
   blockedPlaces: 0,
   totalUsers: 0
   };
+
+  //Edit Parking
+  showEditParkingFrom=false;
+  editingParking : Parking|null=null;
+  editParkingData : Parking={
+     parkingId:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
+  }
+
+  //Edit Palce
 showEditPlaceForm = false;
 editingPlace: Place | null = null;
 editPlaceData: Place = {
@@ -59,7 +73,7 @@ editPlaceData: Place = {
   status: Status.AVAILABLE,
   parkingId: 0
 };
-  // Form data
+  // Add New Place
   newPlace: Place = {
     placeId:0,
     number: 0,
@@ -67,6 +81,8 @@ editPlaceData: Place = {
     parkingId: 0
     
   }
+
+  // Add New Parking
 newParking : Parking={
   parkingId:0,
    name: '',
@@ -75,7 +91,7 @@ newParking : Parking={
  opening_hours:0
 
 }
-
+  // adminDash tabs
   tabs = [
     { id: 'overview', label: 'Overview' },
     { id: 'bookings', label: 'Bookings' },
@@ -401,6 +417,54 @@ cancelEdit(): void {
     }
   }
 
+  editParking(parking: Parking): void {
+    console.log("ilgjkhvfd")
+  this.editingParking = { ...parking }; // Create a copy 
+  this.editParkingData = { ...parking }; // Initialize edit form data
+  this.showEditParkingFrom = true;
+}
+
+  updateParking(): void {
+    console.log("hhhhhh")
+  if (!this.editingParking) return;
+
+  this.successMessage = '';
+  this.errorMessage = '';
+
+  // form validation
+  if (!this.editParkingData.name ) {
+    this.errorMessage = 'Please enter a valid name';
+    return;
+  }
+
+  if (!this.editParkingData.opening_hours ) {
+    this.errorMessage = 'Please enter a valid openning hours';
+    return;
+  }
+
+  if (!this.editPlaceData.status) {
+    this.errorMessage = 'Please select a status';
+    return;
+  }
+
+  this.loading = true;
+
+  this.parkingservice.updatePArking(this.editingParking.parkingId!, this.editParkingData).subscribe({
+    next: (response) => {
+      console.log('Parking updated successfully:', response);
+      this.successMessage = 'Parking updated successfully!';
+      this.showEditParkingFrom = false;
+      this.editingParking = null;
+      this.loadParkings(); 
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error updating parking:', error);
+      this.errorMessage = error.error?.message || 'Failed to update parking';
+      this.loading = false;
+    }
+  });
+}
   deleteParking(id:number ){
     console.log("yfjhn,")
      if (confirm('Are you sure you want to delete this parking?')) {
