@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface RegisterRequest {
@@ -19,15 +19,16 @@ export interface LoginResponse {
 export interface User {
   id: number;
   name: string;
+    email: string;
   role: string;
-  email: string;
+
   userId?: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class Authservice {
+export class Authservice implements OnInit {
 
 
   private apiUrl = "http://localhost:8080";
@@ -42,7 +43,9 @@ export class Authservice {
       this.currentUserSubject.next(user);
     }
   }
-
+ngOnInit(): void {
+  this.getCurrentUser();
+}
     private getUserFromStorage(): User | null {
     const userData = localStorage.getItem('user');
     return userData ? JSON.parse(userData) : null;

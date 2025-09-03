@@ -300,8 +300,10 @@ addParking():void{
 
   deletePlace(id: number): void {
     if (confirm('Are you sure you want to delete this place?')) {
+     
       this.placeService.deletPlace(id).subscribe({
         next: () => {
+           console.log(id)
           this.successMessage = 'Place deleted successfully';
           this.loadPlaces();
         },
