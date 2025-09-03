@@ -19,7 +19,12 @@
       <!-- Overview Tab -->
       <div *ngIf="activeTab === 'overview'" class="tab-content">
         <div class="stats-grid">
+            <div class="stat-card">
+            <h3>Total Parkings</h3>
+            <div class="stat-number">{{ stats.totalParkings }}</div>
+          </div>
           <div class="stat-card">
+
             <h3>Total Bookings</h3>
             <div class="stat-number">{{ stats.totalBookings }}</div>
           </div>
@@ -62,6 +67,7 @@
             <button (click)="setActiveTab('bookings')" class="action-btn">
               <i class="icon">📅</i> View Bookings
             </button>
+
           </div>
         </div>
       </div>
@@ -105,6 +111,8 @@
             No bookings found
           </div>
         </div>
+                    
+
       </div>
 
       <!-- Places Tab -->

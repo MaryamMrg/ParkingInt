@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { User,Authservice } from '../authservice';
 import { Bookingservice,Booking } from '../bookingservice';
 import { Placeservice , Place,Status } from '../placeservice';
-import { Router } from '@angular/router';
 import { Userservice } from '../userservice';
+import { Location } from '@angular/common';
 
 import { Parking,Parkingservice } from '../parkingservice';
 interface DashboardStats {
@@ -79,7 +79,9 @@ newParking : Parking={
   constructor(private userservice:Userservice,
     private bookingService: Bookingservice,
     private placeService: Placeservice,
-    private authService: Authservice,private parkingservice:Parkingservice
+    private authService: Authservice,
+    private parkingservice:Parkingservice,
+    private location:Location
   ) {}
 
   ngOnInit(): void {
@@ -377,5 +379,8 @@ addParking():void{
   }
    trackByParkingId(index:number,parking:Parking):any{
     return parking.parkingId;
+  }
+   goBack(): void {
+    this.location.back();
   }
 }

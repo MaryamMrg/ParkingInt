@@ -41,10 +41,8 @@ public class BookingService {
             throw new IllegalStateException("Parking place is not available for booking");
         }
 
-        // Use mapper to convert DTO to entity - this will set ALL fields including parkingId
         Booking booking = bookingMapper.toEntity(bookingDto);
 
-        // Set the relationship (this might already be handled by the mapper)
         booking.setParkingPlace(parkingPlace);
         booking.setParking(parking);
         // Update parking place status
@@ -74,6 +72,20 @@ public class BookingService {
     }
 
     public void deleteBooking(Long id){
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Booking not found with id: " + id));
+
+        ParkingPlace parkingPlace = booking.getParkingPlace();
+
+        if (parkingPlace != null) {
+            // Update parking place status back to available
+            parkingPlace.setStatus(Status.AVAILABLE);
+            parkingPlace.setAvailablty(true);
+
+            // Save the updated parking place
+            parkingPlaceRepository.save(parkingPlace);
+        }
+
         bookingRepository.deleteById(id);
     }
 }
