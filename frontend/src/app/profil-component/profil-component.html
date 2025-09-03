@@ -245,7 +245,7 @@
               <strong>Delete Account</strong>
               <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
             </div>
-            <button class="btn-danger" (click)="deleteAccount()">
+            <button class="btn-danger" (click)="deleteAccount(currentUser?.userId!)">
               Delete Account
             </button>
           </div>

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Authservice, User } from '../authservice';
 import { RouterLink } from '@angular/router';
 import { Userservice } from '../userservice';
+import { U } from '@angular/cdk/keycodes';
 export interface UpdateProfileRequest {
   id: number;
   name: string;
@@ -290,12 +291,21 @@ export class ProfilComponent implements OnInit{
     this.successMessage = '';
   }
 
-  deleteAccount(): void {
+  deleteAccount(userId:number): void {
+    userId!=this.currentUser?.userId
+    console.log(userId);
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       if (confirm('This will permanently delete all your data. Are you absolutely sure?')) {
         this.loading = true;
-        
-        // TODO: Implement account deletion
+        this.userservice.deleteUser(userId).subscribe({
+                      next: () => {
+                console.log(' account deleted successfully');
+            },
+            error: (error) => {
+                console.log('Error deleting account:', error);
+                alert('Failed to delete account. Please try again.');
+            }
+        })
         console.log('Deleting account...');
         
         setTimeout(() => {
