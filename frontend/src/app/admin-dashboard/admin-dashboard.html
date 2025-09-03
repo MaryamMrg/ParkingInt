@@ -166,7 +166,48 @@
             </div>
           </form>
         </div>
-
+<div *ngIf="showEditPlaceForm" class="form-container">
+    <h3>Edit Place</h3>
+    <form (ngSubmit)="updatePlace()" #editPlaceForm="ngForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="editPlaceNumber">Place Number:</label>
+          <input 
+            type="number" 
+            id="editPlaceNumber" 
+            [(ngModel)]="editPlaceData.number" 
+            name="editNumber" 
+            required>
+        </div>
+        <div class="form-group">
+          <label for="editParkingId">Parking ID:</label>
+          <input 
+            type="number" 
+            id="editParkingId" 
+            [(ngModel)]="editPlaceData.parkingId" 
+            name="editParkingId" 
+            required>
+        </div>
+        <div class="form-group">
+          <label for="editStatus">Status:</label>
+          <select id="editStatus" [(ngModel)]="editPlaceData.status" name="editStatus" required>
+            <option value="">Select Status</option>
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="!editPlaceForm.form.valid" class="submit-btn">
+          Update Place
+        </button>
+        <button type="button" (click)="cancelEdit()" class="cancel-btn">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
         <!-- Places Table -->
         <div class="table-container">
           <table class="data-table">

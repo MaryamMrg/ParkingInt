@@ -56,18 +56,5 @@ export class Placeservice {
     });
   }
 
- updatePlaceStatus(placeId: number, startTime: number, endTime: number): Observable<Status> {
-  const params = new HttpParams()
-    .set('startTime', startTime.toString())
-    .set('endTime', endTime.toString());
-  
-  return this.http.put<Status>(
-    `${this.apiUrl}/${placeId}/status`, 
-    null, 
-    { 
-      headers: this.getAuthHeader(), 
-      params: params 
-    }
-  );
-}
+
 }

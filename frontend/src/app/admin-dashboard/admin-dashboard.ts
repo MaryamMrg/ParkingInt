@@ -33,22 +33,32 @@ export class AdminDashboard implements OnInit{
   successMessage = '';
   showAddPlaceForm = false;
   showAddParkingForm=false;
-users:User[]=[];
+  users:User[]=[];
+
+
   // Data
   bookings: Booking[] = [];
   places: Place[] = [];
-   parkings: Parking[] = [];
+  parkings: Parking[] = [];
+  
   stats: DashboardStats = {
-    totalBookings: 0,
-    totalPlaces: 0,
-    totalParkings:0,
-    availablePlaces: 0,
-    occupiedPlaces: 0,
-    reservedPlaces: 0,
-    blockedPlaces: 0,
-    totalUsers: 0
+  totalBookings: 0,
+  totalPlaces: 0,
+  totalParkings:0,
+  availablePlaces: 0,
+  occupiedPlaces: 0,
+  reservedPlaces: 0,
+  blockedPlaces: 0,
+  totalUsers: 0
   };
-
+showEditPlaceForm = false;
+editingPlace: Place | null = null;
+editPlaceData: Place = {
+  placeId: 0,
+  number: 0,
+  status: Status.AVAILABLE,
+  parkingId: 0
+};
   // Form data
   newPlace: Place = {
     placeId:0,
@@ -56,7 +66,7 @@ users:User[]=[];
     status: Status.AVAILABLE,
     parkingId: 0
     
-  };
+  }
 newParking : Parking={
   parkingId:0,
    name: '',
@@ -65,6 +75,7 @@ newParking : Parking={
  opening_hours:0
 
 }
+
   tabs = [
     { id: 'overview', label: 'Overview' },
     { id: 'bookings', label: 'Bookings' },
@@ -294,10 +305,66 @@ addParking():void{
     }
   });
 }
-  editPlace(place: Place): void {
-    console.log('Edit place:', place);
+ 
+
+editPlace(place: Place): void {
+  this.editingPlace = { ...place }; // Create a copy 
+  this.editPlaceData = { ...place }; // Initialize edit form data
+  this.showEditPlaceForm = true;
+}
+
+updatePlace(): void {
+  if (!this.editingPlace) return;
+
+  this.successMessage = '';
+  this.errorMessage = '';
+
+  // form validation
+  if (!this.editPlaceData.number || this.editPlaceData.number <= 0) {
+    this.errorMessage = 'Please enter a valid place number';
+    return;
   }
 
+  if (!this.editPlaceData.parkingId || this.editPlaceData.parkingId <= 0) {
+    this.errorMessage = 'Please enter a valid parking ID';
+    return;
+  }
+
+  if (!this.editPlaceData.status) {
+    this.errorMessage = 'Please select a status';
+    return;
+  }
+
+  this.loading = true;
+
+  this.placeService.updatePlace(this.editingPlace.placeId, this.editPlaceData).subscribe({
+    next: (response) => {
+      console.log('Place updated successfully:', response);
+      this.successMessage = 'Place updated successfully!';
+      this.showEditPlaceForm = false;
+      this.editingPlace = null;
+      this.loadPlaces(); 
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error updating place:', error);
+      this.errorMessage = error.error?.message || 'Failed to update place';
+      this.loading = false;
+    }
+  });
+}
+
+// cancel editing
+cancelEdit(): void {
+  this.showEditPlaceForm = false;
+  this.editingPlace = null;
+  this.editPlaceData = {
+    placeId: 0,
+    number: 0,
+    status: Status.AVAILABLE,
+    parkingId: 0
+  };
+}
   deletePlace(id: number): void {
     if (confirm('Are you sure you want to delete this place?')) {
      

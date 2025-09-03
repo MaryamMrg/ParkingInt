@@ -77,6 +77,9 @@ public class ParkingPlaceService {
         place.setAvailablty(dto.getAvailablty());
         place.setNumber(dto.getNumber());
         place.setStatus(dto.getStatus());
+        Parking parking = parkingRepository.findById(dto.getParkingId())
+                .orElseThrow(() -> new RuntimeException("parking not found"));
+        place.setParking(parking);
 
         ParkingPlace saved = parkingPlaceRepository.save(place);
         return parkingPlaceMapper.toDto(saved);
