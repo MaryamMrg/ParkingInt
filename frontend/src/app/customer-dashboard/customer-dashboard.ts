@@ -6,19 +6,33 @@ import { Booking, Bookingservice } from '../bookingservice';
 import { CommonModule } from '@angular/common';
 import { Placeservice } from '../placeservice';
 import { Place } from '../placeservice';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './customer-dashboard.html',
   styleUrl: './customer-dashboard.css'
 })
 export class CustomerDashboard implements OnInit {
+  //data
   customername: String = '';
   errorMessage = '';
   loading = true;
   parkings: Parking[] = [];
   
+  //search
+ searchTerm: string = '';
+  hasSearched=false;
+  searchResults:Parking={
+      parkingId:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
+  };
+ 
+
   //  properties for bookings
   myBookings: Booking[] = [];
   bookingsLoading = false;
@@ -318,4 +332,40 @@ viewDetails(parking: Parking): void {
     }
     console.log('=== END DEBUG INFO ===');
   }
+
+   onSearch(name: string): void {
+    if (!name.trim()) return;
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.parkingservice.searchParkingByName(name).subscribe({
+        next: (parking) => {
+            this.searchResults = parking; 
+            this.hasSearched = true;
+            this.loading = false;
+            console.log("parking searched for :",parking)
+        },
+        error: (error) => {
+            this.errorMessage = error.message || 'Error searching for parking';
+            this.loading = false;
+            this.hasSearched = true;
+        }
+    });
+}
+ clearSearch(): void {
+    this.searchTerm = '';
+    this.searchResults = {
+       parkingId:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
+    };
+    this.hasSearched = false;
+    this.errorMessage = '';
+  }
+ onSearchInput(event: any) {
+    this.searchTerm = event.target.value;
+  }
+
 }

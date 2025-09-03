@@ -2,6 +2,9 @@ package com.example.backend.Controller;
 
 import com.example.backend.Dto.ParkingDto;
 import com.example.backend.Service.ParkingService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +32,17 @@ public class ParkingController {
         return parkingService.getAllParkings();
     }
 
+    @GetMapping("/searchByName")
+    public ResponseEntity<ParkingDto> searchByName(@RequestParam String name) {
+        try {
+            ParkingDto parking = parkingService.searchByName(name);
+            return ResponseEntity.ok(parking);
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
     @PutMapping("/update/{id}")
     public ParkingDto updateParking(@RequestBody ParkingDto parkingDto,@PathVariable Long id){
         return parkingService.updateParking(id,parkingDto);

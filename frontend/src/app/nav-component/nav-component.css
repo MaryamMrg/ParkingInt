@@ -36,65 +36,7 @@
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .search-container {
-      flex: 1;
-      max-width: 400px;
-      margin: 0 32px;
-    }
-
-    .search-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .search-input {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 25px;
-      padding: 10px 16px;
-      padding-right: 45px;
-      color: white;
-      font-size: 14px;
-      outline: none;
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-    }
-
-    .search-input::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .search-input:focus {
-      border-color: rgba(255, 255, 255, 0.4);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-    }
-
-    .search-button {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.7);
-      cursor: pointer;
-      padding: 6px;
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
-
-    .search-button:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .search-icon {
-      width: 18px;
-      height: 18px;
-    }
+ 
 
     .nav-links {
       display: flex;

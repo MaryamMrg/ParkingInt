@@ -2,23 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule , } from '@angular/common';
 import { Router ,RouterLink} from '@angular/router';
 import { Authservice ,User} from '../authservice';
+import { Parking, Parkingservice } from '../parkingservice';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-nav-component',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,ReactiveFormsModule,FormsModule],
   templateUrl: './nav-component.html',
   styleUrl: './nav-component.css'
 })
 export class NavComponent implements OnInit{
- searchTerm: string = '';
   activeMenuItem: string = 'HOME';
    isMenuOpen = false;
   isMobile = false;
   isMenuCollapsed = true;
   currentUser:User|null=null;
 
+ 
+
 
 constructor(private router :Router,
-  private authservice:Authservice){
+  private authservice:Authservice,
+private parkingService:Parkingservice){
   this.authservice.currentUser$.subscribe(user=>{
     this.currentUser=user;
   });
@@ -32,16 +36,8 @@ ngOnInit(): void {
     { name: 'Signup', route: '/signup' },
     { name: 'About us', route: '/about' }
   ];
- onSearchInput(event: any) {
-    this.searchTerm = event.target.value;
-  }
 
-  onSearch() {
-    if (this.searchTerm.trim()) {
-      console.log('Searching for:', this.searchTerm);
-      // Implement your search logic here
-    }
-  }
+
 
   setActiveMenuItem(item: string) {
     this.activeMenuItem = item;

@@ -806,7 +806,204 @@
   animation: spin 1s ease-in-out infinite;
   margin-bottom: 20px;
 }
+/* Search Container Styles - Fixed Positioning */
+.search-container {
+  position: relative;
+  margin: 25px 0;
+  max-width: 500px;
+  width: 100%;
+  z-index: 1000; /* Ensure it's above other elements */
+}
 
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 10px 35px rgba(0, 0, 0, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.search-wrapper:focus-within {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 15px 45px rgba(0, 0, 0, 0.25),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.search-input {
+  flex: 1;
+  padding: 16px 25px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  height: 100%;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.search-button {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 0 30px 30px 0;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 65px;
+  height: 100%;
+  font-weight: 500;
+}
+
+.search-button:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.search-button:active {
+  transform: scale(0.98);
+}
+
+.search-icon {
+  width: 22px;
+  height: 22px;
+  stroke: white;
+  stroke-width: 2.5;
+}
+
+/* Status Messages */
+.loading-indicator {
+  margin-top: 12px;
+  padding: 12px 18px;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 15px;
+  color: #3b82f6;
+  font-size: 14px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
+
+.error-message {
+  margin-top: 12px;
+  padding: 14px 20px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 15px;
+  color: #ef4444;
+  font-size: 14px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
+
+/* Animation for loading state */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.loading-indicator {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Focus states for accessibility */
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.search-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 100%;
+    margin: 20px 0;
+  }
+  
+  .search-wrapper {
+    border-radius: 25px;
+  }
+  
+  .search-input {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+  
+  .search-button {
+    padding: 13px 20px;
+    min-width: 55px;
+    border-radius: 0 25px 25px 0;
+  }
+  
+  .search-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  
+  .search-button {
+    padding: 12px 18px;
+    min-width: 50px;
+  }
+  
+  .search-input::placeholder {
+    font-size: 13px;
+  }
+}
+
+/* Ensure the search container is visible */
+.welcome-section .search-container {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* If there's any parent hiding it */
+.welcome-section {
+  position: relative;
+  z-index: 10;
+}
+
+/* Make sure it's not being overlapped by other elements */
+.main-content {
+  position: relative;
+}
+
+.welcome-section > * {
+  position: relative;
+  z-index: 20;
+}
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -942,4 +1139,6 @@
   .detail-value {
     font-size: 0.85rem;
   }
+  
+   
 }
