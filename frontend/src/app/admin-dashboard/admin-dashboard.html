@@ -344,7 +344,7 @@
           </div>
         </div>
         
-           <!-- Add Place Form -->
+           <!-- Add Parking Form -->
         <div *ngIf="showAddParkingForm" class="form-container">
           <form (ngSubmit)="addParking()" #parkingForm="ngForm">
             <div class="form-row">
@@ -409,8 +409,8 @@
                   </span>
                 </td> -->
                 <td>
-                  <button class="edit-btn">Edit</button>
-                  <button  class="delete-btn">Delete</button>
+                  <button class="edit-btn" >Edit</button>
+                  <button  class="delete-btn" (click)="deleteParking(parking.parkingId!)">Delete</button>
                 </td>
               </tr>
             </tbody>

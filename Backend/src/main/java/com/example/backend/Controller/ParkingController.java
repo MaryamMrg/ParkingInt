@@ -35,8 +35,8 @@ public class ParkingController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteparking(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deleteParking(@PathVariable Long id){
         parkingService.deleteParking(id);
     }
 }

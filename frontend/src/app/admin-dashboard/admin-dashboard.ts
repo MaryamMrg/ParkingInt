@@ -295,7 +295,7 @@ addParking():void{
       this.successMessage = 'Parking created successfully!';
       this.showAddParkingForm = false;
       this.resetNewPartking();
-      this.loadParkings 
+      this.loadParkings ();
       this.loading = false;
     },
     error: (error) => {
@@ -401,6 +401,21 @@ cancelEdit(): void {
     }
   }
 
+  deleteParking(id:number ){
+    console.log("yfjhn,")
+     if (confirm('Are you sure you want to delete this parking?')) {
+      this.parkingservice.deletParking(id).subscribe({
+        next: () => {
+          this.successMessage = 'Parking deleted successfully';
+          this.loadParkings();
+        },
+        error: (error) => {
+          console.error('Error deleting parking:', error);
+          this.errorMessage = 'Failed to delete parking';
+        }
+      });
+    }
+  }
   formatTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
   }
