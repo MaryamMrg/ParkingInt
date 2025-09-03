@@ -26,15 +26,20 @@ public class UserController {
 
 
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
     }
 
 
 
-    @PutMapping("update/{id}")
-    public UserDto updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
-        return userService.updateUser(userDto, id);
+    @PutMapping("update/{userId}")
+    public UserDto updateUser(@RequestBody UserDto userDto, @PathVariable Long userId) {
+        return userService.updateUser(userDto, userId);
+    }
+
+    @PutMapping("password/{userId}")
+    public  UserDto changePassWord(@RequestBody UserDto userDto,@PathVariable Long userId){
+        return userService.changePassword(userDto,userId);
     }
 }

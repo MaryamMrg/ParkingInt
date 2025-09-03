@@ -19,7 +19,7 @@ export interface LoginResponse {
 export interface User {
   id: number;
   name: string;
-    email: string;
+  email: string;
   role: string;
 
   userId?: number;

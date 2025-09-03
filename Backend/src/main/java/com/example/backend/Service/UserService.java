@@ -39,6 +39,16 @@ public class UserService {
         return userMapper.toDto(savedUser);
     }
 
+
+    public UserDto changePassword(UserDto userDto,Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null){
+            throw new RuntimeException("user not found");
+        }
+        user.setPassword(userDto.getPassword());
+        User savedUser= userRepository.save(user);
+        return userMapper.toDto(savedUser);
+    }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

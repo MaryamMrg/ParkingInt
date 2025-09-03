@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/userservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/userservice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
