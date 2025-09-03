@@ -423,7 +423,18 @@ cancelEdit(): void {
   this.editParkingData = { ...parking }; // Initialize edit form data
   this.showEditParkingFrom = true;
 }
-
+// cancel editing
+cancelParkingEdit(): void {
+  this.showEditParkingFrom = false;
+  this.editingParking = null;
+  this.editParkingData = {
+      parkingId:0,
+   name: '',
+ capacity: 0,
+ avaible_places: 0,
+ opening_hours:0
+  };
+}
   updateParking(): void {
     console.log("hhhhhh")
   if (!this.editingParking) return;

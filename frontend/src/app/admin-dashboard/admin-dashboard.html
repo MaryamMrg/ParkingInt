@@ -421,7 +421,7 @@
         <button type="submit" [disabled]="!editParkingForm.form.valid" class="submit-btn">
           Update Parking
         </button>
-        <button type="button" class="cancel-btn">
+        <button type="button" class="cancel-btn" (click)="cancelParkingEdit()">
           Cancel
         </button>
       </div>
