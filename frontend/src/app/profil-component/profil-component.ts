@@ -140,28 +140,27 @@ export class ProfilComponent implements OnInit{
   
   this.userservice.updateUser(userId, this.profileForm).subscribe({
     next: (response) => {
-      // Option 1: If your backend returns the updated user directly
-      if (response.id ) {
-        this.currentUser = response;
-      } 
-      // Option 2: If your backend returns a response object with user property
-      else if (response.user) {
-        this.currentUser = response.user;
-      }
-      // Option 3: If backend just returns success, update locally
-      else {
+      // // Option 1: If your backend returns the updated user directly
+      // if (response.id ) {
+      //   this.currentUser = response;
+      // } 
+      // // Option 2: If your backend returns a response object with user property
+      // else if (response.user) {
+      //   this.currentUser = response.user;
+      // }
+      // // Option 3: If backend just returns success, update locally
+      // else {
         if (this.currentUser) {
           this.currentUser.name = this.profileForm.name;
           this.currentUser.email = this.profileForm.email;
           this.currentUser.role = this.profileForm.role;
         }
-      }
+      
 
-      // Update localStorage and auth service
       if (this.currentUser) {
         localStorage.setItem('user', JSON.stringify(this.currentUser));
         // Update auth service current user
-        this.authservice.setCurrentUser(this.currentUser); // You may need to add this method
+        this.authservice.setCurrentUser(this.currentUser); 
       }
 
       this.successMessage = 'Profile updated successfully!';
@@ -204,17 +203,14 @@ export class ProfilComponent implements OnInit{
     this.loading = true;
     this.clearMessages();
 
-    // Note: You'll need to implement this endpoint in your backend and service
     console.log('Changing password...');
     
-    // Simulate API call
     setTimeout(() => {
       try {
         this.successMessage = 'Password changed successfully!';
         this.isChangingPassword = false;
         this.loading = false;
         
-        // Clear password form
         this.passwordForm = {
           currentPassword: '',
           newPassword: '',
