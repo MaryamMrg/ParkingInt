@@ -2,11 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule , } from '@angular/common';
 import { Router ,RouterLink} from '@angular/router';
 import { Authservice ,User} from '../authservice';
-import { Parking, Parkingservice } from '../parkingservice';
+import {  Parkingservice } from '../parkingservice';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-nav-component',
-  imports: [CommonModule,RouterLink,ReactiveFormsModule,FormsModule],
+  imports: [CommonModule,RouterLink,ReactiveFormsModule,FormsModule,
+    MatButtonModule
+    ,MatIconModule,MatMenuModule,MatToolbarModule
+  ],
   templateUrl: './nav-component.html',
   styleUrl: './nav-component.css'
 })

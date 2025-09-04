@@ -313,7 +313,6 @@ selectPlace(place: Place): void {
     this.showBookingModal = true;
     this.bookingError = '';
     this.checkModalVisibility();
-    // TEMPORARY: Force same-day times for testing
     const now = new Date();
     const thirtyMinutesLater = new Date(now.getTime() + 30 * 60 * 1000); // 30 minutes later
     
