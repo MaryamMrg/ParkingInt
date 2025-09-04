@@ -6,14 +6,42 @@ import { CustomerDashboard } from './customer-dashboard/customer-dashboard';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { Parkingplace } from './parkingplace/parkingplace';
 import { ProfilComponent } from './profil-component/profil-component';
+import { AuthGuard } from './auth-guard-guard';
 
 export const routes: Routes = [
-
+   
+    //public paths
     {path : '', component : HomeComponent},
     {path: 'login', component:LoginComponent},
     {path : 'signup' , component:Signup},
-    {path : 'customer-Dash',component:CustomerDashboard},
-    {path : 'admin-dashboard', component : AdminDashboard},
-    {path : 'places',component : Parkingplace},
-    {path : 'profil',component:ProfilComponent}
+
+
+    //needs guard
+    {path : 'customer-Dash',
+        component:CustomerDashboard,
+        canActivate:[AuthGuard],
+        data : { expectedRole:'CUSTOMER'}
+
+    },
+
+    {path : 'admin-dashboard',
+         component : AdminDashboard,
+         canActivate:[AuthGuard],
+         data:{expectedRole:'ADMIN'}
+         
+        },
+
+    {path : 'places',
+        component : Parkingplace,
+        canActivate:[AuthGuard],
+        data : { expectedRole:'CUSTOMER'}
+    },
+
+    {path : 'profil',
+        component:ProfilComponent,
+           canActivate:[AuthGuard],
+        data : { expectedRole:['CUSTOMER','ADMIN']}
+    
+    },
+    
 ];
