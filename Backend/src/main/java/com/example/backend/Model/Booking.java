@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +16,8 @@ public class Booking {
     private Long bookingId;
 
     private Long userId;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
 
 
     public ParkingPlace getParkingPlace() {
@@ -50,20 +52,12 @@ public class Booking {
         this.userId = userId;
     }
 
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @ManyToOne

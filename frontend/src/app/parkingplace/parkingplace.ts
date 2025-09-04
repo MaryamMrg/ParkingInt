@@ -347,7 +347,8 @@ private formatTime(date: Date): string {
   return `${hours}:${minutes}`;
 }
 
-private convertTimeToTimestamp(timeString: string, isEndTime: boolean = false): number {
+// Rename and modify the method to return Date objects
+private convertTimeToDate(timeString: string, isEndTime: boolean = false): Date {
   const [hours, minutes] = timeString.split(':').map(Number);
   const date = new Date();
   
@@ -363,7 +364,7 @@ private convertTimeToTimestamp(timeString: string, isEndTime: boolean = false): 
   }
   
   date.setHours(hours, minutes, 0, 0);
-  return date.getTime();
+  return date;  // Return Date object instead of timestamp
 }
 submitBooking(): void {
   
@@ -372,8 +373,8 @@ submitBooking(): void {
     return;
   }
 
-  const startTimestamp = this.convertTimeToTimestamp(this.startTime, false);
-  const endTimestamp = this.convertTimeToTimestamp(this.endTime, true);
+  const startTimestamp = this.convertTimeToDate(this.startTime, false);
+  const endTimestamp = this.convertTimeToDate(this.endTime, true);
 
   if (endTimestamp <= startTimestamp) {
     this.bookingError = 'End time must be after start time';

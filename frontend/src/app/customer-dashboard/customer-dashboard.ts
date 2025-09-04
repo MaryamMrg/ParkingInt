@@ -52,6 +52,7 @@ export class CustomerDashboard implements OnInit {
   ngOnInit(): void {
     this.loadCustomerData();
     this.loadParkings();
+    this.loadMyBookings();
   }
 
   loadCustomerData(): void {
@@ -173,34 +174,34 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
   }
 
   // Get booking status
-  getBookingStatus(booking: Booking): string {
-    const now = Date.now();
-    const startTime = booking.startTime;
-    const endTime = booking.endTime;
+  // getBookingStatus(booking: Booking): string {
+  //   const now = Date.now();
+  //   const startTime = booking.startTime;
+  //   const endTime = booking.endTime;
 
-    if (now < startTime) {
-      return 'Upcoming';
-    } else if (now >= startTime && now <= endTime) {
-      return 'Active';
-    } else {
-      return 'Completed';
-    }
-  }
+  //   if (now < startTime) {
+  //     return 'Upcoming';
+  //   } else if (now  startTime && now <= endTime) {
+  //     return 'Active';
+  //   } else {
+  //     return 'Completed';
+  //   }
+  // }
 debugBooking(booking: any): void {
   console.log('Full booking object:', booking);
   console.log('Booking ID:', booking.bookingId);
   console.log('All keys:', Object.keys(booking));
 }
-  // Get status class for styling
-  getBookingStatusClass(booking: Booking): string {
-    const status = this.getBookingStatus(booking);
-    switch (status) {
-      case 'Upcoming': return 'status-upcoming';
-      case 'Active': return 'status-active';
-      case 'Completed': return 'status-completed';
-      default: return '';
-    }
-  }
+  // // Get status class for styling
+  // getBookingStatusClass(booking: Booking): string {
+  //   const status = this.getBookingStatus(booking);
+  //   switch (status) {
+  //     case 'Upcoming': return 'status-upcoming';
+  //     case 'Active': return 'status-active';
+  //     case 'Completed': return 'status-completed';
+  //     default: return '';
+  //   }
+  // }
 
   // Cancel booking method
   cancelBooking(booking: Booking): void {

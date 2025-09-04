@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 export interface Booking{
   bookingId?:number,
   userId?: number,
-  parkingId: number,
+  parkingId?: number,
   placeId?: number,
-  startTime: number,
-  endTime: number
+  startTime: Date,
+  endTime: Date
 }
 @Injectable({
   providedIn: 'root'

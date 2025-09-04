@@ -179,6 +179,7 @@ newParking : Parking={
     try {
       this.bookingService.getAllBookings().subscribe({
         next: (data) => {
+          console.log("booking : ",data)
           this.bookings = data || [];
           this.calculateStats();
         },

@@ -3,23 +3,25 @@ package com.example.backend.Dto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDto {
 
-    private Long id;
+    private Long bookingId;
     private Long userId;
     private Long parkingId;
     private Long placeId;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
 
-    public Long getId() {
-        return id;
+    public Long getBookingId() {
+        return bookingId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
     }
 
     public Long getUserId() {
@@ -46,19 +48,19 @@ public class BookingDto {
         this.placeId = placeId;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 }
