@@ -22,7 +22,7 @@ export interface ChangePasswordRequest {
 
 @Component({
   selector: 'app-profil-component',
-  imports: [CommonModule,FormsModule,RouterLink],
+  imports: [CommonModule,FormsModule],
   templateUrl: './profil-component.html',
   styleUrl: './profil-component.css'
 })

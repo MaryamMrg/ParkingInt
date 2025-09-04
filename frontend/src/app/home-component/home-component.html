@@ -1,5 +1,5 @@
 <div class="home-container">
-      <!-- Hero Section -->
+     
       <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -14,18 +14,9 @@
             <button class="cta-button secondary">Learn More</button>
           </div>
         </div>
-        
-        <!-- Animated parking spots indicators -->
-        <div class="parking-indicators">
-          <div class="indicator" [class.occupied]="spot.occupied" *ngFor="let spot of parkingSpots; let i = index">
-            <span class="spot-number">{{spot.number}}</span>
-          </div>
-        </div>
       </section>
 
-      
-
-      <!-- CTA Section -->
+    
       <section class="cta-section">
         <div class="container">
           <h2 class="cta-title">Ready to Transform Your Parking Experience?</h2>
