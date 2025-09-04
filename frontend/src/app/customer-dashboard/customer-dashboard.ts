@@ -342,7 +342,7 @@ viewDetails(parking: Parking): void {
 
     this.parkingservice.searchParkingByName(name).subscribe({
         next: (parking) => {
-            this.searchResults = parking; 
+            this.searchResults = parking;
             this.hasSearched = true;
             this.loading = false;
             console.log("parking searched for :",parking)
