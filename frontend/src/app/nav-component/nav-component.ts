@@ -19,6 +19,7 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class NavComponent implements OnInit{
   activeMenuItem: string = 'HOME';
+  
    isMenuOpen = false;
   isMobile = false;
   isMenuCollapsed = true;
