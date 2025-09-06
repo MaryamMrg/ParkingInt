@@ -4,6 +4,9 @@ import { Authservice } from '../authservice';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+
+
+
 @Component({
   selector: 'app-login-component',
   imports: [ReactiveFormsModule,CommonModule],
@@ -12,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent implements OnInit {
 
-   loginForm: FormGroup;
+  loginForm: FormGroup;
   loading = false;
   errorMessage = '';
   successMessage = '';
@@ -20,13 +23,16 @@ export class LoginComponent implements OnInit {
     constructor(
     private formBuilder: FormBuilder,
     private authService: Authservice,
-    private router: Router
+    private router: Router,private snackBar:MatSnackBar
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
+
+
+
 
   ngOnInit(): void {
         this.errorMessage='';
@@ -37,6 +43,8 @@ export class LoginComponent implements OnInit {
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
 
+
+  
 
   onSumbit():void{
   this.errorMessage='';
@@ -61,7 +69,7 @@ export class LoginComponent implements OnInit {
           
           console.log('saved token : ', response.token);
           console.log('user  is:', response.user);
-          
+             this.snackBar.open('Login successfully', 'Close', {duration: 3000});
            switch(response.user.role) {
           case 'ADMIN':
             this.router.navigate(['/admin-dashboard']);

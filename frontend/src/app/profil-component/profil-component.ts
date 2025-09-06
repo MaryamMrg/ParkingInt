@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Authservice, User } from '../authservice';
-import { RouterLink } from '@angular/router';
 import { Userservice } from '../userservice';
-import { U } from '@angular/cdk/keycodes';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
+
 export interface UpdateProfileRequest {
   id: number;
   name: string;
@@ -14,11 +16,13 @@ export interface UpdateProfileRequest {
   userId?: number;
 }
 
+
 export interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 }
+
 
 @Component({
   selector: 'app-profil-component',
@@ -58,7 +62,13 @@ export class ProfilComponent implements OnInit{
     memberSince: ''
   };
 
-  constructor(private authservice :Authservice, private router:Router,private userservice:Userservice){}
+  constructor(private authservice :Authservice,
+     private router:Router,
+     private userservice:Userservice,
+    private snackBar:MatSnackBar){}
+
+
+
   ngOnInit(): void {
     this.loadUserProfile();
   }
@@ -124,6 +134,9 @@ export class ProfilComponent implements OnInit{
     this.clearMessages();
   }
 
+
+
+
  updateProfile(): void {
   if (!this.validateProfileForm()) {
     return;
@@ -165,6 +178,8 @@ export class ProfilComponent implements OnInit{
       }
 
       this.successMessage = 'Profile updated successfully!';
+      this.snackBar.open('profile updated successfully', 'Close', {duration: 3000});
+
       this.isEditingProfile = false;
       this.loading = false;
     },
@@ -176,6 +191,8 @@ export class ProfilComponent implements OnInit{
   });
 }
 
+
+
   startChangePassword(): void {
     this.isChangingPassword = true;
     this.passwordForm = {
@@ -186,6 +203,8 @@ export class ProfilComponent implements OnInit{
     this.clearMessages();
   }
 
+
+
   cancelChangePassword(): void {
     this.isChangingPassword = false;
     this.passwordForm = {
@@ -195,6 +214,9 @@ export class ProfilComponent implements OnInit{
     };
     this.clearMessages();
   }
+
+
+
 
   changePassword(): void {
     if (!this.validatePasswordForm()) {
@@ -237,6 +259,8 @@ export class ProfilComponent implements OnInit{
     // });
   }
 
+
+
   validateProfileForm(): boolean {
     if (!this.profileForm.name.trim()) {
       this.errorMessage = 'Name is required';
@@ -256,6 +280,8 @@ export class ProfilComponent implements OnInit{
 
     return true;
   }
+
+
 
   validatePasswordForm(): boolean {
     if (!this.passwordForm.currentPassword) {
@@ -286,10 +312,16 @@ export class ProfilComponent implements OnInit{
     return true;
   }
 
+
+
+
   clearMessages(): void {
     this.errorMessage = '';
     this.successMessage = '';
   }
+
+
+
 
   deleteAccount(userId:number): void {
     userId!=this.currentUser?.userId
@@ -300,6 +332,8 @@ export class ProfilComponent implements OnInit{
         this.userservice.deleteUser(userId).subscribe({
                       next: () => {
                 console.log(' account deleted successfully');
+                this.snackBar.open('account deleted successfully', 'Close', {duration: 3000});
+
             },
             error: (error) => {
                 console.log('Error deleting account:', error);
@@ -316,6 +350,9 @@ export class ProfilComponent implements OnInit{
     }
   }
 
+
+
+
   navigateToBookings(): void {
     if (this.currentUser?.role === 'CUSTOMER') {
       this.router.navigate(['/customer-Dash']);
@@ -328,6 +365,8 @@ export class ProfilComponent implements OnInit{
   logout(): void {
     this.authservice.logout();
     this.router.navigate(['/login']);
+    this.snackBar.open('Logout successfully', 'Close', {duration: 3000});
+
   }
 
   getRoleBadgeClass(): string {

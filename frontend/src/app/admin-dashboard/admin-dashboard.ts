@@ -33,14 +33,16 @@ export class AdminDashboard implements OnInit{
   successMessage = '';
   showAddPlaceForm = false;
   showAddParkingForm=false;
-  users:User[]=[];
+
 
 
   // Data
   bookings: Booking[] = [];
   places: Place[] = [];
   parkings: Parking[] = [];
-  
+  users:User[]=[];
+
+
   // Dash Stats
   stats: DashboardStats = {
   totalBookings: 0,
@@ -58,37 +60,37 @@ export class AdminDashboard implements OnInit{
   editingParking : Parking|null=null;
   editParkingData : Parking={
      parkingId:0,
-   name: '',
- capacity: 0,
- avaible_places: 0,
- opening_hours:0
+     name: '',
+     capacity: 0,
+     avaible_places: 0,
+     opening_hours:0
   }
 
   //Edit Palce
 showEditPlaceForm = false;
 editingPlace: Place | null = null;
 editPlaceData: Place = {
-  placeId: 0,
-  number: 0,
-  status: Status.AVAILABLE,
-  parkingId: 0
+      placeId: 0,
+      number: 0,
+      status: Status.AVAILABLE,
+      parkingId: 0
 };
   // Add New Place
   newPlace: Place = {
-    placeId:0,
-    number: 0,
-    status: Status.AVAILABLE,
-    parkingId: 0
+      placeId:0,
+      number: 0,
+      status: Status.AVAILABLE,
+      parkingId: 0
     
   }
 
   // Add New Parking
 newParking : Parking={
-  parkingId:0,
-   name: '',
- capacity: 0,
- avaible_places: 0,
- opening_hours:0
+      parkingId:0,
+      name: '',
+      capacity: 0,
+      avaible_places: 0,
+      opening_hours:0
 
 }
   // adminDash tabs
@@ -103,6 +105,7 @@ newParking : Parking={
 
   statusOptions = Object.values(Status);
 
+  //constructor
   constructor(private userservice:Userservice,
     private bookingService: Bookingservice,
     private placeService: Placeservice,
@@ -111,58 +114,61 @@ newParking : Parking={
     private location:Location
   ) {}
 
+
   ngOnInit(): void {
+
     this.currentUser = this.authService.getCurrentUser();
     if (!this.currentUser || this.currentUser.role !== 'ADMIN') {
-      // Redirect to login or show error
       this.errorMessage = 'Access denied. Admin privileges required.';
       return;
     }
+    //load data
     this.loadInitialData();
     this.loadUsers();
-    this.loadParkings();
+   
   }
 
-  async loadInitialData(): Promise<void> {
-    this.loading = true;
-    try {
-      await Promise.all([
-        this.loadBookings(),
-        this.loadPlaces()
-      ]);
-      this.calculateStats();
-    } catch (error) {
-      this.errorMessage = 'Failed to load dashboard data';
-    } finally {
-      this.loading = false;
-    }
+  // load initial data
+   loadInitialData(){
+   this.loadBookings();
+   this.loadParkings();
+   this.loadPlaces()
+    
   }
  
 
-  loadUsers():void{
+   loadUsers():void{
 
     this.errorMessage='';
     this.loading=true;
-   this.userservice.getAllUsers().subscribe({
+
+    this.userservice.getAllUsers().subscribe({
     next : (users)=>{
+
       console.log('recieved users :',users);
 
       this.users=users;
       this.loading=false;
     }
-   })
+   });
   }
+
+//load Parkings
    loadParkings(): void {
     this.errorMessage = '';
     this.loading = true;
 
     this.parkingservice.getAllPArkings().subscribe({
+
       next: (parkings) => {
+
         console.log('parking received:', parkings);
-        
         parkings.forEach((parking: Parking) => {
-          console.log(`Parking: ${parking.name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
+          console.log(`Parking: ${parking.name},
+             Capacity: ${parking.capacity},
+              Available: ${parking.avaible_places}`);
         });
+
         this.parkings = parkings;
         this.loading = false;
       },
@@ -174,43 +180,58 @@ newParking : Parking={
     });
   }
 
-
+//load all bookings
   async loadBookings(): Promise<void> {
+
     try {
       this.bookingService.getAllBookings().subscribe({
+
         next: (data) => {
           console.log("booking : ",data)
           this.bookings = data || [];
           this.calculateStats();
+
         },
         error: (error) => {
+
           console.error('Error loading bookings:', error);
           this.errorMessage = 'Failed to load bookings';
+
         }
       });
     } catch (error) {
+
       console.error('Error loading bookings:', error);
     }
   }
 
+//load all places
   async loadPlaces(): Promise<void> {
+
     try {
       this.placeService.getAllPlaces().subscribe({
+
         next: (data) => {
           this.places = data || [];
           this.calculateStats();
+
         },
         error: (error) => {
+
           console.error('Error loading places:', error);
           this.errorMessage = 'Failed to load places';
+
         }
       });
     } catch (error) {
+
       console.error('Error loading places:', error);
     }
   }
 
+  //calculation
   calculateStats(): void {
+
     this.stats = {
       totalBookings: this.bookings.length,
       totalPlaces: this.places.length,
@@ -223,22 +244,24 @@ newParking : Parking={
     };
   }
 
+
   setActiveTab(tabId: string): void {
     this.activeTab = tabId;
   }
 
+  //refresh data
   refreshData(): void {
     this.loadInitialData();
     this.successMessage = 'Data refreshed successfully';
   }
 
+  //add new Place
   addPlace(): void {
 
-   // Clear previous messages
   this.successMessage = '';
   this.errorMessage = '';
 
-  // Validate form data
+  // form validation
   if (!this.newPlace.number || this.newPlace.number <= 0) {
     this.errorMessage = 'Please enter a valid place number';
     return;
@@ -266,71 +289,35 @@ newParking : Parking={
 
   this.placeService.addPlace(placeToAdd).subscribe({
     next: (response) => {
+
       console.log('Place created successfully:', response);
       this.successMessage = 'Place created successfully!';
       this.showAddPlaceForm = false;
       this.resetNewPlace();
       this.loadPlaces(); 
       this.loading = false;
+
     },
     error: (error) => {
+
       console.error('Error adding place:', error);
       this.errorMessage = error.error?.message || 'Failed to add place';
       this.loading = false;
     }
   });
-    // if (this.newPlace.number && this.newPlace.parkingId && this.newPlace.status) {
-    //   this.placeService.addPlace(this.newPlace as Place).subscribe({
-    //     next: () => {
-    //       this.successMessage = 'Place added successfully';
-    //       this.loadPlaces();
-    //       this.showAddPlaceForm = false;
-    //       this.resetNewPlace();
-    //     },
-    //     error: (error) => {
-    //       console.error('Error adding place:', error);
-    //       this.errorMessage = 'Failed to add place';
-    //     }
-    //   });
-    // }
+   
   }
-addParking():void{
-   this.successMessage = '';
-  this.errorMessage = '';
 
-  const parkingToAdd: Parking = {
-    parkingId: 0, 
-    name: this.newParking.name,
-    capacity: this.newParking.capacity,
-    opening_hours: this.newParking.opening_hours,
-    avaible_places:this.newParking.avaible_places
-  };
-
-  this.parkingservice.createParking(parkingToAdd).subscribe({
-    next: (response) => {
-      console.log('Parking created successfully:', response);
-      this.successMessage = 'Parking created successfully!';
-      this.showAddParkingForm = false;
-      this.resetNewPartking();
-      this.loadParkings ();
-      this.loading = false;
-    },
-    error: (error) => {
-      console.error('Error adding parking:', error);
-      this.errorMessage = error.error?.message || 'Failed to add parking';
-      this.loading = false;
-    }
-  });
-}
- 
-
-editPlace(place: Place): void {
+  
+ editPlace(place: Place): void {
   this.editingPlace = { ...place }; // Create a copy 
   this.editPlaceData = { ...place }; // Initialize edit form data
   this.showEditPlaceForm = true;
 }
 
-updatePlace(): void {
+
+
+ updatePlace(): void {
   if (!this.editingPlace) return;
 
   this.successMessage = '';
@@ -356,42 +343,63 @@ updatePlace(): void {
 
   this.placeService.updatePlace(this.editingPlace.placeId, this.editPlaceData).subscribe({
     next: (response) => {
+
       console.log('Place updated successfully:', response);
       this.successMessage = 'Place updated successfully!';
       this.showEditPlaceForm = false;
       this.editingPlace = null;
       this.loadPlaces(); 
       this.loading = false;
+
     },
     error: (error) => {
+
       console.error('Error updating place:', error);
       this.errorMessage = error.error?.message || 'Failed to update place';
       this.loading = false;
+
     }
   });
 }
 
+
+
+
+
+
 // cancel editing
-cancelEdit(): void {
+  cancelEdit(): void {
+
   this.showEditPlaceForm = false;
   this.editingPlace = null;
   this.editPlaceData = {
-    placeId: 0,
-    number: 0,
-    status: Status.AVAILABLE,
-    parkingId: 0
+      placeId: 0,
+      number: 0,
+      status: Status.AVAILABLE,
+      parkingId: 0
   };
+
 }
+
+
+
+
+
+
+
   deletePlace(id: number): void {
     if (confirm('Are you sure you want to delete this place?')) {
      
       this.placeService.deletPlace(id).subscribe({
         next: () => {
+
            console.log(id)
           this.successMessage = 'Place deleted successfully';
           this.loadPlaces();
+
         },
         error: (error) => {
+
           console.error('Error deleting place:', error);
           this.errorMessage = 'Failed to delete place';
         }
@@ -399,10 +407,56 @@ cancelEdit(): void {
     }
   }
 
+
+
+
+
+// add new parking
+addParking():void{
+   this.successMessage = '';
+   this.errorMessage = '';
+
+  const parkingToAdd: Parking = {
+    parkingId: 0, 
+    name: this.newParking.name,
+    capacity: this.newParking.capacity,
+    opening_hours: this.newParking.opening_hours,
+    avaible_places:this.newParking.avaible_places
+  };
+
+  this.parkingservice.createParking(parkingToAdd).subscribe({
+    next: (response) => {
+
+      console.log('Parking created successfully:', response);
+      this.successMessage = 'Parking created successfully!';
+      this.showAddParkingForm = false;
+      this.resetNewPartking();
+      this.loadParkings ();
+      this.loading = false;
+
+    },
+    error: (error) => {
+
+      console.error('Error adding parking:', error);
+      this.errorMessage = error.error?.message || 'Failed to add parking';
+      this.loading = false;
+
+    }
+  });
+}
+ 
+
+
+
+
+
   editBooking(booking: Booking): void {
     console.log('Edit booking:', booking);
   }
 
+
+
+  
   deleteBooking(id: number): void {
     if (confirm('Are you sure you want to delete this booking?')) {
       this.bookingService.deleteBooking(id).subscribe({
@@ -418,12 +472,19 @@ cancelEdit(): void {
     }
   }
 
+
+
+
   editParking(parking: Parking): void {
     console.log("ilgjkhvfd")
   this.editingParking = { ...parking }; // Create a copy 
   this.editParkingData = { ...parking }; // Initialize edit form data
   this.showEditParkingFrom = true;
 }
+
+
+
+
 // cancel editing
 cancelParkingEdit(): void {
   this.showEditParkingFrom = false;
@@ -436,6 +497,11 @@ cancelParkingEdit(): void {
  opening_hours:0
   };
 }
+
+
+
+
+
   updateParking(): void {
     console.log("hhhhhh")
   if (!this.editingParking) return;
@@ -477,6 +543,10 @@ cancelParkingEdit(): void {
     }
   });
 }
+
+
+
+
   deleteParking(id:number ){
     console.log("yfjhn,")
      if (confirm('Are you sure you want to delete this parking?')) {
@@ -492,19 +562,29 @@ cancelParkingEdit(): void {
       });
     }
   }
+
+
+
+
   formatTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
   }
+
+
 
   getOccupancyRate(): number {
     if (this.stats.totalPlaces === 0) return 0;
     return Math.round((this.stats.occupiedPlaces / this.stats.totalPlaces) * 100);
   }
 
+
+
   getAvailabilityRate(): number {
     if (this.stats.totalPlaces === 0) return 0;
     return Math.round((this.stats.availablePlaces / this.stats.totalPlaces) * 100);
   }
+
+
 
   resetNewPlace(): void {
     this.newPlace = {
@@ -514,32 +594,54 @@ cancelParkingEdit(): void {
       parkingId: 0
     };
   }
+
+
+
+
  resetNewPartking(): void {
     this.newParking = {
-      parkingId:0,
-   name: '',
- capacity: 0,
- avaible_places: 0,
- opening_hours:0
+        parkingId:0,
+        name: '',
+        capacity: 0,
+        avaible_places: 0,
+        opening_hours:0
     };
   }
+
+
+
   logout(): void {
     this.authService.logout();
   }
+
+
 
   trackByBookingId(index: number, booking: any): any {
     return booking.id || index;
   }
 
+
+
   trackByPlaceId(index: number, place: Place): any {
     return place.placeId;
   }
+
+
+
   trackByUserId(index:number,user:User):any{
     return user.id;
   }
+
+
+
    trackByParkingId(index:number,parking:Parking):any{
     return parking.parkingId;
   }
+
+
+
+
+
    goBack(): void {
     this.location.back();
   }

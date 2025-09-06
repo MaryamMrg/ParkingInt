@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './customer-dashboard.css'
 })
 export class CustomerDashboard implements OnInit {
+
   //data
   customername: String = '';
   errorMessage = '';
@@ -26,10 +27,10 @@ export class CustomerDashboard implements OnInit {
   hasSearched=false;
   searchResults:Parking={
       parkingId:0,
-   name: '',
- capacity: 0,
- avaible_places: 0,
- opening_hours:0
+      name: '',
+      capacity: 0,
+      avaible_places: 0,
+      opening_hours:0
   };
  
 
@@ -49,18 +50,22 @@ export class CustomerDashboard implements OnInit {
     private router: Router
   ) { }
 
+
   ngOnInit(): void {
     this.loadCustomerData();
     this.loadParkings();
     this.loadMyBookings();
   }
 
+
+
   loadCustomerData(): void {
+
     const user = this.authservice.getCurrentUser();
     console.log('Current user from auth service:', user);
     
     this.customername = user?.name || user?.name || user?.email?.split('@')[0] || 'Customer';
-this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id || null;    
+    this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id || null;    
     console.log('Customer name:', this.customername);
     console.log('Current user ID:', this.currentUserId);
     
@@ -83,21 +88,28 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     console.log('Final customer name:', this.customername);
   }
 
+
+
   loadParkings(): void {
+    
     this.errorMessage = '';
     this.loading = true;
 
     this.parkingservice.getAllPArkings().subscribe({
       next: (parkings) => {
+
         console.log('parking received:', parkings);
-        
         parkings.forEach((parking: Parking) => {
-          console.log(`Parking: ${parking.name}, Capacity: ${parking.capacity}, Available: ${parking.avaible_places}`);
+          console.log(`Parking: ${parking.name}, 
+            Capacity: ${parking.capacity}, 
+            Available: ${parking.avaible_places}`);
         });
         this.parkings = parkings;
         this.loading = false;
+
       },
       error: (error) => {
+
         console.log('error fetching parkings:', error);
         this.errorMessage = 'Failed to load parking locations';
         this.loading = false;
@@ -105,6 +117,8 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
     });
   }
 
+
+  
 
   loadMyBookings(): void {
     console.log("current user id : ",this.currentUserId)
@@ -149,6 +163,7 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
   }
 
   
+
   toggleBookingsView(): void {
     this.showBookings = !this.showBookings;
     if (this.showBookings) {
@@ -165,6 +180,8 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
       }
     }
   }
+
+
 
   // Format date helper
   formatDateTime(timestamp: number): string {
@@ -187,11 +204,18 @@ this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id
   //     return 'Completed';
   //   }
   // }
+
+
+
+
 debugBooking(booking: any): void {
   console.log('Full booking object:', booking);
   console.log('Booking ID:', booking.bookingId);
   console.log('All keys:', Object.keys(booking));
 }
+
+
+
   // // Get status class for styling
   // getBookingStatusClass(booking: Booking): string {
   //   const status = this.getBookingStatus(booking);
@@ -202,6 +226,9 @@ debugBooking(booking: any): void {
   //     default: return '';
   //   }
   // }
+
+
+
 
   // Cancel booking method
   cancelBooking(booking: Booking): void {
@@ -228,20 +255,24 @@ debugBooking(booking: any): void {
     }
   }
 
+
   
   isParkingAvailable(parking: Parking): boolean {
     return (parking.avaible_places || 0) > 0;
   }
 
+
   trackByParkingId(index: number, parking: any): any {
     return parking.parkingId || parking.id || index;
   }
+
 
   trackByBookingId(index: number, booking: Booking): any {
     return booking.bookingId || index;
   }
 
-viewDetails(parking: Parking): void {
+
+  viewDetails(parking: Parking): void {
   console.log('Navigating to parking place with:', parking);
   this.showBookings = false;
   this.showPlaces = false;
@@ -258,11 +289,13 @@ viewDetails(parking: Parking): void {
   });
 }
 
+
   reserveNow(parking: Parking): void {
     if (this.isParkingAvailable(parking)) {
       this.router.navigate(['/reserve', parking.parkingId]);
     }
   }
+
 
   getAvailabilityPercentage(parking: Parking): number {
     if (!parking.capacity || parking.capacity === 0) return 0;
@@ -270,12 +303,15 @@ viewDetails(parking: Parking): void {
     return (availableSpaces / parking.capacity) * 100;
   }
 
+
+
   getStatusClass(parking: Parking): string {
     const availableSpaces = parking.avaible_places || 0;
     if (availableSpaces > 10) return 'status-available';
     if (availableSpaces > 0) return 'status-limited';
     return 'status-full';
   }
+
 
   getStatusText(parking: Parking): string {
     const availableSpaces = parking.avaible_places || 0;
@@ -335,6 +371,8 @@ viewDetails(parking: Parking): void {
     console.log('=== END DEBUG INFO ===');
   }
 
+
+
    onSearch(name: string): void {
     if (!name.trim()) return;
     this.loading = true;
@@ -353,6 +391,9 @@ viewDetails(parking: Parking): void {
             this.hasSearched = true;
         }
     });
+
+
+
 }
  clearSearch(): void {
     this.searchTerm = '';
@@ -366,6 +407,9 @@ viewDetails(parking: Parking): void {
     this.hasSearched = false;
     this.errorMessage = '';
   }
+
+
+
  onSearchInput(event: any) {
     this.searchTerm = event.target.value;
   }

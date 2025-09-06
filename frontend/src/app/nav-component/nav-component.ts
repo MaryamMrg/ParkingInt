@@ -8,19 +8,25 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-nav-component',
-  imports: [CommonModule,RouterLink,ReactiveFormsModule,FormsModule,
+  imports: [CommonModule,RouterLink,
+    ReactiveFormsModule,
+    FormsModule,
     MatButtonModule
-    ,MatIconModule,MatMenuModule,MatToolbarModule
+    ,MatIconModule,
+    MatMenuModule,MatToolbarModule
   ],
   templateUrl: './nav-component.html',
   styleUrl: './nav-component.css'
 })
 export class NavComponent implements OnInit{
+
   activeMenuItem: string = 'HOME';
-  
-   isMenuOpen = false;
+  isMenuOpen = false;
   isMobile = false;
   isMenuCollapsed = true;
   currentUser:User|null=null;
@@ -30,7 +36,8 @@ export class NavComponent implements OnInit{
 
 constructor(private router :Router,
   private authservice:Authservice,
-private parkingService:Parkingservice){
+  private parkingService:Parkingservice,
+  private snackBar:MatSnackBar){
   this.authservice.currentUser$.subscribe(user=>{
     this.currentUser=user;
   });
@@ -38,6 +45,8 @@ private parkingService:Parkingservice){
 ngOnInit(): void {
   
 }
+
+
   menuItems = [
     { name: 'HOME', route: '' },
     { name: 'Login', route: '/login' },
@@ -46,10 +55,12 @@ ngOnInit(): void {
   ];
 
 
-
-  setActiveMenuItem(item: string) {
+ setActiveMenuItem(item: string) {
     this.activeMenuItem = item;
   }
+
+
+
 
 goToLogin(){
 this.router.navigate(['/login']);
@@ -60,13 +71,20 @@ this.router.navigate(['/login']);
 goToRegister(){
   this.router.navigate(['/signup'])
 }
+
+
+
+
 goToProfil(){
   this.router.navigate(['/profil'])
 }
 
-  logout() {
+
+
+
+logout() {
     this.authservice.logout();
-    // this.snackBar.open('Logged out successfully', 'Close', {duration: 3000});
+    this.snackBar.open('Logged out successfully', 'Close', {duration: 3000});
     this.router.navigate(['/login']);
   }
     get isLoggedIn(): boolean {
@@ -75,5 +93,8 @@ goToProfil(){
 
   get userRole(): string | null {
     return this.authservice.getRole();
-  }}
+  }
+
+
+}
   

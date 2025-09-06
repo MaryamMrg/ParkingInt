@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { Booking,Bookingservice } from '../bookingservice';
 import { Authservice } from '../authservice';
 import { Parking } from '../parkingservice';
+
+
+
 export enum Status {
   AVAILABLE = 'AVAILABLE',
   RESERVED = 'RESERVED', 
@@ -25,16 +28,13 @@ export enum Status {
 export class Parkingplace implements OnInit{
   
   errorMessage='';
-   loading = true;
+  loading = true;
   parking : Parking={
      parkingId:0,
- name: '',
- capacity: 0,
- avaible_places: 0,
- opening_hours: 0
-
-
-
+     name: '',
+     capacity: 0,
+     avaible_places: 0,
+     opening_hours: 0
   }
 
   //for places
@@ -43,7 +43,9 @@ export class Parkingplace implements OnInit{
     places: Place[] = [];
     placesLoading = false;
     placesErrorMessage = '';
-     currentStatus: Status | null = null;
+    currentStatus: Status | null = null;
+
+
 
   successMessage: string | null = null;
   parkingName='';
@@ -65,10 +67,14 @@ export class Parkingplace implements OnInit{
   ngOnInit(): void {
     console.log("hhh")
     this.loadParkingFromRoute();
-  this.debugRouteParams();
+    this.debugRouteParams();
     this.loadPlacesForParking(this.parking);
     
   }
+
+
+
+
 debugRouteParams(): void {
   this.route.queryParams.subscribe(params => {
     console.log('=== ROUTE DEBUG ===');
@@ -139,6 +145,9 @@ loadParkingFromRoute(): void {
   });
 }
 
+
+
+
 loadPlacesForParking(parking: Parking): void {
   console.log('Loading places for parking:', parking);
   
@@ -195,6 +204,12 @@ loadPlacesForParking(parking: Parking): void {
     }
   });
 }
+
+
+
+
+
+
 loadPlacesByParkingName():void{
    this.errorMessage='';
     this.loading=true;
@@ -211,11 +226,19 @@ loadPlacesByParkingName():void{
       }
     })
 }
-    trackByPlaceNumber(index: number, place: Place): any {
+
+
+
+
+trackByPlaceNumber(index: number, place: Place): any {
     return place.number;
   }
 
-  getPlaceIcon(status: Status): string {
+
+
+
+
+getPlaceIcon(status: Status): string {
     switch (status) {
       case Status.AVAILABLE:
         return '🟢';
@@ -230,11 +253,16 @@ loadPlacesByParkingName():void{
     }
   }
 
-  getPlaceIconClass(status: Status): string {
+
+
+
+getPlaceIconClass(status: Status): string {
     return `place-icon-${status.toLowerCase()}`;
   }
 
-  getStatusClass(status: Status): string {
+
+
+getStatusClass(status: Status): string {
     switch (status) {
       case Status.AVAILABLE:
         return 'status-available';
@@ -249,7 +277,8 @@ loadPlacesByParkingName():void{
     }
   }
 
-  getStatusText(status: Status): string {
+
+getStatusText(status: Status): string {
     switch (status) {
       case Status.AVAILABLE:
         return 'Available';
@@ -264,7 +293,10 @@ loadPlacesByParkingName():void{
     }
   }
 
-  getStatusTextClass(status: Status): string {
+
+
+
+getStatusTextClass(status: Status): string {
     switch (status) {
       case Status.AVAILABLE:
         return 'text-success';
@@ -279,11 +311,19 @@ loadPlacesByParkingName():void{
     }
   }
 
-  canSelectPlace(place: Place): boolean {
+  
+  
+  
+  
+canSelectPlace(place: Place): boolean {
     return  place.status === Status.AVAILABLE;
   }
 
-  getActionButtonText(status: Status): string {
+  
+  
+  
+  
+getActionButtonText(status: Status): string {
    
     
     switch (status) {
@@ -301,10 +341,18 @@ loadPlacesByParkingName():void{
   }
 
 
-  viewPlaceDetails(place: Place): void {
+  
+  
+  
+viewPlaceDetails(place: Place): void {
     // Navigate to detailed place view
     this.router.navigate(['/place-details', place.number]);
   }
+
+
+
+
+
 selectPlace(place: Place): void {
   console.log('selectPlace called with:', place);
   if (this.canSelectPlace(place)) {
@@ -326,6 +374,10 @@ selectPlace(place: Place): void {
     console.log('Place is not available. Status:', place.status);
   }
 }
+
+
+
+
 checkModalVisibility() {
   setTimeout(() => {
     const modal = document.querySelector('.modal-overlay');
@@ -340,11 +392,16 @@ checkModalVisibility() {
   }, 100);
 }
 
+
+
+
 private formatTime(date: Date): string {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 }
+
+
 
 // Rename and modify the method to return Date objects
 private convertTimeToDate(timeString: string, isEndTime: boolean = false): Date {
@@ -365,6 +422,13 @@ private convertTimeToDate(timeString: string, isEndTime: boolean = false): Date 
   date.setHours(hours, minutes, 0, 0);
   return date;  // Return Date object instead of timestamp
 }
+
+
+
+
+
+
+
 submitBooking(): void {
   
   if (!this.selectedPlace || !this.startTime || !this.endTime) {
@@ -442,7 +506,10 @@ private getUserId(): number {
   return user.userId; 
 }
 
-  closeBookingModal(): void {
+
+
+
+closeBookingModal(): void {
     this.showBookingModal = false;
     this.selectedPlace = null;
     this.startTime = '';
@@ -454,20 +521,13 @@ private getUserId(): number {
 
 
 
-  goBack(): void {
+
+
+
+goBack(): void {
     this.location.back();
   }
 
-
-  toggleFilters(): void {
-    //  filter functionality
-    console.log('Toggle filters');
-  }
-
-  toggleSort(): void {
-    // sort functionality
-    console.log('Toggle sort');
-  }
 
 
 cancelBooking(bookingId: number): void {
@@ -495,4 +555,7 @@ cancelBooking(bookingId: number): void {
         console.log("User cancelled the confirm dialog");
     }
 }
+
+
+
 }

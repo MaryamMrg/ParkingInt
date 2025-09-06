@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup , FormBuilder,Validators,ReactiveFormsModule } from '@angular/forms';
 import { Authservice ,RegisterRequest} from '../authservice';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,8 @@ export class Signup implements OnInit{
  
     constructor(private formBuilder: FormBuilder,
     private authService: Authservice,
-    private router: Router){
+    private router: Router,
+    private snackBar:MatSnackBar){
       this.registerForm= this.formBuilder.group({
         name:['',[Validators.required]],
         email:['',[Validators.required]],
@@ -29,10 +31,15 @@ export class Signup implements OnInit{
 
 
   }
+
+
+
   ngOnInit(): void {
     this.errorMessage='';
     this.successMessage='';
   }
+
+
 
   onSubmit() {
     if (this.registerForm.valid) {
@@ -41,7 +48,7 @@ export class Signup implements OnInit{
       this.authService.register(data).subscribe({
         next : (response) =>{
           this.successMessage = 'Registration successful';
-
+            this.snackBar.open('Logged out successfully', 'Close', {duration: 3000});
           console.log('user:',response)
           this.errorMessage = '';
           this.registerForm.reset();
@@ -56,5 +63,7 @@ export class Signup implements OnInit{
 
     }
   }
+
+  
 
 }
