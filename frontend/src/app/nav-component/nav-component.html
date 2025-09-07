@@ -1,51 +1,70 @@
-<mat-toolbar class="glass-nav">
-      <div class="nav-container">
-        <!-- Logo/Brand -->
-        <div class="brand" routerLink="/" style="cursor: pointer;">
-          <span class="brand-text">SmartParking</span>
-          <mat-icon>home</mat-icon>
-        </div>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Parking App</span>
+  <span class="spacer"></span>
+  
+  <!-- Desktop menu -->
+  <div class="desktop-menu">
+    <a *ngFor="let item of menuItems" 
+       mat-button 
+       [routerLink]="item.route" 
+       routerLinkActive="active"
+       (click)="setActiveMenuItem(item.name)">
+      {{item.name}}
+    </a>
+    
+    <button *ngIf="isLoggedIn" mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon> {{currentUser?.name}}
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="goToProfil()">
+        <mat-icon>person</mat-icon> Profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon> Logout
+      </button>
+    </mat-menu>
+    
+    <button *ngIf="!isLoggedIn" mat-button (click)="goToLogin()">Login</button>
+    <button *ngIf="!isLoggedIn" mat-button (click)="goToRegister()">Sign Up</button>
+  </div>
+</mat-toolbar>
 
-        <span class="nav-spacer"></span>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" fixedTopGap="64">
+    <mat-nav-list>
+      <a *ngFor="let item of menuItems" 
+         mat-list-item 
+         [routerLink]="item.route" 
+         (click)="setActiveMenuItem(item.name); sidenav.close()">
+        <mat-icon>{{getIconForMenuItem(item.name)}}</mat-icon>
+        <span>{{item.name}}</span>
+      </a>
+      
+      <mat-divider></mat-divider>
+      
+      <a *ngIf="isLoggedIn" mat-list-item (click)="goToProfil(); sidenav.close()">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </a>
+      
+      <a *ngIf="isLoggedIn" mat-list-item (click)="logout(); sidenav.close()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </a>
+      
+      <a *ngIf="!isLoggedIn" mat-list-item (click)="goToLogin(); sidenav.close()">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </a>
+      
+      <a *ngIf="!isLoggedIn" mat-list-item (click)="goToRegister(); sidenav.close()">
+        <mat-icon>person_add</mat-icon>
+        <span>Sign Up</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-        <!-- Auth controls -->
-        <div class="auth-controls">
-          <ng-container *ngIf="!isLoggedIn; else userControls">
-            <button 
-              mat-stroked-button 
-              class="login-btn nav-button" 
-              (click)="goToLogin()">
-              <mat-icon>login</mat-icon>
-              Login
-            </button>
-            <button 
-              mat-raised-button 
-              class="signup-btn nav-button" 
-              (click)="goToRegister()">
-               <mat-icon>person_add</mat-icon>
-              Signup
-            </button>
-          </ng-container>
-
-          <ng-template #userControls>
-            <span class="welcome-text">Welcome, {{currentUser?.name}}</span>
-            <button 
-              mat-button 
-              class="profile-btn nav-button" 
-              (click)="goToProfil()">
-             	<mat-icon>account_circle</mat-icon>
-              Profile
-            </button>
-            <button 
-              mat-stroked-button 
-              class="logout-btn nav-button" 
-              (click)="logout()">
-              <mat-icon></mat-icon>
-              Logout
-            </button>
-          </ng-template>
-        </div>
-      </div>
-
-      <div class="nav-overlay"></div>
-    </mat-toolbar>
+</mat-sidenav-container>

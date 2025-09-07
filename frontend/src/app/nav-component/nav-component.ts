@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule , } from '@angular/common';
-import { Router ,RouterLink} from '@angular/router';
-import { Authservice ,User} from '../authservice';
-import {  Parkingservice } from '../parkingservice';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Authservice, User } from '../authservice';
+import { Parkingservice } from '../parkingservice';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+// Angular Material imports
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-nav-component',
   imports: [CommonModule,RouterLink,
@@ -18,7 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     FormsModule,
     MatButtonModule
     ,MatIconModule,
-    MatMenuModule,MatToolbarModule
+    MatMenuModule,MatToolbarModule,MatSidenav,MatSidenavModule,MatListModule,MatDividerModule
   ],
   templateUrl: './nav-component.html',
   styleUrl: './nav-component.css'
@@ -81,6 +84,16 @@ goToProfil(){
 
 
 
+
+getIconForMenuItem(name: string): string {
+  switch(name) {
+    case 'HOME': return 'home';
+    case 'Login': return 'login';
+    case 'Signup': return 'person_add';
+    case 'About us': return 'info';
+    default: return 'help';
+  }
+}
 
 logout() {
     this.authservice.logout();

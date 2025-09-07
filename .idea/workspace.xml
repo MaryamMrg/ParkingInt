@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Model/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.ts" afterDir="false" />
-    </list>
+    <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +60,7 @@
       <workItem from="1755355960478" duration="2389000" />
       <workItem from="1755809247688" duration="1856000" />
       <workItem from="1755814400687" duration="595000" />
-      <workItem from="1756840532225" duration="1321000" />
+      <workItem from="1756840532225" duration="1331000" />
     </task>
     <servers />
   </component>
