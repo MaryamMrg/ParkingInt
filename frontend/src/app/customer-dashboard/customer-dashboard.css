@@ -722,14 +722,6 @@
   animation-delay: 1s;
 }
 
-/* Gradient text effects */
-.welcome-title {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
-}
 
 /* Interactive hover effects for navigation */
 .nav-btn {

@@ -94,7 +94,5 @@ logout() {
   get userRole(): string | null {
     return this.authservice.getRole();
   }
-
-
 }
   
