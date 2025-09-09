@@ -1,8 +1,12 @@
 package com.example.backend.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingPlace {
 
     @Id
@@ -11,6 +15,7 @@ public class ParkingPlace {
 
     private  Long number;
     private  Boolean availablty;
+    private Long price;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -19,15 +24,7 @@ public class ParkingPlace {
     @JoinColumn(name = "parking_id")
     private  Parking parking;
 
-    public ParkingPlace(Long placeId, Long number, Boolean availablty, Status status) {
-        this.placeId = placeId;
-        this.number = number;
-        this.availablty = availablty;
-        this.status = status;
-    }
 
-    public ParkingPlace() {
-    }
 
     public Parking getParking() {
         return parking;
@@ -67,5 +64,13 @@ public class ParkingPlace {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

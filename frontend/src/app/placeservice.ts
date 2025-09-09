@@ -14,6 +14,7 @@ number: number;
   status: Status;
   placeId: number;
   parkingId: number;
+  price:number;
  
 }
 @Injectable({
