@@ -18,15 +18,7 @@ public class Booking {
     private Long userId;
     private Date startTime;
     private Date endTime;
-    private Long price;
 
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
 
     public ParkingPlace getParkingPlace() {
         return parkingPlace;

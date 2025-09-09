@@ -56,7 +56,7 @@ export class Parkingplace implements OnInit{
   endTime: string = '';
   bookingError: string = '';
   bookingId?:number;
-
+  price:number=0;
 
   constructor(private route:ActivatedRoute,private location:Location,
      private placeservice:Placeservice,
@@ -453,7 +453,8 @@ submitBooking(): void {
       parkingId: this.selectedPlace.parkingId,
       placeId: this.selectedPlace.placeId,
       startTime: startTimestamp,
-      endTime: endTimestamp
+      endTime: endTimestamp,
+      
     };
 
     console.log('Submitting booking:', bookingData);

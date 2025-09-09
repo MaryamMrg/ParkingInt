@@ -2,13 +2,10 @@
       <div class="nav-container">
         <!-- Logo/Brand -->
         <div class="brand" routerLink="/" style="cursor: pointer;">
-          
           <span class="brand-text">SmartParking</span>
           <mat-icon>home</mat-icon>
         </div>
-
-        <span class="nav-spacer"></span>
-
+  
         <!-- Auth controls -->
         <div class="auth-controls">
           <ng-container *ngIf="!isLoggedIn; else userControls">

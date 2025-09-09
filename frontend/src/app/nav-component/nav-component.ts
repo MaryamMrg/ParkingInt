@@ -36,7 +36,7 @@ export class NavComponent implements OnInit{
   isMenuCollapsed = true;
   currentUser:User|null=null;
 
-   private destroy$ = new Subject<void>();
+
 
 
 constructor(private router :Router,
@@ -48,70 +48,17 @@ constructor(private router :Router,
   });
 }
 ngOnInit(): void {
-    this.checkScreenSize();
-    this.setActiveMenuItemFromRoute();
-    
-    // Listen to route changes to update active menu item
-    this.router.events
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.setActiveMenuItemFromRoute();
-      });
-}
- ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
-
   
-  private checkScreenSize(): void {
-    this.isMobile = window.innerWidth < 992; // Bootstrap lg breakpoint
-    if (!this.isMobile) {
-      this.isMenuOpen = false; // Close mobile menu when switching to desktop
-    }
-  }
+}
 
-  private setActiveMenuItemFromRoute(): void {
-    const currentRoute = this.router.url;
-    
-    // Check if current route matches any menu item
-    const matchingItem = this.menuItems.find(item => 
-      item.route === currentRoute || 
-      (currentRoute === '/' && item.route === '') ||
-      (currentRoute.startsWith(item.route) && item.route !== '/')
-    );
-    
-    if (matchingItem) {
-      this.activeMenuItem = matchingItem.name;
-    } else if (currentRoute.includes('/admin-dashboard')) {
-      this.activeMenuItem = 'Admin Dashboard';
-    } else if (currentRoute.includes('/login')) {
-      this.activeMenuItem = 'Login';
-    } else if (currentRoute.includes('/signup')) {
-      this.activeMenuItem = 'Signup';
-    }
-  }
+
+ 
 
   setActiveMenuItem(item: string): void {
     this.activeMenuItem = item;
   }
 
-  toggleMobileMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  closeMobileMenu(): void {
-    this.isMenuOpen = false;
-  }
-
-  onSidenavToggle(opened: boolean): void {
-    this.isMenuOpen = opened;
-  }
+  
 
   goToLogin(): void {
     this.router.navigate(['/login']);
