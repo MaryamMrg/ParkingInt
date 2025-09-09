@@ -70,6 +70,7 @@ export class Parkingplace implements OnInit{
     this.debugRouteParams();
     this.loadPlacesForParking(this.parking);
     
+    
   }
 
 
@@ -358,6 +359,7 @@ selectPlace(place: Place): void {
   if (this.canSelectPlace(place)) {
     console.log('Place is available, opening modal');
     this.selectedPlace = place;
+    console.log('selected place :', this.selectedPlace)
     this.showBookingModal = true;
     this.bookingError = '';
     this.checkModalVisibility();
@@ -447,11 +449,11 @@ submitBooking(): void {
   this.bookingInProgress = true;
   this.bookingError = '';
 
-  try {
+
     const bookingData: Booking = {
       userId: this.getUserId(), 
-      parkingId: this.selectedPlace.parkingId,
-      placeId: this.selectedPlace.placeId,
+      parkingId: this.selectedPlace?.parkingId,
+      placeId: this.selectedPlace?.placeId,
       startTime: startTimestamp,
       endTime: endTimestamp,
       
@@ -483,10 +485,7 @@ submitBooking(): void {
         this.bookingInProgress = false;
       }
     });
-  } catch (error) {
-    this.bookingError = (error as Error).message;
-    this.bookingInProgress = false;
-  }
+ 
 }
 
 
@@ -512,9 +511,7 @@ private getUserId(): number {
 
 closeBookingModal(): void {
     this.showBookingModal = false;
-    this.selectedPlace = null;
-    this.startTime = '';
-    this.endTime = '';
+  
     this.bookingError = '';
     this.bookingInProgress = false;
   }

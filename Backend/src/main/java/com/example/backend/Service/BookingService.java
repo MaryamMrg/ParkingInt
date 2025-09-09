@@ -30,13 +30,12 @@ public class BookingService {
     }
     @Transactional
     public BookingDto addBooking(BookingDto bookingDto) {
-        // Get the parking place from database first
         ParkingPlace parkingPlace = parkingPlaceRepository.findById(bookingDto.getPlaceId())
                 .orElseThrow(() -> new IllegalStateException("Parking place not found"));
         Parking parking = parkingRepository.findById(bookingDto.getParkingId())
                 .orElseThrow(() -> new IllegalStateException("Parking place not found"));
 
-        // Check availability
+
         if (parkingPlace.getStatus() != Status.AVAILABLE) {
             throw new IllegalStateException("Parking place is not available for booking");
         }

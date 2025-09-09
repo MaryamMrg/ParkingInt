@@ -127,6 +127,8 @@ newParking : Parking={
     //load data
     this.loadInitialData();
     this.loadUsers();
+    this.loadPlaces();
+    
    
   }
 
