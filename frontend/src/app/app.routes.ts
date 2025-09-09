@@ -7,6 +7,7 @@ import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { Parkingplace } from './parkingplace/parkingplace';
 import { ProfilComponent } from './profil-component/profil-component';
 import { AuthGuard } from './auth-guard-guard';
+import { AboutUs } from './about-us/about-us';
 
 export const routes: Routes = [
    
@@ -14,7 +15,7 @@ export const routes: Routes = [
     {path : '', component : HomeComponent},
     {path: 'login', component:LoginComponent},
     {path : 'signup' , component:Signup},
-
+    {path : 'About',component:AboutUs},
 
     //needs guard
     {path : 'customer-Dash',

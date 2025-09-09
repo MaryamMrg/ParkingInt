@@ -37,7 +37,7 @@ export class NavComponent implements OnInit {
     { name: 'HOME', route: '/', icon: 'home' },
     { name: 'Login', route: '/login', icon: 'login' },
     { name: 'Signup', route: '/signup', icon: 'person_add' },
-    { name: 'About us', route: '/about', icon: 'info' }
+    { name: 'About us', route: '/About', icon: 'info' }
   ];
 
   constructor(
