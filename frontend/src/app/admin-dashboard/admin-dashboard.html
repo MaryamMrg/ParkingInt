@@ -141,6 +141,7 @@
                   name="number" 
                   required>
               </div>
+              
               <div class="form-group">
                 <label for="parkingId">Parking ID:</label>
                 <input 
@@ -149,6 +150,15 @@
                   [(ngModel)]="newPlace.parkingId" 
                   name="parkingId" 
                   required>
+              </div>
+              <div class="form-group">
+                <label for="price">Price:</label>
+                <input 
+                  type="number" 
+                  id="price" 
+                  [(ngModel)]="newPlace.price" 
+                  name="price" 
+                  required>dh
               </div>
               <div class="form-group">
                 <label for="status">Status:</label>
@@ -218,7 +228,9 @@
                 <th>Number</th>
                 <th>Parking ID</th>
                 <th>Status</th>
+                  <th>price</th>
                 <th>Actions</th>
+              
               </tr>
             </thead>
             <tbody>
@@ -226,11 +238,13 @@
                 <td>{{ place.placeId }}</td>
                 <td>{{ place.number }}</td>
                 <td>{{ place.parkingId }}</td>
+                
                 <td>
                   <span [class]="'status-badge ' + place.status.toLowerCase()">
                     {{ place.status }}
                   </span>
                 </td>
+                <td>{{place.price}}</td>
                 <td>
                   <button (click)="editPlace(place)" class="edit-btn">Edit</button>
                   <button (click)="deletePlace(place.placeId)" class="delete-btn">Delete</button>

@@ -14,6 +14,7 @@ public class ParkingPlaceDto {
     private  Boolean availablty;
     private Status status;
     private Long parkingId;
+    private Long price;
 
     public Long getPlaceId() {
         return placeId;
@@ -55,4 +56,11 @@ public class ParkingPlaceDto {
         this.parkingId = parkingId;
     }
 
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
 }

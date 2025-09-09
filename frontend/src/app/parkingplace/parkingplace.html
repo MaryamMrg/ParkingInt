@@ -23,6 +23,8 @@
             <div class="place-header">
                 <div class="place-info">
                     <h3 class="place-name">Place {{ place.number }}</h3>
+
+
                     <p class="place-status-text">Status: {{ getStatusText(place.status) }}</p>
                 </div>
                 <div class="place-icon">
@@ -37,7 +39,10 @@
                     <span class="detail-label">Place Number:</span>
                     <span class="detail-value">#{{ place.number }}</span>
                 </div>
-              
+              <div class="detail-row">
+                    <span class="detail-label">Place Price:</span>
+                    <span class="detail-value">{{ place.price}}Dh</span>
+                </div>
                 <div class="detail-row">
                     <span class="detail-label">Current Status:</span>
                     <span class="detail-value" [ngClass]="getStatusTextClass(place.status)">

@@ -47,6 +47,7 @@ public class ParkingPlaceService {
         place.setAvailablty(dto.getAvailablty());
         place.setStatus(dto.getStatus());
         place.setParking(parking);
+        place.setPrice(dto.getPrice());
 
         System.out.println("Entity before save: placeId=" + place.getPlaceId() +
                 ", parkingId=" + (place.getParking() != null ? place.getParking().getParkingId() : "null"));
