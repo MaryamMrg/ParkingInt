@@ -364,7 +364,7 @@ selectPlace(place: Place): void {
     this.bookingError = '';
     this.checkModalVisibility();
     const now = new Date();
-    const thirtyMinutesLater = new Date(now.getTime() + 30 * 60 * 1000); // 30 minutes later
+    const thirtyMinutesLater = new Date(now.getTime() + 60 * 60 * 1000); // 1hour
     
     this.startTime = this.formatTime(now);
     this.endTime = this.formatTime(thirtyMinutesLater);
