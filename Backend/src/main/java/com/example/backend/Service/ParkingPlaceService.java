@@ -90,6 +90,31 @@ public class ParkingPlaceService {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void deletePlace(Long id){
         parkingPlaceRepository.deleteById(id);
     }

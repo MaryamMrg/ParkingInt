@@ -22,6 +22,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final ParkingPlaceRepository parkingPlaceRepository;
     private  final ParkingRepository parkingRepository;
+
     public BookingService(BookingMapper bookingMapper, BookingRepository bookingRepository, ParkingPlaceRepository parkingPlaceRepository, ParkingRepository parkingRepository) {
         this.bookingMapper = bookingMapper;
         this.bookingRepository = bookingRepository;
@@ -30,12 +31,16 @@ public class BookingService {
     }
     @Transactional
     public BookingDto addBooking(BookingDto bookingDto) {
+
+        //get the parkingplace by id
         ParkingPlace parkingPlace = parkingPlaceRepository.findById(bookingDto.getPlaceId())
                 .orElseThrow(() -> new IllegalStateException("Parking place not found"));
+
+        //get the parking by id
         Parking parking = parkingRepository.findById(bookingDto.getParkingId())
                 .orElseThrow(() -> new IllegalStateException("Parking place not found"));
 
-
+        //check aviability
         if (parkingPlace.getStatus() != Status.AVAILABLE) {
             throw new IllegalStateException("Parking place is not available for booking");
         }
@@ -87,4 +92,6 @@ public class BookingService {
 
         bookingRepository.deleteById(id);
     }
+
+
 }

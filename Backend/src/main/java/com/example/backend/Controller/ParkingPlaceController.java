@@ -1,15 +1,11 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Dto.ParkingPlaceDto;
-import com.example.backend.Model.ParkingPlace;
-import com.example.backend.Model.Status;
 import com.example.backend.Service.ParkingPlaceService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/place")
