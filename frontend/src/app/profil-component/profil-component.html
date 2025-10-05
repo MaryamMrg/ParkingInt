@@ -60,7 +60,7 @@
     </div>
 
     <!-- Profile Stats (for customers) -->
-    <div *ngIf="currentUser?.role === 'USER'" class="profile-stats">
+    <div *ngIf="currentUser?.role === 'COSTOMER'" class="profile-stats">
       <h2>Account Overview</h2>
       <div class="stats-grid">
         <div class="stat-card">
@@ -233,17 +233,16 @@
         </div>
       </div>
 
-      <!-- Danger Zone (Account Deletion) -->
+     
       <div class="section-card danger-zone">
         <div class="section-header">
-          <h3>Danger Zone</h3>
+        
         </div>
         
         <div class="profile-details">
           <div class="detail-row">
             <div>
               <strong>Delete Account</strong>
-              <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
             </div>
             <button class="btn-danger" (click)="deleteAccount(currentUser?.userId!)">
               Delete Account

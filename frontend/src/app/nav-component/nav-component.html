@@ -1,122 +1,22 @@
-<mat-toolbar class="fixed-navbar" color="primary">
-  <!-- Left side: Logo and brand name -->
-  <div class="navbar-left">
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button mat-icon-button (click)="toggleSidebar()">
+    <mat-icon>{{ isCollapsed ? 'menu' : 'close' }}</mat-icon>
+  </button>
+  <ul>
+    <li *ngFor="let item of menuItems" (click)="navigateTo(item.route)">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span *ngIf="!isCollapsed">{{ item.name }}</span>
+    </li>
     
-    <a routerLink="/" class="brand-link">
-      <mat-icon>home</mat-icon>
-      <span class="brand-text">SmartParking</span>
-    </a>
-  </div>
-
-  <!-- Center: Navigation links (Desktop only) -->
-  <div class="navbar-center" *ngIf="!isMobile">
-    <a mat-button 
-       *ngFor="let item of filteredMenuItems" 
-       [routerLink]="item.route" 
-       routerLinkActive="active-link"
-       [class.active-link]="activeMenuItem === item.name"
-       (click)="setActiveMenuItem(item.name)">
-      {{item.name}}
-    </a>
-  </div>
-
-  <!-- Right side: Auth controls -->
-  <div class="navbar-right">
-    <ng-container *ngIf="!isLoggedIn; else userControls">
-      <button mat-stroked-button class="auth-btn" (click)="goToLogin()" *ngIf="!isMobile">
-        <mat-icon>login</mat-icon>
-        <span class="btn-text">Login</span>
-      </button>
-      <button mat-raised-button color="accent" class="auth-btn" (click)="goToRegister()" *ngIf="!isMobile">
-        <mat-icon>person_add</mat-icon>
-        <span class="btn-text">Signup</span>
-      </button>
-    </ng-container>
-
-    <ng-template #userControls>
-      <span class="welcome-text" *ngIf="!isMobile">Welcome, {{currentUser?.name}}</span>
-      <!-- Hide profile button on mobile (moved to dropdown) -->
-      <button mat-button class="auth-btn profile-btn" (click)="goToProfil()" *ngIf="!isMobile">
-        <mat-icon>account_circle</mat-icon>
-        <span class="btn-text">Profile</span>
-      </button>
-      <button mat-stroked-button class="auth-btn" (click)="logout()" *ngIf="!isMobile">
-        <mat-icon>logout</mat-icon>
-        <span class="btn-text" *ngIf="!isMobile">Logout</span>
-      </button>
-    </ng-template>
-
-    <!-- Mobile menu button (only shown on mobile) -->
-    <button *ngIf="isMobile" mat-icon-button class="mobile-menu-button" (click)="toggleMobileMenu()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
-
-<!-- Mobile dropdown menu -->
-<div class="mobile-dropdown-menu" [class.open]="isMobileMenuOpen">
-  <div class="mobile-menu-header">
-    <h3>Navigation</h3>
-    <button mat-icon-button (click)="toggleMobileMenu()" class="close-menu-btn">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  
-  <div class="mobile-menu-content">
-    <!-- Navigation links - Only show non-auth items when not logged in -->
-    <ng-container *ngIf="isLoggedIn; else notLoggedInNavigation">
-      <!-- When logged in, show all filtered menu items -->
-      <a *ngFor="let item of filteredMenuItems" 
-         class="mobile-nav-item"
-         [routerLink]="item.route" 
-         (click)="setActiveMenuItem(item.name); toggleMobileMenu()"
-         [class.active]="activeMenuItem === item.name">
-        <mat-icon>{{item.icon}}</mat-icon>
-        <span>{{item.name}}</span>
-      </a>
-    </ng-container>
+    <!-- Show dashboard link based on role -->
+    <li *ngIf="userRole === 'ADMIN'" (click)="navigateTo('/admin-dashboard')">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span *ngIf="!isCollapsed">Admin Dashboard</span>
+    </li>
     
-    <ng-template #notLoggedInNavigation>
-      <!-- When not logged in, only show non-auth navigation items -->
-      <a *ngFor="let item of nonAuthMenuItems" 
-         class="mobile-nav-item"
-         [routerLink]="item.route" 
-         (click)="setActiveMenuItem(item.name); toggleMobileMenu()"
-         [class.active]="activeMenuItem === item.name">
-        <mat-icon>{{item.icon}}</mat-icon>
-        <span>{{item.name}}</span>
-      </a>
-    </ng-template>
-    
-    <mat-divider></mat-divider>
-    
-    <!-- User actions (shown when logged in) -->
-    <ng-container *ngIf="isLoggedIn">
-      <a class="mobile-nav-item" (click)="goToProfil(); toggleMobileMenu()">
-        <mat-icon>account_circle</mat-icon>
-        <span>Profile</span>
-      </a>
-      <a class="mobile-nav-item" (click)="logout(); toggleMobileMenu()">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
-      </a>
-    </ng-container>
-    
-    <!-- Auth actions (shown when not logged in) -->
-    <ng-container *ngIf="!isLoggedIn">
-      <a class="mobile-nav-item"  (click)="goToLogin() ; toggleMobileMenu() ">
-        <mat-icon>login</mat-icon>
-        <span>Login</span>
-      </a>
-      <a class="mobile-nav-item" (click)="goToRegister(); toggleMobileMenu()">
-        <mat-icon>person_add</mat-icon>
-        <span>Sign Up</span>
-      </a>
-    </ng-container>
-  </div>
+    <li *ngIf="userRole === 'CUSTOMER'" (click)="navigateTo('/customer-Dash')">
+      <mat-icon>dashboard</mat-icon>
+      <span *ngIf="!isCollapsed">My Dashboard</span>
+    </li>
+  </ul>
 </div>
-
-<!-- Main content -->
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>

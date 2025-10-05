@@ -11,4 +11,9 @@ import { NavComponent } from "./nav-component/nav-component";
 })
 export class App {
   protected title = 'frontend';
+   isCollapsed = false;
+     isMobile = false;
+      toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

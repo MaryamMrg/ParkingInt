@@ -3,7 +3,9 @@
         <h1 class="welcome-title">Available Parking Places</h1>
         <p class="welcome-subtitle">Choose your perfect parking spot 🚗</p>
     </div>
-
+<div>
+     <button (click)="goBack()" class="back-btn-alt">Go Back</button>
+</div>
     <!-- Loading State -->
     <div *ngIf="loading" class="loading-container">
         <div class="loading-spinner">⏳</div>
@@ -83,9 +85,7 @@
     </div>
 </main>
 
-<div>
-     <button (click)="goBack()" class="back-btn-alt">Go Back</button>
-</div>
+
 
 <!-- BOOKING MODAL  -->
 <div *ngIf="showBookingModal" class="modal-overlay">

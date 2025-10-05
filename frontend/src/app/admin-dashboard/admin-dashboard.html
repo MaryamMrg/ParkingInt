@@ -4,9 +4,7 @@
         <h1>Admin Dashboard</h1>
         
       </div>
-
-      <!-- Navigation Tabs -->
-      <div class="nav-tabs">
+ <div class="nav-tabs">
         <button 
           *ngFor="let tab of tabs" 
           [class.active]="activeTab === tab.id"
@@ -15,49 +13,7 @@
           {{ tab.label }}
         </button>
       </div>
-
-      <!-- Overview Tab -->
-      <div *ngIf="activeTab === 'overview'" class="tab-content">
-        <div class="stats-grid">
-            <div class="stat-card">
-            <h3>Total Parkings</h3>
-            <div class="stat-number">{{ stats.totalParkings }}</div>
-          </div>
-          <div class="stat-card">
-
-            <h3>Total Bookings</h3>
-            <div class="stat-number">{{ stats.totalBookings }}</div>
-          </div>
-          <div class="stat-card">
-            <h3>Total Places</h3>
-            <div class="stat-number">{{ stats.totalPlaces }}</div>
-          </div>
-          <div class="stat-card available">
-            <h3>Available Places</h3>
-            <div class="stat-number">{{ stats.availablePlaces }}</div>
-          </div>
-          <div class="stat-card occupied">
-            <h3>Occupied Places</h3>
-            <div class="stat-number">{{ stats.occupiedPlaces }}</div>
-          </div>
-          <div class="stat-card reserved">
-            <h3>Reserved Places</h3>
-            <div class="stat-number">{{ stats.reservedPlaces }}</div>
-          </div>
-          <div class="stat-card blocked">
-            <h3>Blocked Places</h3>
-            <div class="stat-number">{{ stats.blockedPlaces }}</div>
-          </div>
-           <div class="stat-card available">
-            <h3>users</h3>
-            <div class="stat-number">{{ stats.totalUsers }}</div>
-          </div>
-        </div>
-
-      
-      </div>
-
-      <!-- Bookings Tab -->
+    <!-- Bookings Tab -->
       <div *ngIf="activeTab === 'bookings'" class="tab-content">
         <div class="section-header">
           <h2>Bookings Management</h2>
@@ -101,7 +57,167 @@
 
       </div>
 
-      <!-- Places Tab -->
+
+
+
+      <div *ngIf="activeTab === 'Parkings'" class="tab-content">
+        <div class="section-header">
+          <h2>Parkings</h2>
+           <div class="actions">
+            <button (click)="showAddParkingForm = !showAddParkingForm" class="add-btn">
+              {{ showAddParkingForm ? 'Cancel' : 'Add Parking' }}
+            </button>
+            <button (click)="loadParkings()" class="refresh-btn">Refresh</button>
+          </div>
+        </div>
+        
+           <!-- Add Parking Form -->
+        <div *ngIf="showAddParkingForm" class="form-container">
+          <form (ngSubmit)="addParking()" #parkingForm="ngForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="parkingName">Parking Name:</label>
+                <input 
+                  type="text" 
+                  id="parkingName" 
+                  [(ngModel)]="newParking.name" 
+                  name="parkingName" 
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="capacity">Parking capacity:</label>
+                <input 
+                  type="number" 
+                  id="capacity" 
+                  [(ngModel)]="newParking.capacity" 
+                  name="capacity" 
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="opening_hours">opening_hours:</label>
+               <input 
+                  type="text" 
+                  id="opening_hours" 
+                  [(ngModel)]="newParking.opening_hours" 
+                  name="opening_hours" 
+                  required>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" [disabled]="!parkingForm.form.valid" class="submit-btn">
+                Add Parking
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <div *ngIf="showEditParkingFrom" class="form-container">
+    <h3>Edit Parking</h3>
+    <form (ngSubmit)="updateParking()" #editParkingForm="ngForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="editParkingName">Parking Name:</label>
+          <input 
+            type="text" 
+            id="editParkingName" 
+            [(ngModel)]="editParkingData.name" 
+            name="editParkingNamer" 
+            required>
+        </div>
+         <div class="form-group">
+                <label for="editcapacity">Parking capacity:</label>
+                <input 
+                  type="number" 
+                  id="editcapacity" 
+                  [(ngModel)]="newParking.capacity" 
+                  name="editcapacity" 
+                  required>
+              </div>
+      <div class="form-group">
+                <label for="editopening_hours">opening_hours:</label>
+               <input 
+                  type="text" 
+                  id="editopening_hours" 
+                  [(ngModel)]="newParking.opening_hours" 
+                  name="editopening_hours" 
+                  required>
+              </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="!editParkingForm.form.valid" class="submit-btn">
+          Update Parking
+        </button>
+        <button type="button" class="cancel-btn" (click)="cancelParkingEdit()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+<div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>parking Name</th>
+                <th>capacity</th>
+                <th>opening_hours</th>
+                <th>available Places<th>
+                <!-- <th>Actions</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parking of parkings; trackBy: trackByParkingId">
+                
+                <td>{{ parking.name}}</td>
+                <td>{{ parking.capacity}}</td>
+                <td>{{ parking.opening_hours }}</td>
+                <td>{{ parking.avaible_places }}</td>
+                <td>
+                  <button class="edit-btn" (click)="editParking(parking)">Edit</button>
+                  <button  class="delete-btn" (click)="deleteParking(parking.parkingId!)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="parkings.length===0" class="no-data">
+            No parking  found
+          </div>
+        </div>
+        </div>
+
+
+           <div *ngIf="activeTab === 'users'" class="tab-content">
+        <div class="section-header">
+          <h2>users</h2>
+        </div>
+        
+<div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                
+                <th>userName</th>
+                <th>email</th>
+                <th>role</th>
+                <!-- <th>Actions</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users; trackBy: trackByUserId">
+               
+                <td>{{ user.name}}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="users.length === 0" class="no-data">
+            No users found
+          </div>
+        </div>
+        </div>
+
+           <!-- Places Tab -->
       <div *ngIf="activeTab === 'places'" class="tab-content">
         <div class="section-header">
           <h2>Places Management</h2>
@@ -209,7 +325,7 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th>Place ID</th>
+                
                 <th>Number</th>
                 <th>Parking ID</th>
                 <th>Status</th>
@@ -220,7 +336,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let place of places; trackBy: trackByPlaceId">
-                <td>{{ place.placeId }}</td>
+               
                 <td>{{ place.number }}</td>
                 <td>{{ place.parkingId }}</td>
                 
@@ -241,240 +357,4 @@
             No places found
           </div>
         </div>
-
-
-          
       </div>
-
-       <div *ngIf="activeTab === 'users'" class="tab-content">
-        <div class="section-header">
-          <h2>users</h2>
-        </div>
-        
-<div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>user ID</th>
-                <th>userName</th>
-                <th>email</th>
-                <th>role</th>
-                <!-- <th>Actions</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of users; trackBy: trackByUserId">
-                <td>{{ user.id }}</td>
-                <td>{{ user.name}}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-                <!-- <td>
-                  <span [class]="'status-badge ' + user.status.toLowerCase()">
-                    {{ place.status }}
-                  </span>
-                </td> -->
-                <!-- <td>
-                  <button class="edit-btn">Edit</button>
-                  <button  class="delete-btn">Delete</button>
-                </td> -->
-              </tr>
-            </tbody>
-          </table>
-          <div *ngIf="users.length === 0" class="no-data">
-            No users found
-          </div>
-        </div>
-        </div>
-      <!-- Analytics Tab -->
-      <div *ngIf="activeTab === 'analytics'" class="tab-content">
-        <div class="section-header">
-          <h2>Analytics & Reports</h2>
-        </div>
-        
-        <div class="analytics-grid">
-          <div class="chart-container">
-            <h3>Place Status Distribution</h3>
-            <div class="pie-chart">
-              <div class="chart-legend">
-                <div class="legend-item">
-                  <span class="legend-color available"></span>
-                  Available: {{ stats.availablePlaces }}
-                </div>
-                <div class="legend-item">
-                  <span class="legend-color occupied"></span>
-                  Occupied: {{ stats.occupiedPlaces }}
-                </div>
-                <div class="legend-item">
-                  <span class="legend-color reserved"></span>
-                  Reserved: {{ stats.reservedPlaces }}
-                </div>
-                <div class="legend-item">
-                  <span class="legend-color blocked"></span>
-                  Blocked: {{ stats.blockedPlaces }}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="metrics-container">
-            <h3>Key Metrics</h3>
-            <div class="metric-item">
-              <span class="metric-label">Occupancy Rate:</span>
-              <span class="metric-value">{{ getOccupancyRate() }}%</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-label">Available Rate:</span>
-              <span class="metric-value">{{ getAvailabilityRate() }}%</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-label">Total Capacity:</span>
-              <span class="metric-value">{{ stats.totalPlaces }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-<div *ngIf="activeTab === 'Parkings'" class="tab-content">
-        <div class="section-header">
-          <h2>Parkings</h2>
-           <div class="actions">
-            <button (click)="showAddParkingForm = !showAddParkingForm" class="add-btn">
-              {{ showAddParkingForm ? 'Cancel' : 'Add Parking' }}
-            </button>
-            <button (click)="loadParkings()" class="refresh-btn">Refresh</button>
-          </div>
-        </div>
-        
-           <!-- Add Parking Form -->
-        <div *ngIf="showAddParkingForm" class="form-container">
-          <form (ngSubmit)="addParking()" #parkingForm="ngForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="parkingName">Parking Name:</label>
-                <input 
-                  type="text" 
-                  id="parkingName" 
-                  [(ngModel)]="newParking.name" 
-                  name="parkingName" 
-                  required>
-              </div>
-              <div class="form-group">
-                <label for="capacity">Parking capacity:</label>
-                <input 
-                  type="number" 
-                  id="capacity" 
-                  [(ngModel)]="newParking.capacity" 
-                  name="capacity" 
-                  required>
-              </div>
-              <div class="form-group">
-                <label for="opening_hours">opening_hours:</label>
-               <input 
-                  type="text" 
-                  id="opening_hours" 
-                  [(ngModel)]="newParking.opening_hours" 
-                  name="opening_hours" 
-                  required>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" [disabled]="!parkingForm.form.valid" class="submit-btn">
-                Add Parking
-              </button>
-            </div>
-          </form>
-        </div>
-
-
-        <div *ngIf="showEditParkingFrom" class="form-container">
-    <h3>Edit Parking</h3>
-    <form (ngSubmit)="updateParking()" #editParkingForm="ngForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="editParkingName">Parking Name:</label>
-          <input 
-            type="text" 
-            id="editParkingName" 
-            [(ngModel)]="editParkingData.name" 
-            name="editParkingNamer" 
-            required>
-        </div>
-         <div class="form-group">
-                <label for="editcapacity">Parking capacity:</label>
-                <input 
-                  type="number" 
-                  id="editcapacity" 
-                  [(ngModel)]="newParking.capacity" 
-                  name="editcapacity" 
-                  required>
-              </div>
-      <div class="form-group">
-                <label for="editopening_hours">opening_hours:</label>
-               <input 
-                  type="text" 
-                  id="editopening_hours" 
-                  [(ngModel)]="newParking.opening_hours" 
-                  name="editopening_hours" 
-                  required>
-              </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" [disabled]="!editParkingForm.form.valid" class="submit-btn">
-          Update Parking
-        </button>
-        <button type="button" class="cancel-btn" (click)="cancelParkingEdit()">
-          Cancel
-        </button>
-      </div>
-    </form>
-  </div>
-<div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>parking ID</th>
-                <th>parking Name</th>
-                <th>capacity</th>
-                <th>opening_hours</th>
-                <th>available Places<th>
-                <!-- <th>Actions</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let parking of parkings; trackBy: trackByParkingId">
-                <td>{{ parking.parkingId }}</td>
-                <td>{{ parking.name}}</td>
-                <td>{{ parking.capacity}}</td>
-                <td>{{ parking.opening_hours }}</td>
-                <td>{{ parking.avaible_places }}</td>
-                <td>
-                  <button class="edit-btn" (click)="editParking(parking)">Edit</button>
-                  <button  class="delete-btn" (click)="deleteParking(parking.parkingId!)">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div *ngIf="parkings.length===0" class="no-data">
-            No parking  found
-          </div>
-        </div>
-        </div>
-      
-        
-      <!-- Loading Overlay -->
-      <div *ngIf="loading" class="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p>Loading...</p>
-      </div>
-
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-        <button (click)="errorMessage = ''" class="close-btn">×</button>
-      </div>
-
-      <!-- Success Message -->
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
-        <button (click)="successMessage = ''" class="close-btn">×</button>
-      </div>
-    </div>

@@ -3,95 +3,12 @@
     <div class="welcome-section">
         <h1 class="welcome-title">Hi {{ customername }}</h1>
         <p class="welcome-subtitle">Park your car easily 🚗</p>
-    
-         <!-- Search Results Section -->
-    <div *ngIf="hasSearched && searchResults" class="search-results-section">
-        <h2 class="section-title">Search Results</h2>
-        
-        <div class="parking-card search-result-card">
-            <div class="parking-header">
-                <div class="parking-info">
-                    <h3 class="parking-name">{{ searchResults.name }}</h3>
-                </div>
-                <div class="parking-icon">🏢</div>
-            </div>
-
-            <div class="parking-stats">
-                <div class="stat-item">
-                    <div class="stat-value">{{ searchResults.capacity || 0 }}</div>
-                    <div class="stat-label">Total Places</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">{{ searchResults.avaible_places || 0 }}</div>
-                    <div class="stat-label">Available</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">{{ searchResults.capacity - searchResults.avaible_places || 0 }}</div>
-                    <div class="stat-label">Occupied</div>
-                </div>
-            </div>
-
-            <div class="parking-hours">
-                <span class="hours-label">Hours:</span>
-                <span class="hours-value">{{ searchResults.opening_hours || '24/7' }}</span>
-            </div>
-
-            <div class="availability-bar">
-                <div class="availability-fill" 
-                     [style.width.%]="(searchResults.avaible_places / searchResults.capacity) * 100">
-                </div>
-            </div>
-
-            <div class="status-section">
-                <span class="status-badge" 
-                      [ngClass]="{'available': searchResults.avaible_places > 0, 'full': searchResults.avaible_places === 0}">
-                    {{ searchResults.avaible_places > 0 ? 'Available' : 'Full' }}
-                </span>
-            </div>
-
-            <div class="parking-actions">
-                <button class="action-btn" (click)="viewDetails(searchResults)">
-                    View Details
-                </button>
-                
-            </div>
-        </div>
-        
-        <button class="clear-search-btn" (click)="clearSearch()">
-            Clear Search
-        </button>
-    </div>
+  
 
         <!-- Navigation buttons -->
         <div class="dashboard-nav">
-                  <!-- Search Bar -->
-        <div class="search-container">
-          <div class="search-wrapper">
-            <input 
-  [(ngModel)]="searchTerm"
-  (keyup.enter)="onSearch(searchTerm)"
-  class="search-input"
-  placeholder="Search parking by name..."
-/>
-
-<button 
-  (click)="onSearch(searchTerm)" 
-  class="search-button">
-  <svg class="search-icon" fill="none" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-  </svg>
-</button>
-
-          </div>
-           <!-- Show error message -->
-    <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-    </div>
+      
     
-    <!-- Show loading indicator -->
-    <div *ngIf="loading" class="loading-indicator">
-        Searching...
-    </div>
         </div>
             <button class="nav-btn" 
                     [ngClass]="{'active': !showBookings}" 
@@ -103,7 +20,7 @@
                     (click)="toggleBookingsView()">
                 My Bookings ({{ myBookings.length }})
             </button>
-        </div>
+       
     </div>
 
     <!-- My Bookings Section -->
@@ -222,10 +139,7 @@
                     </div>
                 </div>
 
-                <div class="parking-hours">
-                    <span class="hours-label">Hours:</span>
-                    <span class="hours-value">{{ parking.opening_hours || 'Not specified' }}</span>
-                </div>
+               
 
                 <div class="availability-bar">
                     <div class="availability-fill" 

@@ -1,4 +1,7 @@
-<main class="main-content">
-    <app-nav-component></app-nav-component>
-  <router-outlet></router-outlet>
-</main>
+<div class="app-container">
+  <div class="sidebar-overlay" [class.show]="!isCollapsed && isMobile" (click)="toggleSidebar()"></div>
+  <app-nav-component></app-nav-component>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

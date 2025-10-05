@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 400px;
+  min-height: 50px;
 }
 
 .hero-content {
@@ -20,8 +20,6 @@
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 700;
   margin-bottom: 16px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }

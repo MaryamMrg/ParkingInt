@@ -26,7 +26,7 @@ interface DashboardStats {
 })
 export class AdminDashboard implements OnInit{
 
-  activeTab = 'overview';
+  activeTab = 'Parkings';
   currentUser: User | null = null;
   loading = false;
   errorMessage = '';
@@ -97,12 +97,11 @@ newParking : Parking={
 }
   // adminDash tabs
   tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'bookings', label: 'Bookings' },
+    
+     { id: 'Parkings', label: 'Parkings' },
     { id: 'places', label: 'Places' },
-    { id: 'analytics', label: 'Analytics' },
     { id: 'users', label: 'users' },
-    { id: 'Parkings', label: 'Parkings' }
+    { id: 'bookings', label: 'Bookings' }
   ];
 
   statusOptions = Object.values(Status);

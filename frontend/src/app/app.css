@@ -1,1 +1,97 @@
+/* APP.COMPONENT.CSS - Add this to your app.component.css */
 
+/* Remove default body margins/padding - Add to styles.css */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Main container to hold sidebar and content side by side */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+ 
+}
+
+/* Content area for router-outlet */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+ 
+  height: 100vh;
+  width: 100%;
+}
+
+
+/* SIDEBAR CSS - Keep your existing sidebar styles */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #3f51b5;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1000;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: 60px;
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+.sidebar button {
+  margin: 10px;
+  color: white;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background-color: #303f9f;
+}
+
+.sidebar mat-icon {
+  margin-right: 10px;
+}
