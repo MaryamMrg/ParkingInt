@@ -14,7 +14,16 @@ public class ParkingPlaceDto {
     private  Boolean availablty;
     private Status status;
     private Long parkingId;
+    private String parkingName;
     private Long price;
+
+    public String getParkingName() {
+        return parkingName;
+    }
+
+    public void setParkingName(String parkingName) {
+        this.parkingName = parkingName;
+    }
 
     public Long getPlaceId() {
         return placeId;

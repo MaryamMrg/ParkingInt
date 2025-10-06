@@ -215,7 +215,7 @@ loadPlacesByParkingName():void{
    this.errorMessage='';
     this.loading=true;
 
-    this.placeservice.getPlacesByParkingNAme(this.parkingName).subscribe({
+    this.placeservice.getPlacesByParkingName(this.parkingName).subscribe({
       next : (places)=>{
         console.log('places of parking selected are : ',places);
         this.places=places;

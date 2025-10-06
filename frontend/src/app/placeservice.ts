@@ -15,6 +15,7 @@ number: number;
   placeId: number;
   parkingId: number;
   price:number;
+  parkingName:String;
  
 }
 @Injectable({
@@ -36,7 +37,7 @@ export class Placeservice {
   getAllPlaces():Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/all`,{headers:this.getAuthHeader()})
   }
- getPlacesByParkingNAme(name:string):Observable<any>{
+ getPlacesByParkingName(name:string):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/placeByName?name=${encodeURIComponent(name)}`,{headers:this.getAuthHeader()})
  }
   addPlace(place:Place) : Observable<Place>{

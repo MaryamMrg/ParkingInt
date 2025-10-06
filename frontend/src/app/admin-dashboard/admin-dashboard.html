@@ -246,7 +246,7 @@
               <div class="form-group">
                 <label for="parkingId">Parking ID:</label>
                 <input 
-                  type="number" 
+                  type="text" 
                   id="parkingId" 
                   [(ngModel)]="newPlace.parkingId" 
                   name="parkingId" 
@@ -328,6 +328,7 @@
                 
                 <th>Number</th>
                 <th>Parking ID</th>
+                <th>Parking Name</th>
                 <th>Status</th>
                   <th>price</th>
                 <th>Actions</th>
@@ -339,7 +340,7 @@
                
                 <td>{{ place.number }}</td>
                 <td>{{ place.parkingId }}</td>
-                
+                <td>{{place.parkingName}}</td>
                 <td>
                   <span [class]="'status-badge ' + place.status.toLowerCase()">
                     {{ place.status }}

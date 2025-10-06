@@ -5,28 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a933fb0e-3a97-47f1-bb92-b93c6eee948c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/BookingServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Dto/ParkingPlaceDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingPlaceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/ParkingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/backend/mapper/ParkingPlaceMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin-dashboard/admin-dashboard.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login-component/login-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav-component/nav-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/customer-dashboard/customer-dashboard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/parkingplace/parkingplace.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/placeservice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/profil-component/profil-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/signup/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +85,7 @@
       <workItem from="1757278154373" duration="5501000" />
       <workItem from="1757529675397" duration="1622000" />
       <workItem from="1758002607622" duration="595000" />
-      <workItem from="1758015679520" duration="5227000" />
+      <workItem from="1758015679520" duration="6657000" />
     </task>
     <servers />
   </component>

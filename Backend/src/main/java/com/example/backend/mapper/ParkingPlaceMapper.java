@@ -16,15 +16,14 @@ public interface ParkingPlaceMapper {
 
 
     @Mapping(source = "parking.parkingId", target = "parkingId")
+    @Mapping(source = "parking.name", target = "parkingName")
     ParkingPlaceDto toDto(ParkingPlace parkingPlace);
 
-    // FIXED: Map parkingId to parking entity
     @Mapping(target = "parking", ignore = true)
     ParkingPlace toEntity(ParkingPlaceDto dto);
 
     List<ParkingPlaceDto> toDtos(List<ParkingPlace> parkingPlaces);
 
-    // Custom mapping method for parkingId to Parking entity
     @Named("mapParkingId")
     default Parking mapParkingId(Long parkingId) {
         if (parkingId == null) {

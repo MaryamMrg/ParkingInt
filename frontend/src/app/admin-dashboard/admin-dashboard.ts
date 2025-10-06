@@ -74,7 +74,8 @@ editPlaceData: Place = {
       number: 0,
       status: Status.AVAILABLE,
       parkingId: 0,
-      price:0
+      price:0,
+      parkingName:''
 };
   // Add New Place
   newPlace: Place = {
@@ -82,7 +83,8 @@ editPlaceData: Place = {
       number: 0,
       status: Status.AVAILABLE,
       parkingId: 0,
-      price:0
+      price:0,
+      parkingName:''
     
   }
 
@@ -288,7 +290,8 @@ newParking : Parking={
     number: this.newPlace.number,
     status: this.newPlace.status,
     parkingId: this.newPlace.parkingId,
-    price:this.newPlace.price
+    price:this.newPlace.price,
+    parkingName:this.newPlace.parkingName
   };
 
   this.placeService.addPlace(placeToAdd).subscribe({
@@ -381,7 +384,8 @@ newParking : Parking={
       number: 0,
       status: Status.AVAILABLE,
       parkingId: 0,
-      price:0
+      price:0,
+      parkingName:''
   };
 
 }
@@ -597,7 +601,8 @@ cancelParkingEdit(): void {
       number: 0,
       status: Status.AVAILABLE,
       parkingId: 0,
-      price:0
+      price:0,
+      parkingName:''
     };
   }
 

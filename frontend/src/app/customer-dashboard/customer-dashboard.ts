@@ -60,7 +60,7 @@ export class CustomerDashboard implements OnInit {
     console.log('Current user from auth service:', user);
     
     this.customername = user?.name || user?.name || user?.email?.split('@')[0] || 'Customer';
-this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id || null;    
+    this.currentUserId = (user as any)?.userId || user?.id || (user as any)?.user_id || null;    
     console.log('Customer name:', this.customername);
     console.log('Current user ID:', this.currentUserId);
     

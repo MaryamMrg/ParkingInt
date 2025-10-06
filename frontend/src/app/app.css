@@ -1,13 +1,10 @@
-/* APP.COMPONENT.CSS - Add this to your app.component.css */
-
-/* Remove default body margins/padding - Add to styles.css */
+ 
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
-/* Main container to hold sidebar and content side by side */
 .app-container {
   display: flex;
   height: 100vh;
@@ -16,7 +13,6 @@ body {
  
 }
 
-/* Content area for router-outlet */
 .main-content {
   flex: 1;
   overflow-y: auto;
@@ -27,7 +23,6 @@ body {
 }
 
 
-/* SIDEBAR CSS - Keep your existing sidebar styles */
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -46,7 +41,6 @@ body {
   width: 60px;
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;

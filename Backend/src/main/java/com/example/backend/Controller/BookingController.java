@@ -3,8 +3,8 @@ package com.example.backend.Controller;
 
 import com.example.backend.Dto.BookingDto;
 import com.example.backend.Model.Booking;
-import com.example.backend.Service.BookingService;
 
+import com.example.backend.Service.BookingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
